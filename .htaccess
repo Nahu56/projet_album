@@ -1,4 +1,4 @@
-<Files "/CODE/VIEWS/admin.php">
+<Files "admin.php">
     AuthType Basic 
     AuthName "My Protected Folder" 
     AuthUserFile ..\htdocs\projet_album\.htpasswd
