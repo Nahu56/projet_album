@@ -7,6 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-    editeur
+
+
+page admin
+    
 </body>
 </html>
