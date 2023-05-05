@@ -29,3 +29,5 @@
 >Les informations entre [] sont les valeurs, les autres sont les clés.
 
 Les commandes sont organisées par **date**, afin de pouvoir les afficher plus facilement ensuite
+
+Dé
