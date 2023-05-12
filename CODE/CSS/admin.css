@@ -1,3 +1,220 @@
 body {
   margin: 0px;
+  background-color: #F0F0F0;
+  font-family: "Space Grotesk", sans-serif;
+}
+body header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85%;
+  margin: auto;
+  margin-top: 120px;
+}
+body header h2 {
+  font-weight: 700;
+  font-size: 60px;
+}
+body header form {
+  display: flex;
+  align-items: center;
+}
+body header form label {
+  font-size: 20px;
+  font-weight: 700;
+}
+body header form select {
+  border: none;
+  padding: 10px 20px;
+  margin-left: 15px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #A0A0A0;
+}
+body #commande {
+  background-color: #FFFFFF;
+  width: 85%;
+  margin: 60px auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+body #commande .date {
+  width: 90%;
+  margin: auto;
+}
+body #commande .date h3 {
+  background-color: #000000;
+  color: #FFFFFF;
+  padding: 15px 30px;
+  font-weight: bold;
+  font-size: 20px;
+  width: -moz-min-content;
+  width: min-content;
+  margin: 50px 0;
+}
+body #commande .date .album {
+  display: flex;
+  justify-content: space-between;
+  background-color: #EBF0EF;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+  margin: 30px 0;
+}
+body #commande .date .album .etat_commande {
+  position: absolute;
+  border: #000000 solid 1px;
+  height: 30px;
+  margin-top: -17px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #A0A0A0;
+  background-color: white;
+}
+body #commande .date .album .etat_commande * {
+  margin: 0 9px;
+}
+body #commande .date .album .etat_commande p {
+  margin-right: 15px;
+}
+body #commande .date .album .etat_commande div {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 15px;
+}
+body #commande .date .album .info_vendeur {
+  width: 40%;
+}
+body #commande .date .album .info_vendeur .visible {
+  padding: 30px 45px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+body #commande .date .album .info_vendeur .visible p {
+  font-weight: 700;
+  font-size: 25px;
+}
+body #commande .date .album .info_vendeur .cache {
+  display: none;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-left: 45px;
+}
+body #commande .date .album .info_vendeur .cache div {
+  background-color: #FFFFFF;
+  font-weight: 700;
+  padding: 5px 20px;
+  margin-right: 20px;
+}
+body #commande .date .album .info_vendeur .cache div p:first-child {
+  color: #A0A0A0;
+  margin-bottom: -15px;
+}
+body #commande .date .album .info_album {
+  width: 40%;
+}
+body #commande .date .album .info_album .visible {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 45px;
+  height: 60px;
+}
+body #commande .date .album .info_album .visible div .nom_alb {
+  font-weight: 700;
+  font-size: 25px;
+  color: #18574A;
+  margin: 0;
+}
+body #commande .date .album .info_album .visible div .qtt_alb {
+  font-size: 20px;
+  font-weight: 300;
+  margin: 0;
+}
+body #commande .date .album .info_album .visible .prx_totale {
+  font-weight: 700;
+  font-size: 40px;
+}
+body #commande .date .album .info_album .cache {
+  display: none;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-left: 45px;
+}
+body #commande .date .album .info_album .cache div {
+  background-color: #FFFFFF;
+  font-weight: 700;
+  padding: 5px 20px;
+  margin-right: 20px;
+  width: 20%;
+}
+body #commande .date .album .info_album .cache div p:first-child {
+  color: #A0A0A0;
+  margin-bottom: -15px;
+}
+body #commande .date .album .action_pdf {
+  width: 20%;
+}
+body #commande .date .album .action_pdf .pdf_supprime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 45px;
+  height: 60px;
+}
+body #commande .date .album .action_pdf .pdf_supprime p {
+  font-weight: 700;
+  font-size: 20px;
+  color: #18574A;
+}
+body #commande .date .album .action_pdf .visible {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 45px;
+  height: 60px;
+}
+body #commande .date .album .action_pdf .visible .btn_telechargement {
+  background-color: #18574A;
+  padding: 14px 30px;
+  border-radius: 5px;
+}
+body #commande .date .album .action_pdf .visible .btn_telechargement .ico_telecharger {
+  height: 33px;
+}
+body #commande .date .album .action_pdf .visible .btn_telechargement:hover {
+  cursor: pointer;
+}
+body #commande .date .album .action_pdf .visible .ico_ouvrir {
+  height: 40px;
+}
+body #commande .date .album .action_pdf .visible .ico_ouvrir:hover {
+  cursor: pointer;
+}
+body #commande .date .album .action_pdf .cache {
+  margin-top: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+body #commande .date .album .action_pdf .cache button {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: #571818;
+  font-size: 20px;
+  background-color: #EBF0EF;
+  border: none;
+}
+body #commande .date .album .action_pdf .cache button img {
+  height: 25px;
+  margin-left: 15px;
+}
+body #commande .date .album .action_pdf .cache button:hover {
+  cursor: pointer;
 }/*# sourceMappingURL=admin.css.map */
