@@ -1,5 +1,12 @@
+h1 {
+  font-weight: 700;
+  font-size: 60px;
+}
+
 body {
-  margin: 0px;
+  max-width: 1500px;
+  width: 98%;
+  margin: 0px auto;
   background-color: #F0F0F0;
   font-family: "Space Grotesk", sans-serif;
 }
@@ -7,7 +14,6 @@ body header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 85%;
   margin: auto;
   margin-top: 120px;
 }
@@ -33,13 +39,10 @@ body header form select {
 }
 body #commande {
   background-color: #FFFFFF;
-  width: 85%;
   margin: 60px auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 1px 50px 20px 50px;
 }
 body #commande .date {
-  width: 90%;
   margin: auto;
 }
 body #commande .date h3 {
@@ -59,6 +62,7 @@ body #commande .date .album {
   border-top: 3px solid black;
   border-bottom: 3px solid black;
   margin: 30px 0;
+  cursor: pointer;
 }
 body #commande .date .album .etat_commande {
   position: absolute;
@@ -179,21 +183,35 @@ body #commande .date .album .action_pdf .visible {
   height: 60px;
 }
 body #commande .date .album .action_pdf .visible .btn_telechargement {
+  margin: 0;
   background-color: #18574A;
   padding: 14px 30px;
   border-radius: 5px;
+  transition: background ease-in 0.1s;
 }
 body #commande .date .album .action_pdf .visible .btn_telechargement .ico_telecharger {
   height: 33px;
 }
 body #commande .date .album .action_pdf .visible .btn_telechargement:hover {
   cursor: pointer;
+  background-color: rgba(24, 87, 74, 0.8431372549);
 }
-body #commande .date .album .action_pdf .visible .ico_ouvrir {
+body #commande .date .album .action_pdf .visible a {
+  width: 65px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background ease-in 0.1s;
+}
+body #commande .date .album .action_pdf .visible a .ico_ouvrir {
   height: 40px;
 }
-body #commande .date .album .action_pdf .visible .ico_ouvrir:hover {
+body #commande .date .album .action_pdf .visible a:hover {
   cursor: pointer;
+  background-color: white;
 }
 body #commande .date .album .action_pdf .cache {
   margin-top: 10px;
@@ -202,14 +220,17 @@ body #commande .date .album .action_pdf .cache {
   align-items: center;
 }
 body #commande .date .album .action_pdf .cache button {
-  margin-top: 15px;
   display: flex;
   align-items: center;
+  margin-top: 15px;
+  padding: 10px 20px;
   font-weight: 700;
   color: #571818;
   font-size: 20px;
   background-color: #EBF0EF;
   border: none;
+  border-radius: 5px;
+  transition: background ease-in 0.1s;
 }
 body #commande .date .album .action_pdf .cache button img {
   height: 25px;
@@ -217,4 +238,5 @@ body #commande .date .album .action_pdf .cache button img {
 }
 body #commande .date .album .action_pdf .cache button:hover {
   cursor: pointer;
+  background-color: white;
 }/*# sourceMappingURL=admin.css.map */

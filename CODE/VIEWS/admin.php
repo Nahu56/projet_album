@@ -196,7 +196,7 @@
     <header>
         <h2>Commandes album photo</h2>
         <form class="style" onchange="window.location.href = '?affichage=' + document.getElementById('affichage_info').value;">
-            <label>Affichage :</label>
+            <label>Affichage&nbsp;:</label>
             <select name="affichage" id="affichage_info">
                 <option value="en_attente" <?php  if (isset($_GET['affichage'])) { if ($_GET['affichage']=='en_attente'){echo 'selected';}} ?> > <div style="width:15px; height: 15px; background-color:red;"></div> Status : En attente </option>
                 <option value="tout"  <?php if (isset($_GET['affichage'])) { if ($_GET['affichage']=='tout'){echo 'selected';}} ?> > TOUT </option>
@@ -324,10 +324,12 @@
                                        <input type="hidden" name="date" value="'.$date.'">
 
                                        <input type="hidden" name="action" value="supprime">
-                                       <button type="submit">
-                                           Supprimer
-                                           <img src="ASSETS/img/icone/trash.svg" alt="icone poubelle"/>
-                                       </button>
+                                       <div>
+                                            <button type="submit">
+                                                Supprimer
+                                                <img src="ASSETS/img/icone/trash.svg" alt="icone poubelle"/>
+                                            </button>
+                                       </div>
                                    
                                </form>
                            
@@ -348,8 +350,17 @@
     </div>
     <script>
         function afficher_cache(element) {
+            let allCache = document.getElementsByClassName('cache');
+
+
+            for (var i = 0; i < allCache.length; i++) {
+                allCache[i].style.display = 'none';
+            }
+
+
             // Trouver tous les éléments avec la classe "cache" à l'intérieur de l'élément parent
             var elementsCache = element.getElementsByClassName('cache');
+
             // Parcourir tous les éléments avec la classe "cache"
             for (var i = 0; i < elementsCache.length; i++) {
                 var cache = elementsCache[i];
