@@ -107,7 +107,7 @@
     /* -------------------------------------------------------------------------- */
     /*                         FONCTION TELECHARGER UN PDF                        */
     /* -------------------------------------------------------------------------- */
-    function telechargerFichier($date, $key) {
+    function telechargerFichier($date, $key,$affichage) {
         // On met à jour les informations dans le json 
         $json_string = file_get_contents('../../ASSETS/json/commandes.json');
         $tableau = json_decode($json_string, true);
@@ -119,12 +119,31 @@
         //     document.location.href="http://localhost/projet_album/CODE/controller.php?action_tel=telecharger&key='.$key.'"; 
         // </script>';
 
-        header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
+        if (isset($affichage)) {
+            if ($affichage!=null) {
+                header("Refresh:0; url=admin?affichage=".$affichage."&action_telechargement=reload&key=".$key."");
+            }else {
+                header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
+            }
+        }
+        else {
+            header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
+        }
+
     }
 
     if (isset($_GET['action_telechargement'])) {
         if ($_GET['action_telechargement']== 'reload') {
-            header("Refresh:0; url=admin?action_telechargement=telecharger&key=".$_GET['key']."");
+            if (isset($_GET['affichage'])) {
+                if ($_GET['affichage']!=null) {
+                    header("Refresh:0; url=admin?affichage=".$_GET['affichage']."&action_telechargement=telecharger&key=".$_GET['key']."");
+                }else {
+                    header("Refresh:0; url=admin?action_telechargement=telecharger&key=".$_GET['key']."");
+                }
+            }else {
+                header("Refresh:0; url=admin?action_telechargement=telecharger&key=".$_GET['key']."");
+            }
+
         }
         if ($_GET['action_telechargement']=='telecharger') {
             
@@ -132,7 +151,7 @@
             $cheminFichier = '../../STOCKAGE/PDF_commandes/'.$_GET['key'].'.pdf';
 
             // Nom du fichier à télécharger
-            $nomFichier = $key.'.pdf';
+            $nomFichier = $_GET['key'].'.pdf';
         
             // Efface la sortie tamponnée
             ob_clean();
@@ -153,7 +172,7 @@
     /* -------------------------------------------------------------------------- */
     /*                           FONCTION SUPPRIMER PDF                           */
     /* -------------------------------------------------------------------------- */
-    function supprimerFichier($date, $key) {
+    function supprimerFichier($date, $key,$affichage) {
 
         // On met à jour les informations dans le json 
         $json_string = file_get_contents('../../ASSETS/json/commandes.json');
@@ -165,9 +184,19 @@
 
         // Méthode pour supprimer le fichier (peut etre ajouter vérifiation)
         if(unlink('../../STOCKAGE/PDF_commandes/'.$key.'.pdf')) {
-            header("Location: admin?affichage=tout");
+            if ($affichage != null) {
+                header("Location: admin?affichage=".$affichage);
+            }else{
+                header("Location: admin");
+
+            }
         } else {
-            header("Location: admin?affichage=tout");
+            if ($affichage != null) {
+                header("Location: admin?affichage=".$affichage);
+            }else{
+                header("Location: admin");
+
+            }        
         }
     }
     
@@ -177,11 +206,11 @@
     /* -------------------------------------------------------------------------- */
     if (isset($_POST['action'])) {
         if($_POST['action']=="telecharger") {
-            telechargerFichier( $_POST['date'], $_POST['key']);
+            telechargerFichier( $_POST['date'], $_POST['key'],$_POST['affichage']);
         
         }
         if($_POST['action']=="supprime") {    
-            supprimerFichier( $_POST['date'], $_POST['key']);
+            supprimerFichier( $_POST['date'], $_POST['key'],$_POST['affichage']);
         }
     
     }
@@ -223,9 +252,28 @@
 
     </header>
     <div id="commande" >
+
         <?php
+        if ($data == array()) {
+
+            echo '
+            <div class="pas_de_commande">
+            
+                <img src="ASSETS/img/icone/waiting.svg" alt="Rien pour le moment">
+                <h2>Pas de commande en attente</h2>
+
+
+            </div>
+            
+            
+            ';
+        }else {
+            
+            
+        
         
         foreach ($data as $date => $values) {
+            
 
             echo '<div class="date"> 
 
@@ -236,7 +284,7 @@
                 foreach ($values as $key => $tab) {
                     echo '
 
-                    <div class="album" onclick="afficher_cache(this)">';
+                    <div id="'.$key.'" class="album" onclick="afficher_cache(this)">';
 
                     if (($tab['deja_telecharge']==false) and ($tab['supprime']==false) ) {
                         echo '
@@ -323,9 +371,14 @@
                             <div class="visible">
                                 <form class="btn_telechargement" method="POST">
                                     <input type="hidden" name="key" value="'.$key.'">
-                                    <input type="hidden" name="date" value="'.$date.'">
+                                    <input type="hidden" name="date" value="'.$date.'">';
 
-                                    <input type="hidden" name="action" value="telecharger">
+                            if (isset($_GET['affichage'])) {
+                                echo ' <input type="hidden" name="affichage" value="'.$_GET['affichage'].'">';
+                            }
+
+
+                            echo '        <input type="hidden" name="action" value="telecharger">
                                     <input type="image" class="ico_telecharger" src="ASSETS/img/icone/download.svg" alt="icone telechargement"/>
                                 </form>
 
@@ -339,7 +392,14 @@
                             
                             <form class="cache" method="POST" onsubmit="return confirmSuppression();">
                                 <input type="hidden" name="key" value="'.$key.'">
-                                <input type="hidden" name="date" value="'.$date.'">
+                                <input type="hidden" name="date" value="'.$date.'">';
+
+                                if (isset($_GET['affichage'])) {
+                                    echo ' <input type="hidden" name="affichage" value="'.$_GET['affichage'].'">';
+                                }
+    
+    
+                                echo '
                             
                                 <input type="hidden" name="action" value="supprime">
                                 <button type="submit">
@@ -368,10 +428,32 @@
 
             echo '</div>';
         }
+        }
 
         ?>
     </div>
+
+
     <script>
+
+
+
+        function scrollToAnchorWithOffset(id) {
+            const anchorElement = document.getElementById(id);
+            const offset = window.innerHeight * 0.5;
+
+            const rect = anchorElement.getBoundingClientRect();
+            const scrollPosition = rect.top + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+
+
+
+
         function afficher_cache(element) {
             let allCache = document.getElementsByClassName('cache');
 
@@ -396,6 +478,20 @@
                 }
             }
         }
+
+
+        <?php 
+
+        if (isset($_GET['key'])) {
+            ?>
+            scrollToAnchorWithOffset('<?php echo $_GET['key']; ?>');
+            
+            <?php
+        }
+
+        ?>
+
+
     </script>
 
     

@@ -42,6 +42,18 @@ body #commande {
   margin: 60px auto;
   padding: 1px 50px 20px 50px;
 }
+body #commande .pas_de_commande {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 50vh;
+}
+body #commande .pas_de_commande img {
+  height: 25vh;
+}
 body #commande .date {
   margin: auto;
 }
