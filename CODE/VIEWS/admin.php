@@ -41,20 +41,20 @@
             $data = array();
             $data = $result;
             
-            foreach ($data as $date => &$values) {
-
+            foreach ($data as $date => $values) {
                 foreach ($values as $key => $tab) {
+
                     if ($tab['deja_telecharge'] == false and $tab['supprime'] == false) {
-                    }else {
-                        unset($values[$key]);
-                        if ($data[$date]==array()) {
+                    } else {
+                        unset($data[$date][$key]);
+                        if (empty($data[$date])) {
                             unset($data[$date]);
                         }
                     }
                 }
             }
 
-            print_r($data);
+            
             
         }else {
             // Si c'est le tout on change rien
@@ -88,12 +88,14 @@
         $data = array();
         $data = $result;
             
-        foreach ($data as $date => &$values) {
+        foreach ($data as $date => $values) {
             foreach ($values as $key => $tab) {
-                if ($tab['deja_telecharge'] == true or $tab['supprime'] == true) {
-                    unset($values[$key]);
-                    if ($data[$date] == []) {
-                        unset($data[$date]); 
+
+                if ($tab['deja_telecharge'] == false and $tab['supprime'] == false) {
+                } else {
+                    unset($data[$date][$key]);
+                    if (empty($data[$date])) {
+                        unset($data[$date]);
                     }
                 }
             }
@@ -106,32 +108,46 @@
     /*                         FONCTION TELECHARGER UN PDF                        */
     /* -------------------------------------------------------------------------- */
     function telechargerFichier($date, $key) {
-
         // On met à jour les informations dans le json 
         $json_string = file_get_contents('../../ASSETS/json/commandes.json');
         $tableau = json_decode($json_string, true);
         $tableau[$date][$key]['deja_telecharge'] = true;
         $newJsonString = json_encode($tableau);
         file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
-    
-        // Chemin du fichier
-        $cheminFichier = '../../STOCKAGE/PDF_commandes/'.$key.'.pdf';
-    
-        // Nom du fichier à télécharger
-        $nomFichier = $key.'.pdf';
-    
-        // Définit le type de contenu de la réponse
-        header('Content-Type: application/pdf');
-    
-        // Définit le nom du fichier dans la réponse
-        header('Content-Disposition: attachment; filename="' . $nomFichier . '"');
-    
-        // Lit le contenu du fichier et l'envoie dans la réponse
-        readfile($cheminFichier);
-    
+        // echo '
+        // <script>
+        //     document.location.href="http://localhost/projet_album/CODE/controller.php?action_tel=telecharger&key='.$key.'"; 
+        // </script>';
 
+        header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
     }
-    
+
+    if (isset($_GET['action_telechargement'])) {
+        if ($_GET['action_telechargement']== 'reload') {
+            header("Refresh:0; url=admin?action_telechargement=telecharger&key=".$_GET['key']."");
+        }
+        if ($_GET['action_telechargement']=='telecharger') {
+            
+            // Chemin du fichier
+            $cheminFichier = '../../STOCKAGE/PDF_commandes/'.$_GET['key'].'.pdf';
+
+            // Nom du fichier à télécharger
+            $nomFichier = $key.'.pdf';
+        
+            // Efface la sortie tamponnée
+            ob_clean();
+        
+            // Définit le type de contenu de la réponse
+            header('Content-Type: application/pdf');
+        
+            // Définit le nom du fichier dans la réponse
+            header('Content-Disposition: attachment; filename="' . $nomFichier . '"');
+        
+            // Lit le contenu du fichier et l'envoie dans la réponse
+            readfile($cheminFichier);
+
+        }
+    }
 
 
     /* -------------------------------------------------------------------------- */
@@ -149,9 +165,9 @@
 
         // Méthode pour supprimer le fichier (peut etre ajouter vérifiation)
         if(unlink('../../STOCKAGE/PDF_commandes/'.$key.'.pdf')) {
-            echo '<script> alert("Fichier supprimer"); </script>';
+            header("Location: admin?affichage=tout");
         } else {
-            echo '<script> alert("Erreur"); </script>';
+            header("Location: admin?affichage=tout");
         }
     }
     
@@ -162,8 +178,9 @@
     if (isset($_POST['action'])) {
         if($_POST['action']=="telecharger") {
             telechargerFichier( $_POST['date'], $_POST['key']);
+        
         }
-        if($_POST['action']=="supprime") {
+        if($_POST['action']=="supprime") {    
             supprimerFichier( $_POST['date'], $_POST['key']);
         }
     
@@ -196,7 +213,7 @@
     <header>
         <h2>Commandes album photo</h2>
         <form class="style" onchange="window.location.href = '?affichage=' + document.getElementById('affichage_info').value;">
-            <label>Affichage&nbsp;:</label>
+            <label>Affichage :</label>
             <select name="affichage" id="affichage_info">
                 <option value="en_attente" <?php  if (isset($_GET['affichage'])) { if ($_GET['affichage']=='en_attente'){echo 'selected';}} ?> > <div style="width:15px; height: 15px; background-color:red;"></div> Status : En attente </option>
                 <option value="tout"  <?php if (isset($_GET['affichage'])) { if ($_GET['affichage']=='tout'){echo 'selected';}} ?> > TOUT </option>
@@ -319,19 +336,25 @@
                                     <img class="ico_ouvrir" src="ASSETS/img/icone/eye-open.svg" alt="icone ouvrir"/>
                                 </a>
                             </div>
-                               <form class="cache"  method="POST">
-                                       <input type="hidden" name="key" value="'.$key.'">
-                                       <input type="hidden" name="date" value="'.$date.'">
-
-                                       <input type="hidden" name="action" value="supprime">
-                                       <div>
-                                            <button type="submit">
-                                                Supprimer
-                                                <img src="ASSETS/img/icone/trash.svg" alt="icone poubelle"/>
-                                            </button>
-                                       </div>
-                                   
-                               </form>
+                            
+                            <form class="cache" method="POST" onsubmit="return confirmSuppression();">
+                                <input type="hidden" name="key" value="'.$key.'">
+                                <input type="hidden" name="date" value="'.$date.'">
+                            
+                                <input type="hidden" name="action" value="supprime">
+                                <button type="submit">
+                                    Supprimer
+                                    <img src="ASSETS/img/icone/trash.svg" alt="icone poubelle"/>
+                                </button>
+                            </form>
+                        
+                            <script>
+                                function confirmSuppression() {
+                                    var val = confirm("Êtes-vous sûr de vouloir supprimer le pdf ?");
+                                    return val;
+                                }
+                            </script>
+                        
                            
                            </div>';
                         }
