@@ -1,0 +1,94 @@
+/* -------------------------------------------------------------------------- */
+/*                                   GENERAL                                  */
+/* -------------------------------------------------------------------------- */
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  COULEURS                                  */
+/* -------------------------------------------------------------------------- */
+
+$gris: #F0F0F0;
+$gris2: #dddddd;
+$gristext: #737373;
+
+$vert: #18574A;
+$vert_fond: #EBF0EF;
+
+
+/* -------------------------------------------------------------------------- */
+/*                                    TEXTE                                   */
+/* -------------------------------------------------------------------------- */
+
+*{
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+h1{
+    font-size: 60px;
+    font-weight: 700;
+}
+h2{
+    font-size: 50px;
+    font-weight: 700;
+}
+p{
+    font-size: 18px;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                   BOUTONS                                  */
+/* -------------------------------------------------------------------------- */
+
+.main_btn{
+    width: fit-content;
+    margin: auto;
+
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    font-size: 1.5em;
+    
+    outline: 2px solid black;
+    padding: 10px 50px;
+    background-color: white;
+    box-shadow: 5px 5px 0 0 black;
+
+    transition: all ease 0.2s;
+}
+.main_btn:hover{
+    background-color: $vert_fond;
+    box-shadow: 8px 8px 0 0 black;
+}
+
+.btn_retour{
+    display: flex;
+    gap: 10px;
+
+    width: fit-content;
+    padding: 10px 20px;
+    margin-left: -20px;
+
+    border-radius: 5px;
+    background-color: white;
+
+    text-decoration: none;
+    color: $gristext;
+    font-size: 20px;
+
+    img{
+        fill: green;
+
+        width: 30px;
+    }
+
+    transition: background ease 0.2s;
+}
+.btn_retour:hover{
+    background-color: $vert_fond;
+}

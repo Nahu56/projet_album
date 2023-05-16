@@ -1,3 +1,122 @@
+/* -------------------------------- Variables ------------------------------- */
+// --- couleurs ---
+$gris: #F0F0F0;
+$gris2: #dddddd;
+$gristext: #737373;
+
+$vert: #18574A;
+$vert_fond: #EBF0EF;
+
 body{
-    margin: 0px;
+    margin: 100px;
+
+    max-width: 1200px;
+    width: 95%;
+    margin: 20vh auto;
+
+    .img_start{
+        position: relative;
+
+        width: 100%;
+        height: 30vh;
+        
+        margin-top: 50px;
+        outline: 1px solid black;
+        background-color: $gris;
+
+        a{
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    main{
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+        }
+
+        section{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+
+            >hr{
+                border: none;
+                border-top: 2px solid $gris2;
+
+                width: 60%;
+                margin: 0 auto;
+            }
+
+
+
+            fieldset{
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap-reverse;
+                gap: 10px;
+            
+                border: none;
+            
+                div{
+                    flex: 1;
+            
+                    outline: 2px solid black;
+                    border-radius: 1px;
+                    min-width: 250px;
+                    width: 300px;
+            
+                    label{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+            
+                        height: 50px;
+                        padding: 0 30px;
+                        cursor: pointer;
+                        text-align: center;
+            
+                        img{
+                            width: 100%;
+                            height: 300px;
+            
+                            object-fit: cover;
+                        }
+            
+                        input{
+                            appearance: none;
+                            position: absolute;
+                        }
+            
+                        //propriétés différentes s'il comporte une image
+                        &:has(>img) {
+                            padding: 0;
+                            padding-bottom: 15px;
+                            gap: 15px;
+            
+                            height: auto;
+                        }
+                    }
+            
+                    &:hover{
+                        background-color: $vert_fond;
+                    }
+            
+                    //propriétés différentes si l'input est check
+                    &:has(input[type="radio"]:checked) {
+                        background-color: $vert;
+                        outline: 3px solid $vert;
+                        outline-offset: -1px;
+                        color: $vert_fond;
+                    }
+                }
+            }
+
+        }
+    }
 }

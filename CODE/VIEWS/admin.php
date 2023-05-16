@@ -225,22 +225,13 @@
     <title>Admin</title>
     <link rel="stylesheet" href="CODE/CSS/admin.css">
 
-    <!----------------------------------------------------------------------------->
-    <!--                                 LISTE FONTS                             -->
-    <!----------------------------------------------------------------------------->
-
-    <!-- Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap" rel="stylesheet">
-
-
-
+    <!-- Appel header -->
+    <?php require '../components/header.php' ?>
 
 </head>
 <body>
     <header>
-        <h2>Commandes album photo</h2>
+        <h1>Commandes album photo</h1>
         <form class="style" onchange="window.location.href = '?affichage=' + document.getElementById('affichage_info').value;">
             <label>Affichage :</label>
             <select name="affichage" id="affichage_info">

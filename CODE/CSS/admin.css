@@ -1,11 +1,6 @@
-h1 {
-  font-weight: 700;
-  font-size: 60px;
-}
-
 body {
   max-width: 1500px;
-  width: 98%;
+  width: 95%;
   margin: 0px auto;
   background-color: #F0F0F0;
   font-family: "Space Grotesk", sans-serif;
