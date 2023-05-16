@@ -190,13 +190,14 @@
 
         }
     }
+    
 
 
     /* -------------------------------------------------------------------------- */
     /*                           FONCTION SUPPRIMER PDF                           */
     /* -------------------------------------------------------------------------- */
     function supprimerFichier($date, $key,$affichage) {
-
+        
         // On met à jour les informations dans le json 
         $json_string = file_get_contents('../../ASSETS/json/commandes.json');
         $tableau = json_decode($json_string, true);
@@ -230,6 +231,8 @@
     /* -------------------------------------------------------------------------- */
     /*                          LANCER FONCTIONS DES PDF                          */
     /* -------------------------------------------------------------------------- */
+
+    // On vérifie que action existe     
     if (isset($_POST['action'])) {
 
         if($_POST['action']=="telecharger") {
@@ -284,6 +287,7 @@
 
 </head>
 <body>
+    
 
     <div id="notifications">
         <?php
@@ -383,26 +387,32 @@
 
                         <div class="info_album">
                             <div class="visible">
+
                                 <div>
                                     <p class="nom_alb">'.$tab['nom_album'].'</p>
                                     <p class="qtt_alb">x'.$tab['qtt_album'].' exemplaires</p>
                                 </div>
+
                                 <p class="prx_totale">'.number_format($tab['total'],2,',').'€</p>
+
                             </div>
 
                             <div class="cache">
-                            <div>
-                                <p>Reliure </p>
-                                <p> '.$tab['reliure'].' </p>
-                            </div>
-                            <div>
-                                <p>Format </p>
-                                <p> Feuilles '.$tab['format'].' </p>
-                            </div>
-                            <div>
-                                <p>Nb Pages </p>
-                                <p>'.$tab['pages'].' pages </p>
-                            </div>
+
+                                <div>
+                                    <p>Reliure </p>
+                                    <p> '.$tab['reliure'].' </p>
+                                </div>
+
+                                <div>
+                                    <p>Format </p>
+                                    <p> Feuilles '.$tab['format'].' </p>
+                                </div>
+
+                                <div>
+                                    <p>Nb Pages </p>
+                                    <p>'.$tab['pages'].' pages </p>
+                                </div>
 
 
                             </div>

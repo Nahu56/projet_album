@@ -24,7 +24,7 @@
             <!-- --------------------------------------------------------------------------  -->
             <!--                                  SECTION 1                                  -->
             <!-- --------------------------------------------------------------------------  -->
-            <section id="">
+            <section id="section1">
                 <header>
                     <h2>Pour commencer,</h2>
 
@@ -33,34 +33,16 @@
 
                 <fieldset>
                     <div>
-                        <label for="huey">
-                            <input type="radio" id="huey" name="drone" value="huey" required="required" >
-                            Huey
+                        <label for="reliure_bleue">
+                            <input type="radio" id="reliure_bleue" name="reliure" value="reliure_bleue" required="required" >
+                            Reliure bleue
                         </label>
                     </div>
 
                     <div>
-                        <label for="dewey">
-                            <input type="radio" id="dewey" name="drone" value="dewey" required="required" >
-                            Dewey
-                        </label>
-                    </div>
-                </fieldset>
-
-                <hr>
-
-                <fieldset>
-                    <div>
-                        <label for="formatA">
-                            <input type="radio" id="formatA" name="format" value="formatA" required="required" >
-                            formatA
-                        </label>
-                    </div>
-
-                    <div>
-                        <label for="formatB">
-                            <input type="radio" id="formatB" name="format" value="formatB" required="required" >
-                            formatB
+                        <label for="reliure_rouge">
+                            <input type="radio" id="reliure_rouge" name="reliure" value="reliure_rouge" required="required" >
+                            Reliure rouge
                         </label>
                     </div>
                 </fieldset>
@@ -69,20 +51,20 @@
 
                 <fieldset>
                     <div>
-                        <label for="choixA">
+                        <label for="FormatA">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="choixA" name="choix" value="huey" required="required" >
-                            choixA
+                            <input type="radio" id="FormatA" name="format" value="FormatA" required="required" >
+                            FormatA
                         </label>
                     </div>
 
                     <div>
-                        <label for="choixB">
+                        <label for="FormatB">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="choixB" name="choix" value="dewey" required="required" >
-                            choixB
+                            <input type="radio" id="FormatB" name="format" value="FormatB" required="required" >
+                            FormatB
                         </label>
                     </div>
                 </fieldset>
@@ -92,7 +74,7 @@
             <!-- --------------------------------------------------------------------------  -->
             <!--                                  SECTION 2                                  -->
             <!-- --------------------------------------------------------------------------  -->
-            <section id="">
+            <section id="section2">
                 <header>
                     <p>Maintenant,</p>
                     <h2>choisissez le thème</h2>
@@ -109,7 +91,7 @@
                         <label for="theme1">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme1" name="theme" value="huey" required="required" >
+                            <input type="radio" id="theme1" name="theme" value="theme1" required="required" >
                             theme1
                         </label>
                     </div>
@@ -118,7 +100,7 @@
                         <label for="theme2">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme2" name="theme" value="dewey" required="required" >
+                            <input type="radio" id="theme2" name="theme" value="theme2" required="required" >
                             theme2
                         </label>
                     </div>
@@ -127,7 +109,7 @@
                         <label for="theme3">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme3" name="theme" value="dewey" required="required" >
+                            <input type="radio" id="theme3" name="theme" value="theme3" required="required" >
                             theme3
                         </label>
                     </div>
@@ -136,7 +118,7 @@
                         <label for="theme4">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme4" name="theme" value="dewey" required="required" >
+                            <input type="radio" id="theme4" name="theme" value="theme4" required="required" >
                             theme4
                         </label>
                     </div>
@@ -149,7 +131,7 @@
                         <label for="theme5">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme5" name="theme" value="dewey" required="required" >
+                            <input type="radio" id="theme5" name="theme" value="theme5" required="required" >
                             theme5
                         </label>
                     </div>
@@ -158,7 +140,7 @@
                         <label for="theme6">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme6" name="theme" value="dewey" required="required" >
+                            <input type="radio" id="theme6" name="theme" value="theme6" required="required" >
                             theme6
                         </label>
                     </div>
