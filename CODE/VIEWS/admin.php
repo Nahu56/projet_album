@@ -27,7 +27,7 @@
             // Trier les dates du plus ancien au plus récent
             asort($dateObjects);
             
-
+            // On remet les valeurs de data avec les dates trié dans le fichier $result
             $result = array();
             foreach ($dateObjects as $dateObject) {
                 $formattedDate = $dateObject->format('d/m/Y');
@@ -37,7 +37,7 @@
 
             }
             
-            // Afficher le tableau trié
+            // On enleve les commandes qui ont déjà été téléchargé ou supprimé 
             $data = array();
             $data = $result;
             
@@ -47,6 +47,8 @@
                     if ($tab['deja_telecharge'] == false and $tab['supprime'] == false) {
                     } else {
                         unset($data[$date][$key]);
+
+                        // Si la date est vide alors on l'enleve du tableau 
                         if (empty($data[$date])) {
                             unset($data[$date]);
                         }
@@ -74,7 +76,7 @@
         // Trier les dates du plus ancien au plus récent
         asort($dateObjects);
         
-
+        // On remet les valeurs de data avec les dates trié dans le fichier $result
         $result = array();
         foreach ($dateObjects as $dateObject) {
             $formattedDate = $dateObject->format('d/m/Y');
@@ -84,16 +86,18 @@
 
         }
         
-        // Afficher le tableau trié
+        // On transfert les données de $result dans $data
         $data = array();
         $data = $result;
             
+        // On enleve les commandes qui ont déjà été téléchargé ou supprimé 
         foreach ($data as $date => $values) {
-            foreach ($values as $key => $tab) {
 
+            foreach ($values as $key => $tab) {
                 if ($tab['deja_telecharge'] == false and $tab['supprime'] == false) {
                 } else {
                     unset($data[$date][$key]);
+                    // Si la date est vide alors on l'enleve du tableau 
                     if (empty($data[$date])) {
                         unset($data[$date]);
                     }
@@ -101,7 +105,7 @@
             }
         }
     }
-
+// Essaie de vori ec 
 
 
     /* -------------------------------------------------------------------------- */
@@ -114,10 +118,6 @@
         $tableau[$date][$key]['deja_telecharge'] = true;
         $newJsonString = json_encode($tableau);
         file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
-        // echo '
-        // <script>
-        //     document.location.href="http://localhost/projet_album/CODE/controller.php?action_tel=telecharger&key='.$key.'"; 
-        // </script>';
 
         if (isset($affichage)) {
             if ($affichage!=null) {
@@ -184,19 +184,22 @@
 
         // Méthode pour supprimer le fichier (peut etre ajouter vérifiation)
         if(unlink('../../STOCKAGE/PDF_commandes/'.$key.'.pdf')) {
-            if ($affichage != null) {
-                header("Location: admin?affichage=".$affichage);
-            }else{
-                header("Location: admin");
 
+            // On redirige 
+            if ($affichage != null) {
+                header("Location: admin?notification=valid&affichage=".$affichage);
+            }else{
+                header("Location: admin?notification=valid");
             }
-        } else {
-            if ($affichage != null) {
-                header("Location: admin?affichage=".$affichage);
-            }else{
-                header("Location: admin");
 
-            }        
+        } else {
+
+            if ($affichage != null) {
+                header("Location: admin?notification=erreur&affichage=".$affichage);
+            }else{
+                header("Location: admin?notification=erreur");
+            }     
+
         }
     }
     
@@ -205,14 +208,36 @@
     /*                          LANCER FONCTIONS DES PDF                          */
     /* -------------------------------------------------------------------------- */
     if (isset($_POST['action'])) {
+
         if($_POST['action']=="telecharger") {
             telechargerFichier( $_POST['date'], $_POST['key'],$_POST['affichage']);
-        
         }
+
         if($_POST['action']=="supprime") {    
             supprimerFichier( $_POST['date'], $_POST['key'],$_POST['affichage']);
         }
     
+    }
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                           FONCTION NOTIFICATIONS                           */
+    /* -------------------------------------------------------------------------- */
+
+    function notifications($etat){
+        if ($etat == 'valid') {
+            echo '
+            <div class="valid">
+                <p>Fichier supprimé avec <span> succès </span> ! </p> <img src="ASSETS/img/Partying_Face.png" alt="smiley fête"/>
+            </div>
+            ';
+        }elseif ($etat == 'erreur') {
+            echo '
+            <div class="erreur">
+                <p> <span> Erreur</span>  lors de la suppression du fichier </p> <img src="ASSETS/img/Warning.png" alt="warning"/>
+            </div>
+            ';
+        }
     }
 
 ?>
@@ -230,6 +255,16 @@
 
 </head>
 <body>
+
+    <div id="notifications">
+        <?php
+        if (isset($_GET['notification'])) {
+            notifications($_GET['notification']);
+        }
+        ?>
+    </div>
+
+
     <header>
         <h1>Commandes album photo</h1>
         <form class="style" onchange="window.location.href = '?affichage=' + document.getElementById('affichage_info').value;">
@@ -249,11 +284,8 @@
 
             echo '
             <div class="pas_de_commande">
-            
-                <img src="ASSETS/img/icone/waiting.svg" alt="Rien pour le moment">
+                <img src="ASSETS/img/waiting.svg" alt="Rien pour le moment">
                 <h2>Pas de commande en attente</h2>
-
-
             </div>
             
             
