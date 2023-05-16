@@ -7,8 +7,8 @@ body {
 }
 body #notifications {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 30px;
+  right: 30px;
   animation: arrive 0.5s forwards, sortie 1s 4s forwards;
 }
 body #notifications div {
@@ -163,12 +163,12 @@ body #commande .date .album .info_vendeur .cache {
 body #commande .date .album .info_vendeur .cache div {
   background-color: #FFFFFF;
   font-weight: 700;
-  padding: 5px 20px;
+  padding: 10px 25px;
   margin-right: 20px;
 }
 body #commande .date .album .info_vendeur .cache div p:first-child {
   color: #A0A0A0;
-  margin-bottom: -15px;
+  margin-bottom: 5px;
 }
 body #commande .date .album .info_album {
   width: 40%;
@@ -204,13 +204,13 @@ body #commande .date .album .info_album .cache {
 body #commande .date .album .info_album .cache div {
   background-color: #FFFFFF;
   font-weight: 700;
-  padding: 5px 20px;
+  padding: 10px 25px;
   margin-right: 20px;
   width: 20%;
 }
 body #commande .date .album .info_album .cache div p:first-child {
   color: #A0A0A0;
-  margin-bottom: -15px;
+  margin-bottom: 5px;
 }
 body #commande .date .album .action_pdf {
   width: 20%;
@@ -274,7 +274,7 @@ body #commande .date .album .action_pdf .cache {
 body #commande .date .album .action_pdf .cache button {
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 5px;
   padding: 10px 20px;
   font-weight: 700;
   color: #571818;

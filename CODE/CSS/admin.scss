@@ -8,8 +8,8 @@ body{
 
     #notifications{
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 30px;
+        right: 30px;
         
         animation: arrive 0.5s forwards, sortie 1s 4s forwards;
 
@@ -21,6 +21,7 @@ body{
             padding:  15px 35px  ;
             background-color: #EBF0EF;
             box-shadow: 5px 5px 0px #000000;
+
             img{
                 height: 20px;
                 width: 20px;
@@ -185,14 +186,14 @@ body{
                         div{
                             background-color: #FFFFFF;
                             font-weight: 700;
-                            padding:5px 20px ;
+                            padding:10px 25px ;
                             margin-right: 20px;
 
 
 
                             p:first-child{
                                 color: #A0A0A0;
-                                margin-bottom: -15px;
+                                margin-bottom: 5px;
                             }
                         }
 
@@ -241,7 +242,7 @@ body{
                         div{
                             background-color: #FFFFFF;
                             font-weight: 700;
-                            padding:5px 20px ;
+                            padding:10px 25px ;
                             margin-right: 20px;
                             width: 20%;
 
@@ -249,7 +250,7 @@ body{
 
                             p:first-child{
                                 color: #A0A0A0;
-                                margin-bottom: -15px;
+                                margin-bottom: 5px;
                             }
                         }
                     }
@@ -332,7 +333,7 @@ body{
                             display: flex;
                             align-items: center;
 
-                            margin-top: 15px;
+                            margin-top: 5px;
                             padding: 10px 20px;
 
                             font-weight: 700;

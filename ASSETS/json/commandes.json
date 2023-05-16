@@ -48,7 +48,7 @@
         "19X34009RB896712M": {
             "nom": "Doe",
             "prenom": "John",
-            "email": "sb-zaddza@personal.example.com",
+            "email": "sb-zaddza@example.com",
             "nom_album": "Album Photo",
             "qtt_album": "1",
             "reliure": "Gold",
@@ -61,7 +61,7 @@
         "610135681U3933548": {
             "nom": "Doe",
             "prenom": "victor",
-            "email": "sb-testd@personal.example.com",
+            "email": "sb-testd@example.com",
             "nom_album": "Album Photo",
             "qtt_album": "1",
             "reliure": "Gold",
@@ -87,7 +87,7 @@
         "6PH24486S73182056": {
             "nom": "Doe",
             "prenom": "John",
-            "email": "test@personal.example.com",
+            "email": "test@example.com",
             "nom_album": "Album Photo",
             "qtt_album": "1",
             "reliure": "Gold",

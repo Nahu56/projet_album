@@ -112,22 +112,45 @@
     /*                         FONCTION TELECHARGER UN PDF                        */
     /* -------------------------------------------------------------------------- */
     function telechargerFichier($date, $key,$affichage) {
-        // On met à jour les informations dans le json 
-        $json_string = file_get_contents('../../ASSETS/json/commandes.json');
-        $tableau = json_decode($json_string, true);
-        $tableau[$date][$key]['deja_telecharge'] = true;
-        $newJsonString = json_encode($tableau);
-        file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+        $cheminFichier = '../../STOCKAGE/PDF_commandes/'.$key.'.pdf';
+        if (file_exists($cheminFichier)) {
 
-        if (isset($affichage)) {
-            if ($affichage!=null) {
-                header("Refresh:0; url=admin?affichage=".$affichage."&action_telechargement=reload&key=".$key."");
-            }else {
+            // On met à jour les informations dans le json 
+            $json_string = file_get_contents('../../ASSETS/json/commandes.json');
+            $tableau = json_decode($json_string, true);
+            $tableau[$date][$key]['deja_telecharge'] = true;
+            $newJsonString = json_encode($tableau);
+            file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+
+            if (isset($affichage)) {
+                if ($affichage!=null) {
+                    header("Refresh:0; url=admin?affichage=".$affichage."&action_telechargement=reload&key=".$key."");
+                }else {
+                    header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
+                }
+            }
+            else {
                 header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
             }
-        }
-        else {
-            header("Refresh:0; url=admin?action_telechargement=reload&key=".$key."");
+
+        }else {
+            // On met à jour les informations dans le json 
+            $json_string = file_get_contents('../../ASSETS/json/commandes.json');
+            $tableau = json_decode($json_string, true);
+            $tableau[$date][$key]['supprime'] = true;
+            $newJsonString = json_encode($tableau);
+            file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+
+
+            if (isset($affichage)) {
+                if ($affichage!=null) {
+                    header("Refresh:0; url=admin?affichage=".$affichage."&notification=fichier");
+                }else {
+                    header("Refresh:0; url=admin?notification=fichier");
+                }
+            }else {
+                header("Refresh:0; url=admin?notification=fichier");
+            }
         }
 
     }
@@ -237,6 +260,12 @@
                 <p> <span> Erreur</span>  lors de la suppression du fichier </p> <img src="ASSETS/img/Warning.png" alt="warning"/>
             </div>
             ';
+        }elseif ($etat == 'fichier') {
+            echo '
+            <div class="erreur">
+                <p> <span> Erreur</span>, fichier introuvable </p> <img src="ASSETS/img/Warning.png" alt="warning"/>
+            </div>
+            ';
         }
     }
 
@@ -268,7 +297,7 @@
     <header>
         <h1>Commandes album photo</h1>
         <form class="style" onchange="window.location.href = '?affichage=' + document.getElementById('affichage_info').value;">
-            <label>Affichage :</label>
+            <label>Affichage&nbsp:</label>
             <select name="affichage" id="affichage_info">
                 <option value="en_attente" <?php  if (isset($_GET['affichage'])) { if ($_GET['affichage']=='en_attente'){echo 'selected';}} ?> > <div style="width:15px; height: 15px; background-color:red;"></div> Status : En attente </option>
                 <option value="tout"  <?php if (isset($_GET['affichage'])) { if ($_GET['affichage']=='tout'){echo 'selected';}} ?> > TOUT </option>
