@@ -14,6 +14,10 @@
     </script>
 </head>
 <body>
+
+    <?php 
+        echo $_POST['format'];
+    ?>
     editeur
 </body>
 </html>

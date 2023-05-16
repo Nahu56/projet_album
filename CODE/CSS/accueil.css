@@ -22,7 +22,7 @@ body .img_start a {
 body main form {
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 200px;
 }
 body main section {
   display: flex;

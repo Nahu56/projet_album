@@ -19,7 +19,7 @@
     </a>
     
     <main>
-        <form action="">
+        <form action="./editeur" method="post">
 
             <!-- --------------------------------------------------------------------------  -->
             <!--                                  SECTION 1                                  -->
@@ -34,14 +34,14 @@
                 <fieldset>
                     <div>
                         <label for="huey">
-                            <input type="radio" id="huey" name="drone" value="huey" >
+                            <input type="radio" id="huey" name="drone" value="huey" required="required" >
                             Huey
                         </label>
                     </div>
 
                     <div>
                         <label for="dewey">
-                            <input type="radio" id="dewey" name="drone" value="dewey">
+                            <input type="radio" id="dewey" name="drone" value="dewey" required="required" >
                             Dewey
                         </label>
                     </div>
@@ -52,14 +52,14 @@
                 <fieldset>
                     <div>
                         <label for="formatA">
-                            <input type="radio" id="formatA" name="truc" value="huey" >
+                            <input type="radio" id="formatA" name="format" value="formatA" required="required" >
                             formatA
                         </label>
                     </div>
 
                     <div>
                         <label for="formatB">
-                            <input type="radio" id="formatB" name="truc" value="dewey">
+                            <input type="radio" id="formatB" name="format" value="formatB" required="required" >
                             formatB
                         </label>
                     </div>
@@ -72,7 +72,7 @@
                         <label for="choixA">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="choixA" name="choix" value="huey" >
+                            <input type="radio" id="choixA" name="choix" value="huey" required="required" >
                             choixA
                         </label>
                     </div>
@@ -81,7 +81,7 @@
                         <label for="choixB">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="choixB" name="choix" value="dewey">
+                            <input type="radio" id="choixB" name="choix" value="dewey" required="required" >
                             choixB
                         </label>
                     </div>
@@ -109,7 +109,7 @@
                         <label for="theme1">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme1" name="theme" value="huey">
+                            <input type="radio" id="theme1" name="theme" value="huey" required="required" >
                             theme1
                         </label>
                     </div>
@@ -118,7 +118,7 @@
                         <label for="theme2">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme2" name="theme" value="dewey">
+                            <input type="radio" id="theme2" name="theme" value="dewey" required="required" >
                             theme2
                         </label>
                     </div>
@@ -127,7 +127,7 @@
                         <label for="theme3">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme3" name="theme" value="dewey">
+                            <input type="radio" id="theme3" name="theme" value="dewey" required="required" >
                             theme3
                         </label>
                     </div>
@@ -136,7 +136,7 @@
                         <label for="theme4">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme4" name="theme" value="dewey">
+                            <input type="radio" id="theme4" name="theme" value="dewey" required="required" >
                             theme4
                         </label>
                     </div>
@@ -149,7 +149,7 @@
                         <label for="theme5">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme5" name="theme" value="dewey">
+                            <input type="radio" id="theme5" name="theme" value="dewey" required="required" >
                             theme5
                         </label>
                     </div>
@@ -158,7 +158,7 @@
                         <label for="theme6">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="theme6" name="theme" value="dewey">
+                            <input type="radio" id="theme6" name="theme" value="dewey" required="required" >
                             theme6
                         </label>
                     </div>
@@ -166,7 +166,7 @@
                 
             </section>
 
-            <a href="./editeur" class="main_btn">Passer à l'éditeur</a>
+            <button type="submit" class="main_btn">Passer à l'éditeur</button>
 
         </form>
     </main>
