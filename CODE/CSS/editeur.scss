@@ -1,6 +1,374 @@
+// --- couleurs ---- 
+$gris: #F0F0F0;
+$gris2: #dddddd;
+$gristext: #737373;
+
+$vert: #18574A;
+$vert_fond: #EBF0EF;
+
+
 body{
     margin: 0px;
 }
-section{
-    border: 1px solid black;
+
+/* -------------------------------------------------------------------------- */
+/*                                   EDITEUR                                  */
+/* -------------------------------------------------------------------------- */
+#editeur{
+    position: relative;
+
+    background-color: $vert_fond;
+ 
+    section{
+        border: 2px solid black;
+        background-color: white;
+
+        .header_section{
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            padding: 15px 0 25px 0;
+            text-align: center;
+
+            width: 100%;
+
+            background: linear-gradient(180deg, #FFFFFF 70%, rgba(255, 255, 255, 0) 100%);
+        }
+        .footer_section{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            padding: 30px 0;
+            
+            display: flex;
+            justify-content: center;
+            align-self: center;
+
+            background: linear-gradient(0deg, #FFFFFF 50%, rgba(255, 255, 255, 0) 100%);
+        }
+    }
+
+
+
+    div#gauche{
+        position: fixed ;
+        left:0 ;
+        top: 0;
+        height: calc(100vh - 4px);
+        width: 360px;
+
+        
+
+
+        #templates{
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+            padding: 0 30px;
+
+            display:flex;
+            flex-direction: column;
+            align-items:center; 
+
+            main{
+                overflow: visible;
+
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                flex-direction: row;
+                
+                width: 100%;
+                gap: 15px;
+                padding: 100px 0;
+
+                
+                >div{
+                    position: relative;
+                    
+                    $width: 110px;
+                    $ratio: 1.414;
+                    height: $width * $ratio ;
+                    width: $width;
+
+
+                    outline: 2px solid $vert;
+                    // outline-offset: -2px;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+
+                    .img{
+                        position: absolute;
+                        margin: 0;
+                        background-color: $gris2;
+                        border: none;
+                    }
+                    .txt{
+                        height: 5%;
+                        width: 30%;
+
+                        border-radius: 100px;
+
+                        transform: translate(-50%, -50%);
+
+                        position: absolute;
+                        margin: 0;
+                        background-color: $vert;
+                        border: none;
+                    }
+                }
+
+
+                
+                &:after {
+                    content: "";
+                    flex: auto;
+                  }
+            }
+            
+        }
+
+        #edit_image,
+        #edit_texte{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+            padding: 0 30px;
+       
+            overflow: auto;
+
+
+            footer{
+                span{
+                    font-size: 15px;
+                    color: rgba(0, 0, 0, 0.4);   
+                }
+            }
+        }
+        
+        #edit_image{
+            display: none;
+
+            main{
+                margin-top: 90px;
+                position:relative;
+                div{
+                    margin-bottom: 40px;
+                    p{
+                        font-size: 15px;
+                        font-weight: 300;
+                        line-height: 19px;
+                        margin-bottom: 15px;
+                    }
+                    input{
+                        width: 100%;
+                        height: 250px;
+                        border: 1px dashed #18574A;
+                        background-color: $gris;
+                        border-radius: 5px;
+
+                        visibility: hidden;
+
+                    }
+                }
+
+            }
+
+
+        }
+
+        #edit_texte{
+            display: none;
+
+            main{
+                margin-top: 90px;
+                position: relative;
+
+                div{
+                    height: 65vh;
+
+                    p{
+                        color: rgba(0, 0, 0, 0.6);
+                        text-decoration: underline;
+                        position: absolute;
+                        
+                        top: 15px;
+                        left: 15px;
+
+                        z-index: 2;
+                    }
+                    textarea{
+                        
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        
+                        height: 100%;
+                        width: 88%;
+                        background-color: $gris2;
+                        border: 1px solid #000000;
+
+
+                        font-size: 16px;
+                        line-height: 20px;
+                        font-weight: 300;
+
+                        padding:  50px 20px;
+
+                        
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+
+
+    // TODO : a enlever 
+    #centre{
+        position: fixed;
+        top: 50vh;
+        left: 50%;
+    }
+
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   DROITE                                   */
+    /* -------------------------------------------------------------------------- */
+    div#droite{
+
+        position: fixed ;
+        right:0 ;
+        top: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        height: 100vh;
+        width: 304px;
+
+        /* -------------------------------------------------------------------------- */
+        /*                                   APERCU                                   */
+        /* -------------------------------------------------------------------------- */
+        #apercu{
+            position: relative;
+            width: 100%;
+            height: 89vh;
+
+            right: 0;
+            top: 0;
+            
+            header{
+                p{
+                    color: $gristext;
+                }
+            }
+
+            main{
+                box-sizing: border-box;
+                
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+
+                height: 100%;
+                margin: 0 auto;
+                padding: 100px 10px 110px 30px;
+
+                overflow-y: scroll;
+
+                .bloc_page{
+                    width: 100%;
+
+                    >div{
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 10px;
+
+                        .vignette_page{
+                            $width: 125px;
+
+                            width: $width;
+                            height: calc($width * 1.414);
+
+                            outline: 2px solid $vert;
+                            
+                            div{
+                                background-color: $gris;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        #panier{
+            
+            header{
+                position: relative;
+                display: flex;
+                justify-content: end;
+    
+
+                .roll{
+                    $height: 8vh;
+                }
+                .unrolled{
+                    $height: 100vh;
+                }
+                width: 100%;
+                height: $height;
+                cursor: pointer;
+    
+                >div:first-child{
+                    flex: 1;
+                    height: 100%;
+    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
+                >div:last-child{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    background-color: black;
+                    height: 100%;
+                    width: $height;
+    
+                    img{
+                        width: 50px;
+                        transition: transform ease 0.2s;
+                    }
+                }
+    
+    
+                &:hover{
+                    img{
+                        transform: translate(0, -10px);
+                    }
+                }
+            }
+            
+        }
+
+        
+    }
 }
+

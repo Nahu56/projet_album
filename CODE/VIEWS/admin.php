@@ -441,14 +441,14 @@
 
 
                             echo '        <input type="hidden" name="action" value="telecharger">
-                                    <input type="image" class="ico_telecharger" src="ASSETS/img/icone/download.svg" alt="icone telechargement"/>
+                                    <input type="image" class="ico_telecharger" src="ASSETS/img/icones/download.svg" alt="icones telechargement"/>
                                 </form>
 
 
 
 
                                 <a href="STOCKAGE/PDF_commandes/'.$key.'.pdf" target="_bank">
-                                    <img class="ico_ouvrir" src="ASSETS/img/icone/eye-open.svg" alt="icone ouvrir"/>
+                                    <img class="ico_ouvrir" src="ASSETS/img/icones/eye-open.svg" alt="icones ouvrir"/>
                                 </a>
                             </div>
                             
@@ -466,7 +466,7 @@
                                 <input type="hidden" name="action" value="supprime">
                                 <button type="submit">
                                     Supprimer
-                                    <img src="ASSETS/img/icone/trash.svg" alt="icone poubelle"/>
+                                    <img src="ASSETS/img/icones/trash.svg" alt="icones poubelle"/>
                                 </button>
                             </form>
                         

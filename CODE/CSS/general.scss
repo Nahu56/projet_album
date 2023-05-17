@@ -35,6 +35,10 @@ h2{
     font-size: 50px;
     font-weight: 700;
 }
+h3{
+    font-size: 30px;
+    font-weight: 700;
+}
 p{
     font-size: 18px;
 }
@@ -94,3 +98,37 @@ p{
 .btn_retour:hover{
     background-color: $vert_fond;
 }
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                                  ELEMENTS                                  */
+/* -------------------------------------------------------------------------- */
+
+//ligne de numéro de page entre <hr> 
+//      <div class="ligne_page">
+//          <div class="hr"></div>
+//          <div class="num_page"> page 1 / 2 </div>
+//          <div class="hr"></div>
+//      </div>
+.ligne_page{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+
+    margin-bottom: 15px;
+
+    .hr{
+        height: 2px;
+        background-color: $gristext;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .num_page{
+        flex: 1;
+        white-space: nowrap;
+        color: $gristext
+    }
+}  

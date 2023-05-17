@@ -26,6 +26,11 @@ h2 {
   font-weight: 700;
 }
 
+h3 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
 p {
   font-size: 18px;
 }
@@ -77,4 +82,26 @@ p {
 
 .btn_retour:hover {
   background-color: #EBF0EF;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  ELEMENTS                                  */
+/* -------------------------------------------------------------------------- */
+.ligne_page {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+.ligne_page .hr {
+  height: 2px;
+  background-color: #737373;
+  border-radius: 10px;
+  width: 100%;
+}
+.ligne_page .num_page {
+  flex: 1;
+  white-space: nowrap;
+  color: #737373;
 }/*# sourceMappingURL=general.css.map */
