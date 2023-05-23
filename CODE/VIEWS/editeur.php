@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Editeur</title>
 
     <link rel="stylesheet" href="CODE/CSS/editeur.css">
     
@@ -35,7 +35,7 @@
     <div id="gauche">
 
         <!-- Mise en page -->
-        <section id="templates">
+        <section id="templates" style="display:block;">
             <header class="header_section">
                 <h3>Mise en page</h3>
             </header>
@@ -43,14 +43,21 @@
         </section>
 
         <!-- Edition d'image -->
-        <section id="edit_image">
+        <section id="edit_image" >
             <header class="header_section" >
                 <h3>Edition d'image</h3>
             </header>
             <main>
                 <div>
                     <p>Insérer une image</p>
-                    <input type="file" name="image" id="image" value="Inserer une image">
+                    <div class="inserer_image">
+                        
+                        <label for="inserer_image">
+                            Ouvrir un fichier
+                            <input type="file" name="inserer_image" id="inserer_image" value="Inserer une image">
+
+                        </label>
+                    </div>
                 </div>
                 <div>
                     <p>Placer l'image</p>
@@ -58,27 +65,26 @@
                 </div>
 
             </main>
-            <footer class="footer_section">
-                <button class="main_btn">
+            <footer class="footer_section" >
+                <button class="main_btn" onclick="afficher_edit_templates()">
                     Terminer  <br> <span>et revenir à la mise en page</span>
                 </button>
             </footer>
         </section>
 
-        <!-- Edition d'image -->
-        <section id="edit_texte">
+        <!-- Edition du texte -->
+        <section id="edit_texte" >
             <header class="header_section" >
                 <h3>Edition de texte</h3>
             </header>
             <main>
                 <div>
-                    <p>Texte</p>
-                    <textarea rows="4" cols="50"></textarea>
+                    <h6>Texte</h6>
+                    <textarea rows="4" cols="50" id="textarea_edit_texte" ></textarea>
                 </div>
-
             </main>
             <footer class="footer_section">
-                <button class="main_btn">
+                <button class="main_btn" onclick="afficher_edit_templates()">
                     Terminer  <br> <span>et revenir à la mise en page</span>
                 </button>
             </footer>
@@ -92,18 +98,32 @@
     /*                                    PAGE                                    */
     /* ------------------------------------------------------------------------- -->
     
+
+
+    
     <div id="centre">
-            
-            <button id="btn_image">
-                image
-            </button>
-            <button id="temp">
-                template
-            </button>
-            <button id="btn_txt">
-                texte
-            </button>
-            
+
+        <div id="page_1" class="page">
+            <p>Page 1</p>
+            <div></div>
+        </div>
+
+        
+    </div>
+
+    <!-- TODO : a enlever -->
+    <div id="centre_bis">
+        <button id="btn_image">
+            image
+        </button>
+        <button id="temp">
+            template
+        </button>
+        <button id="btn_txt">
+            texte
+        </button>
+
+        <p id="test_texte"></p>
     </div>
 
     <!-- ------------------------------------------------------------------------ */
@@ -196,7 +216,7 @@
 
             </main>
             <footer class="footer_section">
-                <button class="main_btn">
+                <button class="main_btn" onclick="ajout_page()">
                     + page
                 </button>
             </footer>
@@ -205,8 +225,9 @@
         
         
         <!-- /* ----------------------------- panier ---------------------------- */ -->
-        <section id="panier">
-            <header onclick="wrap_panier()" class="roll">
+        <section id="panier" class="roll">
+
+            <header onclick="wrap_panier()">
                 <div>
                     <h3>Panier</h3>
                 </div>
@@ -216,15 +237,94 @@
             </header>
             <main>
 
+                <header>
+                    <h6>Titre de l'album</h6>
+
+                    <input type="text" placeholder="Mon album">
+                </header>
+                <main>
+                    <div id="options_album">
+                        <div>
+                            <p>Base</p>
+                            <span id=""> 9,90€</span>
+                        </div>
+                        <div>
+                            <p>Reliure</p>
+                            <span id=""> 6,50€</span>
+                        </div>
+                        <div>
+                            <p>Format</p>
+                            <span id=""> 2,00€</span>
+                        </div>
+                        <div>
+                            <p>Pages x24</p>
+                            <span id=""> 12,00€</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>Album</p>
+                        <span>30,40€</span>
+                    </div>
+                </main>
+                <footer>
+                    <div>
+                        <button> + </button>
+                        <p>2</p>
+                        <button> - </button>
+                    </div>
+
+                    <div>
+                        <div>
+                            <span>63,80€</span>
+                            <p>-10%</p>
+                        </div>
+                        <p>54,72€</p>
+                    </div>
+                </footer>
             </main>
+
+            <footer>
+                <button onclick="open_modal_final()" class="black_btn">Terminer</button>
+            </footer>
         </section>
+    </div>
+
+
+    <div id="modal_final" class="">
+        <main>
+            <header>
+                <div>
+                    <h2>Récapitulatif</h2>
+                    <button class="btn_retour" onclick="open_modal_final()">
+                        Retour
+                        <img src="ASSETS/img/retour_haut.svg" alt="">
+                    </button>
+                </div>
+                <p>Voici un récapitulatif de votre album. Prenez soin de vérifier toutes les pages avant de continuer !</p>
+            </header>
+
+            <main>
+                -- Ici les miniatures des pages --
+            </main>
+
+            <footer>
+                <h3>Votre panier</h3>
+
+                <div>
+                    album
+                </div>
+
+                <button> << Paypal >> </button>
+            </footer>
+        </main>
     </div>
 
 </body>
 </html>
 
 <script src="CODE/JS/editeur_gestion-template.js"></script>
-<script src="CODE/JS/editeur_edition.js"></script>
+<script src="CODE/JS/editeur.js"></script>
 <script>
     /* -------------------------------------------------------------------------- */
     /*                          RECUPERATION DES OPTIONS                          */

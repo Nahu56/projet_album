@@ -14,6 +14,7 @@
 $gris: #F0F0F0;
 $gris2: #dddddd;
 $gristext: #737373;
+$dark_gris: #282828;
 
 $vert: #18574A;
 $vert_fond: #EBF0EF;
@@ -39,6 +40,14 @@ h3{
     font-size: 30px;
     font-weight: 700;
 }
+h6{
+    font-size: 16px;
+    font-weight: 200;
+
+    color: $gristext;
+    text-decoration: underline;
+}
+
 p{
     font-size: 18px;
 }
@@ -72,6 +81,31 @@ p{
     box-shadow: 8px 8px 0 0 black;
 }
 
+.black_btn{
+    width: 100%;
+    cursor: pointer;
+
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-weight: 900;
+    font-size: 1.7em;
+
+    border: none;
+    padding: 10px 0px;
+    background-color: black;
+
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+    outline: 1px solid rgba(255, 255, 255, 0.468);
+    
+
+    transition: all ease 0.2s;
+}
+.black_btn:hover{
+    background-color: $dark_gris;
+    box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 1);
+}
+
 .btn_retour{
     display: flex;
     gap: 10px;
@@ -86,9 +120,10 @@ p{
     text-decoration: none;
     color: $gristext;
     font-size: 20px;
+    cursor: pointer;
 
     img{
-        fill: green;
+        fill: $vert;
 
         width: 30px;
     }

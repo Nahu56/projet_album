@@ -31,6 +31,13 @@ h3 {
   font-weight: 700;
 }
 
+h6 {
+  font-size: 16px;
+  font-weight: 200;
+  color: #737373;
+  text-decoration: underline;
+}
+
 p {
   font-size: 18px;
 }
@@ -61,6 +68,27 @@ p {
   box-shadow: 8px 8px 0 0 black;
 }
 
+.black_btn {
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-weight: 900;
+  font-size: 1.7em;
+  border: none;
+  padding: 10px 0px;
+  background-color: black;
+  box-shadow: 5px 5px 0px 0px rgb(0, 0, 0);
+  outline: 1px solid rgba(255, 255, 255, 0.468);
+  transition: all ease 0.2s;
+}
+
+.black_btn:hover {
+  background-color: #282828;
+  box-shadow: 7px 7px 0px 0px rgb(0, 0, 0);
+}
+
 .btn_retour {
   display: flex;
   gap: 10px;
@@ -73,10 +101,11 @@ p {
   text-decoration: none;
   color: #737373;
   font-size: 20px;
+  cursor: pointer;
   transition: background ease 0.2s;
 }
 .btn_retour img {
-  fill: green;
+  fill: #18574A;
   width: 30px;
 }
 

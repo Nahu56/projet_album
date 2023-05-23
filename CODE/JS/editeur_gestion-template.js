@@ -10,19 +10,13 @@ function recuperation_templates() {
         .then(templates => {
 
             for(const template in templates){
-
                 let div_template = document.querySelector("#templates main");
                 let div = document.createElement("div");
-
                 div.classList.add(template);
-
                 div_template.appendChild(div);
-
-                console.log(templates[template])
-
+                // console.log(templates[template])
                 loadElement("#templates main ." + template, templates[template]);
             }
-
 
 
             const tab_templates = templates;
