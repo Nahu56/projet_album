@@ -11,23 +11,33 @@ function recuperation_templates() {
 
             for(const template in templates){
                 let div_template = document.querySelector("#templates main");
-                let div = document.createElement("div");
-                div.classList.add(template);
-                div_template.appendChild(div);
-                // console.log(templates[template])
-                loadElement("#templates main ." + template, templates[template]);
+                let card = document.createElement("a");
+
+                card.id = template;
+                div_template.appendChild(card);
+                loadElement("#templates main #" + template, templates[template]);
             }
 
 
-            const tab_templates = templates;
+            let box_templates = document.querySelector("#box_templates"); // -> liste de templates
 
-            return templates;
+            // ajoute listener sur le choix du template
+            box_templates.querySelectorAll("a").forEach(div_template => {
+
+              div_template.addEventListener('click', function() {
+                let num_page = sessionStorage.getItem("currentpage").split("_")[1];
+
+                document.querySelector("#page_" + num_page + ">div").innerHTML = ""; // clear la page actuelle
+
+                loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
+              });
+            })
+
         })
         .catch(error => {
             console.error('Une erreur s\'est produite lors du chargement du fichier JSON :', error);
         });
 }
-
 
 
 
@@ -44,26 +54,36 @@ function loadElement(query_target, template, type = 0){
     let template_obj_list = Object.values(template); // object -> tableau (crée une liste des éléments)
     let div_template = document.querySelector(query_target); // cherche la div où seront ajoutés les objets
   
+    let count = 0;
+
     // boucle sur les objets du template
     template_obj_list.forEach(obj => {
       let element;
-  
-  
+      count += 1;
+
       // Création de l'objet
       if(type == 1){
-        element = document.createElement("input"); // -> INPUT fonctionnel
+        element = document.createElement("button"); // -> INPUT fonctionnel
+
+        // element.id = 
+        // console.log(div_template.parentNode.id)
   
         if(obj.type == "img"){
-          element.type = "file";
-          element.onchange = function(){ // -> Met l'image upload au background de l'input
-            addImageBg(this);
+          element.onclick = function(){ // -> Met l'image upload au background de l'input
+
+            element.style.border = "1px solid green";
+            afficher_edit_image(this);
           }
   
-        }else if(obj.type == "img"){
-          element.type = "text";
+        }else if(obj.type == "txt"){
+          element.onclick = function(){ // -> Met l'image upload au background de l'input
+            afficher_edit_texte(this);
+          }
   
         }
   
+        majTableau();
+
       }else{
         element = document.createElement("div"); // -> DIV pour affichage
   
@@ -97,9 +117,39 @@ function loadElement(query_target, template, type = 0){
     })
   
 }
-  
 
 
+
+/* -------------------------------------------------------------------------- */
+/*                                 MAJ TABLEAU                                */
+/* -------------------------------------------------------------------------- */
+/** Tableau contenant tout l'album -> voir "tableau_rendu.md"
+ * @param {int} num_page // numéro de la page à modifier
+ * @param {string} id_template // id du template choisi
+ * @param {array} objs_page // tableau des objets de la page
+ *  -> ["Le troisième jour de vacances", "#id_img"]
+ * @param {bool} modif // modification ou ajout d'une page
+ */
+function majTableau(){
+  let num_page = 1;
+  let id_template = 2;
+  let objs_page = ["Le troisième jour de vacances", "#2"];
+
+  if(sessionStorage.getItem("album") === null){
+    var tableau = [];
+  }else{
+    var tableau = sessionStorage.getItem("album");
+  }
+
+  tableau = [id_template];
+
+  objs_page.forEach(obj => {
+    tableau.push(obj);
+  })
+
+  console.log(tableau)
+
+}
 
 
 

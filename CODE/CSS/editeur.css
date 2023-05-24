@@ -46,6 +46,7 @@ body {
   top: 0;
   height: calc(100vh - 4px);
   width: 360px;
+  z-index: 900;
 }
 #editeur div#gauche #edit_image,
 #editeur div#gauche #edit_texte,
@@ -76,27 +77,27 @@ body {
   gap: 15px;
   padding: 100px 0;
 }
-#editeur div#gauche #templates main > div {
+#editeur div#gauche #templates main > a {
   position: relative;
   height: 155.54px;
   width: 110px;
   outline: 2px solid #18574A;
 }
-#editeur div#gauche #templates main > div:hover {
+#editeur div#gauche #templates main > a:hover {
   cursor: pointer;
 }
-#editeur div#gauche #templates main > div .img {
+#editeur div#gauche #templates main > a .img {
   position: absolute;
   margin: 0;
   background-color: #dddddd;
   border: none;
 }
-#editeur div#gauche #templates main > div .txt {
+#editeur div#gauche #templates main > a .txt {
+  position: absolute;
   height: 5%;
   width: 30%;
-  border-radius: 100px;
   transform: translate(-50%, -50%);
-  position: absolute;
+  border-radius: 100px;
   margin: 0;
   background-color: #18574A;
   border: none;
@@ -177,23 +178,55 @@ body {
   height: 100vh;
   padding: 0 35%;
   display: flex;
+  align-items: center;
+  overflow: hidden;
+  behavior: smooth;
 }
 #editeur #centre .page {
   width: 550px;
-  margin-top: 7vh;
 }
 #editeur #centre .page p {
   font-size: 15px;
   font-weight: 300;
   text-align: center;
   margin-bottom: 10px;
+  transition: all ease 1s;
 }
-#editeur #centre .page div {
+#editeur #centre .page > div {
   height: 777.7px;
   width: 550px;
   background-color: white;
   border: 4px solid #18574A;
   box-shadow: 13px 13px 0px #000000;
+  position: relative;
+  z-index: 0;
+}
+#editeur #centre .page > div .voile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(24, 87, 74, 0.3333333333);
+  z-index: 10;
+}
+#editeur #centre .page > div .voile:hover {
+  cursor: pointer;
+}
+#editeur #centre .page > div button {
+  position: absolute;
+  cursor: pointer;
+}
+#editeur #centre .page > div button.txt {
+  border: 1px dashed black;
+  width: 30%;
+  height: 5%;
+  border-radius: 100px;
+  transform: translate(-50%, -50%);
+}
+#editeur #centre .page > div button.img {
+  border: none;
+  background-color: #F0F0F0;
 }
 #editeur #centre_bis {
   position: fixed;
@@ -201,6 +234,7 @@ body {
   left: 45%;
 }
 #editeur div#droite {
+  z-index: 900;
   position: fixed;
   right: 0;
   top: 0;
@@ -265,7 +299,7 @@ body {
   height: 8vh;
 }
 #editeur div#droite #panier.unrolled {
-  height: 600px;
+  height: 610px;
 }
 #editeur div#droite #panier.shadow {
   box-shadow: 0px -20px 105px 50px #ebf0ef;

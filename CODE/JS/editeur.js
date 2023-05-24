@@ -1,3 +1,12 @@
+/** --------- VARIABLES IMPORTANTES ---------
+ * Variables essentiels 
+ */
+
+var focus = "page_0";
+var nb_pages = 0;
+
+
+
 
 /** ----- FONCTIONS AFFICHAGE PAGES EDIT -----
  * Fonctions qui permet d'afficher ou de cacher la partie edit
@@ -111,9 +120,81 @@ function afficher_edit_texte() {
 }
 
 
+/** ------------- FOCUS PAGE -------------
+ * fonction qui affiche la page avec l'id qui est mis en paramètre 
+ * @param {string} id // Identifiant de la page que l'ont veut mettre en evidence 
+ */
+function focus_page(id){
 
-var focus= "page_1";
-var nb_pages = 1;
+    var page = document.getElementById(id);
+    var centre = document.getElementById('centre');
+
+    // page.addEventListener('click',()=>{
+    //     afficher_edit_templates()
+    // })
+
+    centre.scrollTo({
+        top: 0,
+        left: page.offsetLeft - window.innerWidth * 0.35,
+        behavior: 'smooth'
+    });
+
+    
+    var voile = document.createElement('div');
+    voile.className = 'voile';
+
+    var pages = document.getElementsByClassName('page');
+
+    
+    var passe = false;
+    Array.from(pages).forEach(element => {
+
+        if (element.getAttribute('id') !== id) {
+
+            var feuilleElement = element.querySelector('.feuille');
+            var hasVoile = feuilleElement.querySelector('.voile') !== null;
+
+            if (!hasVoile) { 
+
+                if (passe) {
+                    element.querySelector('p').style.textAlign="left";
+                }else{
+                    element.querySelector('p').style.textAlign="right";
+                }
+
+                
+                element.querySelector('.feuille').appendChild(voile);
+                
+                
+                element.querySelector('.feuille .voile').addEventListener('click',()=>{
+                    focus_page(element.id);
+                });
+
+            }
+
+      }else {
+
+        passe = true;
+        element.querySelector('p').style.textAlign="center";
+
+        if (element.querySelector('.feuille').hasChildNodes(voile)) { 
+
+            remove = element.querySelector('.feuille .voile');
+            remove.remove();
+            
+        }
+
+      }
+
+    });
+
+
+    afficher_edit_templates()
+    sessionStorage.setItem("currentpage", id); // -> assignation de la nouvelle page courante
+
+}
+
+
 
 function ajout_page() {
 
@@ -131,6 +212,7 @@ function ajout_page() {
 
     // Création de l'élément div vide à l'intérieur de divPage1
     var divElement = document.createElement("div");
+    divElement.className = "feuille";
     divPage.appendChild(divElement);
 
     if(nb_pages % 2 === 0 ){
@@ -141,26 +223,9 @@ function ajout_page() {
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
 
-    focus("page_"+nb_pages);
-    
+    focus_page("page_"+nb_pages);
 
 }
-
-function focus(id){
-
-    var elementCible = document.getElementById(id);
-    
-    var event=document.getElementById("page_1");
-
-    event.preventDefault(); // Empêche le comportement de lien par défaut
-
-    elementCible.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-    
-}
-
 
 
 
@@ -171,21 +236,31 @@ textarea_edit_texte.addEventListener("input", function(){
     test_texte.textContent  = textarea_edit_texte.value;
 })
 
+ajout_page()
+focus_page('page_1');
 
 
 // TODO : a enlever 
-var btn_centre = document.getElementById("btn_image");
-btn_centre.addEventListener("click", () => {
-    afficher_edit_image();
-});
-var btn_centre_2 = document.getElementById("btn_txt");
-btn_centre_2.addEventListener("click", () => {
-    afficher_edit_texte();
-});
-var btn_centre_3 = document.getElementById("temp");
-btn_centre_3.addEventListener("click", () => {
-    afficher_edit_templates();
-});
+// var btn_centre = document.getElementById("btn_image");
+// btn_centre.addEventListener("click", () => {
+//     afficher_edit_image();
+// });
+// var btn_centre_2 = document.getElementById("btn_txt");
+// btn_centre_2.addEventListener("click", () => {
+//     afficher_edit_texte();
+// });
+// var btn_centre_3 = document.getElementById("temp");
+// btn_centre_3.addEventListener("click", () => {
+//     afficher_edit_templates();
+// });
+
+// var btn_lien = document.getElementById("btn_lien");
+// btn_lien.addEventListener("click", () => {
+//     focus_page("page_4");
+// });
+
+
+
 
 
 
@@ -210,6 +285,9 @@ function wrap_panier(){
     }
 }
 
+/** ------------- MODAL FINAL -------------
+ * Permet de faire apparaitre le modal récapitulatif
+ */
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
 

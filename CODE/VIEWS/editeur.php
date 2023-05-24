@@ -39,7 +39,7 @@
             <header class="header_section">
                 <h3>Mise en page</h3>
             </header>
-            <main> </main>
+            <main id="box_templates"> </main>
         </section>
 
         <!-- Edition d'image -->
@@ -101,18 +101,10 @@
 
 
     
-    <div id="centre">
-
-        <div id="page_1" class="page">
-            <p>Page 1</p>
-            <div></div>
-        </div>
-
-        
-    </div>
+    <div id="centre"></div>
 
     <!-- TODO : a enlever -->
-    <div id="centre_bis">
+    <!-- <div id="centre_bis">
         <button id="btn_image">
             image
         </button>
@@ -124,7 +116,8 @@
         </button>
 
         <p id="test_texte"></p>
-    </div>
+        <p><button id="btn_lien">lien page 4</button></p>
+    </div> -->
 
     <!-- ------------------------------------------------------------------------ */
     /*                                   DROITE                                   */
@@ -323,8 +316,9 @@
 </body>
 </html>
 
-<script src="CODE/JS/editeur_gestion-template.js"></script>
 <script src="CODE/JS/editeur.js"></script>
+<script src="CODE/JS/editeur_gestion-template.js"></script>
+
 <script>
     /* -------------------------------------------------------------------------- */
     /*                          RECUPERATION DES OPTIONS                          */
@@ -342,5 +336,5 @@
     var variablesJSON = JSON.stringify(variables);
 
     // Enregistrer la chaîne JSON dans le sessionStorage
-    sessionStorage.setItem('variables', variablesJSON);
+    sessionStorage.setItem('options', variablesJSON);
 </script>
