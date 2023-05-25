@@ -48,7 +48,7 @@ function recuperation_templates() {
  * @param {Array} template_obj_list //Object template, contenant tous les éléments du template
  * @param {bool} type //défini ce qui est inséré dans la div
  *      0 => ce sont des div, avec class IMG et TXT
- *      1 => ce sont des input, type image et type texte
+ *      1 => ce sont des btns, avec class IMG et TXT
  */
 function loadElement(query_target, template, type = 0){
     let template_obj_list = Object.values(template); // object -> tableau (crée une liste des éléments)
@@ -66,23 +66,27 @@ function loadElement(query_target, template, type = 0){
         element = document.createElement("button"); // -> INPUT fonctionnel
 
         // element.id = 
-        // console.log(div_template.parentNode.id)
+        // console.log(div_template.parentNode.id) // -> numéro de page
   
         if(obj.type == "img"){
-          element.onclick = function(){ // -> Met l'image upload au background de l'input
-
-            element.style.border = "1px solid green";
+          
+          element.onclick = function(event){ // -> Met l'image upload au background de l'input
+            event.stopPropagation();
             afficher_edit_image(this);
           }
+          
+
   
         }else if(obj.type == "txt"){
-          element.onclick = function(){ // -> Met l'image upload au background de l'input
+
+          element.onclick = function(event){ // -> Met l'image upload au background de l'input
+            event.stopPropagation();
+            maj_textarea(this);
             afficher_edit_texte(this);
           }
+
   
         }
-  
-        majTableau();
 
       }else{
         element = document.createElement("div"); // -> DIV pour affichage
@@ -115,7 +119,6 @@ function loadElement(query_target, template, type = 0){
   
       div_template.appendChild(element);
     })
-  
 }
 
 
@@ -136,18 +139,23 @@ function majTableau(){
   let objs_page = ["Le troisième jour de vacances", "#2"];
 
   if(sessionStorage.getItem("album") === null){
-    var tableau = [];
+    var album = {};
   }else{
-    var tableau = sessionStorage.getItem("album");
+    var album = JSON.parse(sessionStorage.getItem("album"));
   }
 
-  tableau = [id_template];
+  console.log(album)
+
+  album[num_page] = [];
+  album[num_page].push(id_template);
 
   objs_page.forEach(obj => {
-    tableau.push(obj);
+    album[num_page].push(obj);  
   })
 
-  console.log(tableau)
+  console.log(album.parse)
+
+  sessionStorage.setItem("album", JSON.stringify(album));
 
 }
 

@@ -4,17 +4,25 @@
 
 var focus = "page_0";
 var nb_pages = 0;
-
+var element_focus = null;
 
 
 
 /** ----- FONCTIONS AFFICHAGE PAGES EDIT -----
- * Fonctions qui permet d'afficher ou de cacher la partie edit
+ * Fonction qui permet d'afficher ou de cacher la partie edit
+ * 
+ * -> Met à jour le tableau
  */
 
 function afficher_edit_templates() {
+    // !! Mise à jour du tableau !!
+
+
     var template = document.querySelector("#templates");
     if (template.style.display !== "block") {
+
+        element_focus.classList.remove("border");
+        element_focus = null
         
         template.style.display ="block";
 
@@ -41,15 +49,26 @@ function afficher_edit_templates() {
                 edit_texte.style.display ="none";
             }
         }
-
+        
         afficher_edit();
 
     }
 
 }
-function afficher_edit_image() {
+function afficher_edit_image(element_focus_param) {
+    if (element_focus_param != element_focus) {
+        if (element_focus!=null) {
+            // element_focus.style.border = "none";
+            element_focus.classList.remove("border");
+        }
+        element_focus = element_focus_param;
+        // element_focus.style.border = "4px solid green";
+        element_focus.classList.add("border");
+    }
     var edit_image = document.querySelector("#edit_image");
     if (edit_image.style.display !== "block") {
+
+
 
         edit_image.style.display ="block";
 
@@ -82,10 +101,34 @@ function afficher_edit_image() {
     }
 
 }
-function afficher_edit_texte() {
+
+function maj_textarea(element_focus_param) {
+    var textarea_edit_texte = document.getElementById("textarea_edit_texte");
+     
+    // console.log(textarea_edit_texte.value);
+    textarea_edit_texte.value = textarea_edit_texte.defaultValue;
+    textarea_edit_texte.value = element_focus_param.textContent ;
+}
+
+function afficher_edit_texte(element_focus_param) {
+    if (element_focus_param != element_focus) {
+        if (element_focus!=null) {
+            // element_focus.style.border = "none";
+            element_focus.classList.remove("border");
+        }
+        element_focus = element_focus_param;
+
+
+        
+        
+        
+        // element_focus.style.border = "1px solid green";
+    }
 
     var edit_texte = document.querySelector("#edit_texte");
     if (edit_texte.style.display !== "block") {
+
+        
 
         edit_texte.style.display ="block";
         
@@ -129,9 +172,7 @@ function focus_page(id){
     var page = document.getElementById(id);
     var centre = document.getElementById('centre');
 
-    // page.addEventListener('click',()=>{
-    //     afficher_edit_templates()
-    // })
+    
 
     centre.scrollTo({
         top: 0,
@@ -195,7 +236,9 @@ function focus_page(id){
 }
 
 
-
+/** ------------- AJOUT PAGE -------------
+ * fonction qui permet d'ajouter une div dans #centre et de la focus 
+ */
 function ajout_page() {
 
     nb_pages += 1;
@@ -217,6 +260,11 @@ function ajout_page() {
 
     if(nb_pages % 2 === 0 ){
         divPage.style.marginRight= "100px";
+
+        var icone = document.createElement("img");
+        icone.src = "ASSETS/img/icones/liaison_page.svg";
+        icone.alt = "icone liaison entre les pages";
+        divPage.appendChild(icone);
     }
 
     // Ajout de divPage1 à la page (body dans cet exemple)
@@ -228,36 +276,56 @@ function ajout_page() {
 }
 
 
+/** ------------- SET BACKGROUND -------------
+ * Cette fonction modifie le fond de l'élément element_focus qui est initialisé dans l'apparition de la page edit 
+ * RAF : 
+ *  - sauvegarde de l'image 
+ *  - Initialisation de la position de l'image a center dans le tableau
+ */
+function setBackground(event) {
 
-var textarea_edit_texte = document.getElementById("textarea_edit_texte");
-var test_texte = document.getElementById("test_texte");
+    const file = event.target.files[0];
+    const reader = new FileReader();
+                    
+    reader.addEventListener('load', () => {
+        element_focus.style.backgroundImage = `url(${reader.result})`;
+    });
+                    
+    reader.readAsDataURL(file);
+    
+}
 
-textarea_edit_texte.addEventListener("input", function(){
-    test_texte.textContent  = textarea_edit_texte.value;
-})
+/** ------------- TEXTAREA EDIT -------------
+ * Modifie le texte dans element_focus
+ * RAF :
+ *  - sauvegarde du texte 
+ *  - changement du texte du input quand on change de div
+ */
+function textarea_edit() {
+    var textarea_edit_texte = document.getElementById("textarea_edit_texte");
+    element_focus.textContent  = textarea_edit_texte.value;
+}
+
+
+
 
 ajout_page()
 focus_page('page_1');
 
+var centre = document.getElementById("centre");
 
-// TODO : a enlever 
-// var btn_centre = document.getElementById("btn_image");
-// btn_centre.addEventListener("click", () => {
-//     afficher_edit_image();
-// });
-// var btn_centre_2 = document.getElementById("btn_txt");
-// btn_centre_2.addEventListener("click", () => {
-//     afficher_edit_texte();
-// });
-// var btn_centre_3 = document.getElementById("temp");
-// btn_centre_3.addEventListener("click", () => {
-//     afficher_edit_templates();
-// });
+centre.addEventListener('click',afficher_edit_templates)
 
-// var btn_lien = document.getElementById("btn_lien");
-// btn_lien.addEventListener("click", () => {
-//     focus_page("page_4");
-// });
+
+// RAF : 
+// - sauvegarde du texte 
+// - Petit apercu image
+// - Ajouter plusieurs fois la même image
+// - 
+
+
+
+
 
 
 
@@ -285,11 +353,28 @@ function wrap_panier(){
     }
 }
 
+
+/** -------------- GO CHECKOUT --------------
+ * Fonction appelée au clic du bouton "terminer" dans le panier
+ */
+function go_checkout(){
+
+    majTableau(); // -> sauvegarde l'album dans le sessionStorage
+
+    open_modal_final();
+}
+
+
 /** ------------- MODAL FINAL -------------
  * Permet de faire apparaitre le modal récapitulatif
  */
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
+
+    modal.addEventListener("click", function(element){
+        element.querySelector("main").stopPropagation();
+        modal.classList.remove('actif');
+    })
 
     if(modal.classList.contains('actif')){
         modal.classList.remove('actif');

@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0037)http://localhost/projet_album/editeur -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editeur</title>
 
-    <link rel="stylesheet" href="CODE/CSS/editeur.css">
+    <link rel="stylesheet" href="./fheuzfuehzufze_files/editeur.css">
     
     <!-- Appel header -->
-    <?php require '../components/header.php' ?>
+    <!-- /* ------------------------------ TAILLES TEXTE ----------------------------- */ -->
+
+<link rel="stylesheet" href="./fheuzfuehzufze_files/general.css">
+
+<!-- /* ------------------------------- APPEL FONTS ------------------------------ */ -->
+
+<!-- Space Grotesk -->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./fheuzfuehzufze_files/css2" rel="stylesheet">
 
     <script>
         // TODO : A decocher plus tard
@@ -39,12 +48,12 @@
             <header class="header_section">
                 <h3>Mise en page</h3>
             </header>
-            <main id="box_templates"> </main>
+            <main id="box_templates"> <a id="id1"><div class="img" style="width: 94%; height: 96%; left: 3%; top: 2%;"></div></a><a id="id2"><div class="img" style="width: 94%; height: 30%; left: 3%; top: 18%;"></div><div class="img" style="width: 94%; height: 30%; left: 3%; top: 52%;"></div></a><a id="id3"><div class="img" style="width: 94%; height: 30%; left: 3%; top: 2%;"></div><div class="img" style="width: 45%; height: 42%; left: 3%; top: 35%;"></div><div class="img" style="width: 45%; height: 42%; left: 52%; top: 35%;"></div><div class="txt" style="left: 50%; top: 85%;"></div></a><a id="id4"><div class="txt" style="left: 50%; top: 15%;"></div><div class="img" style="width: 94%; height: 45%; left: 3%; top: 50%;"></div></a><a id="id5"><div class="img" style="width: 45%; height: 42%; left: 3%; top: 35%;"></div><div class="img" style="width: 45%; height: 42%; left: 52%; top: 35%;"></div><div class="txt" style="left: 50%; top: 85%;"></div></a></main>
         </section>
 
         <!-- Edition d'image -->
-        <section id="edit_image" >
-            <header class="header_section" >
+        <section id="edit_image">
+            <header class="header_section">
                 <h3>Edition d'image</h3>
             </header>
             <main>
@@ -54,7 +63,7 @@
                         
                         <label for="inserer_image">
                             Ouvrir un fichier
-                            <input type="file" name="inserer_image" id="inserer_image" value="Inserer une image"  onchange="setBackground(event)">
+                            <input type="file" name="inserer_image" id="inserer_image" value="Inserer une image" onchange="setBackground(event)">
 
                         </label>
                     </div>
@@ -65,7 +74,7 @@
                 </div>
 
             </main>
-            <footer class="footer_section" >
+            <footer class="footer_section">
                 <button class="main_btn" onclick="afficher_edit_templates()">
                     Terminer  <br> <span>et revenir à la mise en page</span>
                 </button>
@@ -73,8 +82,8 @@
         </section>
 
         <!-- Edition du texte -->
-        <section id="edit_texte" >
-            <header class="header_section" >
+        <section id="edit_texte">
+            <header class="header_section">
                 <h3>Edition de texte</h3>
             </header>
             <main>
@@ -101,9 +110,23 @@
 
 
     
-    <div id="centre"></div>
+    <div id="centre"><div id="page_1" class="page"><p style="text-align: center;">Page 1</p><div class="feuille"></div></div></div>
 
+    <!-- TODO : a enlever -->
+    <!-- <div id="centre_bis">
+        <button id="btn_image">
+            image
+        </button>
+        <button id="temp">
+            template
+        </button>
+        <button id="btn_txt">
+            texte
+        </button>
 
+        <p id="test_texte"></p>
+        <p><button id="btn_lien">lien page 4</button></p>
+    </div> -->
 
     <!-- ------------------------------------------------------------------------ */
     /*                                   DROITE                                   */
@@ -211,7 +234,7 @@
                     <h3>Panier</h3>
                 </div>
                 <div>
-                    <img src="ASSETS/img/icones/arrow.svg" alt=""> <!-- fleche qui monte en svg -->
+                    <img src="./fheuzfuehzufze_files/arrow.svg" alt="" class=""> <!-- fleche qui monte en svg -->
                 </div>
             </header>
             <main>
@@ -264,20 +287,20 @@
             </main>
 
             <footer>
-                <button onclick="go_checkout()" class="black_btn">Terminer</button>
+                <button onclick="open_modal_final()" class="black_btn">Terminer</button>
             </footer>
         </section>
     </div>
 
 
-    <div id="modal_final" class="" title="Revenir à l'éditeur">
+    <div id="modal_final" class="">
         <main>
             <header>
                 <div>
                     <h2>Récapitulatif</h2>
                     <button class="btn_retour" onclick="open_modal_final()">
                         Retour
-                        <img src="ASSETS/img/retour_haut.svg" alt="">
+                        <img src="./fheuzfuehzufze_files/retour_haut.svg" alt="">
                     </button>
                 </div>
                 <p>Voici un récapitulatif de votre album. Prenez soin de vérifier toutes les pages avant de continuer !</p>
@@ -294,16 +317,16 @@
                     album
                 </div>
 
-                <button> << Paypal >> </button>
+                <button> &lt;&lt; Paypal &gt;&gt; </button>
             </footer>
         </main>
     </div>
 
-</body>
-</html>
 
-<script src="CODE/JS/editeur.js"></script>
-<script src="CODE/JS/editeur_gestion-template.js"></script>
+
+
+<script src="./fheuzfuehzufze_files/editeur.js.téléchargement"></script>
+<script src="./fheuzfuehzufze_files/editeur_gestion-template.js.téléchargement"></script>
 
 <script>
     /* -------------------------------------------------------------------------- */
@@ -311,16 +334,16 @@
     /* -------------------------------------------------------------------------- */
 
     // Créer un tableau vide
-    var options = [];
+    var variables = [];
 
-    // Récupérer les valeurs des options de l'album et les ajouter au tableau
-    options.push('<?php echo $_POST["reliure"]; ?>');
-    options.push('<?php echo $_POST["format"]; ?>');
-    options.push('<?php echo $_POST["theme"]; ?>');
+    // Récupérer les valeurs des variables PHP et les ajouter au tableau
+    variables.push('reliure_bleue');
+    variables.push('FormatB');
+    variables.push('theme4');
 
     // Convertir le tableau en une chaîne JSON
-    var optionsJSON = JSON.stringify(options);
+    var variablesJSON = JSON.stringify(variables);
 
     // Enregistrer la chaîne JSON dans le sessionStorage
-    sessionStorage.setItem('options', optionsJSON);
-</script>
+    sessionStorage.setItem('options', variablesJSON);
+</script></body></html>
