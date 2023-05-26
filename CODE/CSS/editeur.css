@@ -161,8 +161,9 @@ body {
 }
 #editeur div#gauche #edit_image main > div .image_actuel > div .image {
   width: 100px;
-  height: 70;
+  height: 70px;
   background-color: #737373;
+  background-size: contain;
   background-position: center;
   border-radius: 5px;
 }
@@ -172,8 +173,9 @@ body {
 }
 #editeur div#gauche #edit_image main > div .image_actuel > div .info p {
   margin: 5px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
+  width: 80%;
 }
 #editeur div#gauche #edit_texte {
   display: none;

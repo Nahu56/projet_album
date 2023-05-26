@@ -58,9 +58,7 @@
 
                         </label>
                     </div>
-                    <div class="image_actuel" style="display:none;">
-
-                    </div>
+                    <div class="image_actuel" style="display:none;"></div>
                 </div>
                 <div>
                     <p>Placer l'image</p>

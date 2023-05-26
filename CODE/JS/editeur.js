@@ -23,6 +23,7 @@ function afficher_edit_templates() {
 
         element_focus.classList.remove("selected");
         element_focus = null
+        rm_apercue_image();
         
         template.style.display ="block";
 
@@ -59,8 +60,14 @@ function afficher_edit_image(element_focus_param) {
     if (element_focus_param != element_focus) {
         if (element_focus!=null) {
             element_focus.classList.remove("selected");
+            rm_apercue_image();
         }
         element_focus = element_focus_param;
+        if (element_focus.style.backgroundImage =="none" || element_focus.style.backgroundImage=="") {
+
+        }else{
+            apercue_image()
+        }
         element_focus.classList.add("selected");
     }
 
@@ -121,6 +128,7 @@ function afficher_edit_texte(element_focus_param) {
         if (element_focus!=null) {
             // element_focus.style.border = "none";
             element_focus.classList.remove("selected");
+            rm_apercue_image();
         }
         element_focus = element_focus_param;
 
@@ -249,6 +257,7 @@ function focus_page(id){
 }
 
 
+
 /** ------------- AJOUT PAGE -------------
  * fonction qui permet d'ajouter une div dans #centre et de la focus 
  */
@@ -302,10 +311,16 @@ function setBackground(event) {
                     
     reader.addEventListener('load', () => {
         element_focus.style.backgroundImage = `url(${reader.result})`;
+        element_focus.value = file.name;
+
+        rm_apercue_image();
+        apercue_image();
+        
+        
     });
                     
     reader.readAsDataURL(file);
-    apercue_image();
+
 
     
     
@@ -372,10 +387,7 @@ function apercue_image(){
         // On remet la couleur en background
         element_focus.style.backgroundImage = "none";
 
-        var image_actuel = document.querySelector(".image_actuel");
-        image_actuel.style.display = 'none';
-        image_actuel.removeChild(div1);
-        image_actuel.removeChild(btnSupprimeImage);
+        rm_apercue_image()
     })
 
 
@@ -386,6 +398,21 @@ function apercue_image(){
 
     image_actuel.style.display = 'flex';
 }
+
+
+function rm_apercue_image() {
+    
+    var image_actuel = document.querySelector(".image_actuel");
+    if (image_actuel.childElementCount != 0) {
+        var div = document.querySelector(".image_actuel div");
+        var btnSupprimeImage = document.querySelector(".image_actuel img");
+        image_actuel.style.display = 'none';
+        image_actuel.removeChild(div);
+        image_actuel.removeChild(btnSupprimeImage);
+    }
+
+}
+
 
 
 /** ------------- PLACE IMAGE -------------
@@ -417,7 +444,6 @@ centre.addEventListener('click',afficher_edit_templates)
 
 
 // RAF : 
-// - sauvegarde du texte 
 // - Petit apercu image
 // - Ajouter plusieurs fois la même image
 // - 
