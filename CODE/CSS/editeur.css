@@ -163,7 +163,7 @@ body {
   width: 100px;
   height: 70px;
   background-color: #737373;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   border-radius: 5px;
 }

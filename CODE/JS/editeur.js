@@ -18,12 +18,15 @@ function afficher_edit_templates() {
     // !! Mise à jour du tableau !!
 
 
+    // La fonction correspond majoritairement à l'animation d'affichage de l'élément lorsqu'on clique dessus 
     var template = document.querySelector("#templates");
     if (template.style.display !== "block") {
 
+        // on enleve la bordure de l'ancien l'élément séléctionné et on met element_focus à null
         element_focus.classList.remove("selected");
         element_focus = null
-        rm_apercue_image();
+
+        rm_apercue_image(); // On enleve l'apercue de l'image
         
         template.style.display ="block";
 
@@ -57,25 +60,29 @@ function afficher_edit_templates() {
 
 }
 function afficher_edit_image(element_focus_param) {
-    if (element_focus_param != element_focus) {
-        if (element_focus!=null) {
-            element_focus.classList.remove("selected");
-            rm_apercue_image();
-        }
-        element_focus = element_focus_param;
-        if (element_focus.style.backgroundImage =="none" || element_focus.style.backgroundImage=="") {
 
-        }else{
-            apercue_image()
+    if (element_focus_param != element_focus) {
+
+        if (element_focus!=null) {
+            element_focus.classList.remove("selected"); // On enleve la bordure de l'ancien élément séléctionné 
+
+            rm_apercue_image(); // On enleve l'apercue de l'image
         }
-        element_focus.classList.add("selected");
+
+        element_focus = element_focus_param; // On met à jour l'élément séléctionné
+
+        // On test si il y a une image dans l'élément séléctionné et si c'est le cas on affiche l'apercue
+        if (element_focus.style.backgroundImage =="none" || element_focus.style.backgroundImage=="") {}else{
+            apercue_image() 
+        }
+        element_focus.classList.add("selected"); // On affiche la bordure sur l'élément séléctionné
     }
 
     // On réinitialise la valeur du input 
     const fileInput = document.querySelector("#inserer_image");
     fileInput.value = "";
 
-
+    // Le reste de la fonction correspond à l'animation d'affichage de l'élément lorsqu'on clique dessus 
     var edit_image = document.querySelector("#edit_image");
     if (edit_image.style.display !== "block") {
 
@@ -86,7 +93,6 @@ function afficher_edit_image(element_focus_param) {
 
         var template = document.querySelector("#templates");
         var edit_texte = document.querySelector("#edit_texte");
-
 
         function afficher_edit() {
             if (hauteur > 0) {
@@ -105,49 +111,30 @@ function afficher_edit_image(element_focus_param) {
                 edit_texte.style.display ="none";
             }
         }
-
         afficher_edit();
-
-
-        
-
     }
 
-}
-
-function maj_textarea(element_focus_param) {
-    var textarea_edit_texte = document.getElementById("textarea_edit_texte");
-     
-    // console.log(textarea_edit_texte.value);
-    textarea_edit_texte.value = textarea_edit_texte.defaultValue;
-    textarea_edit_texte.value = element_focus_param.textContent ;
 }
 
 function afficher_edit_texte(element_focus_param) {
     if (element_focus_param != element_focus) {
         if (element_focus!=null) {
-            // element_focus.style.border = "none";
-            element_focus.classList.remove("selected");
-            rm_apercue_image();
+            element_focus.classList.remove("selected"); // On enleve la bordure si l'élément avant était un image 
+            rm_apercue_image(); // On enleve en même temps l'apercue de l'image 
         }
-        element_focus = element_focus_param;
 
+        element_focus = element_focus_param; // On met à jour la valeur de element_focus
 
-        
-        
-        
-        // element_focus.style.border = "1px solid green";
     }
 
+    // Le reste de la fonction correspond à l'animation d'affichage de l'élément lorsqu'on clique dessus 
     var edit_texte = document.querySelector("#edit_texte");
-    if (edit_texte.style.display !== "block") {
-
-        
+    if (edit_texte.style.display !== "block") {        
 
         edit_texte.style.display ="block";
 
         var textarea_edit_texte = document.getElementById("textarea_edit_texte");
-        textarea_edit_texte.focus();
+        textarea_edit_texte.focus(); // On focus le la textarea 
         
         var hauteur = 100;
         edit_texte.style.top = hauteur+"%";
@@ -176,12 +163,20 @@ function afficher_edit_texte(element_focus_param) {
 
         afficher_edit();
 
-        
-
     }
 
     
 }
+
+/** ------------- MAJ TEXTAREA -------------
+ * Cette fonction permet d'initialiser dans le textarea les valeurs qui sont dans l'élément séléctionné
+ * @param {string} id // Cette fonction n'utilise pas element_focus car elle est lancé avant avant la fct afficher_edit_texte()
+ */
+function maj_textarea(element_focus_param) {
+    var textarea_edit_texte = document.getElementById("textarea_edit_texte");
+    textarea_edit_texte.value = element_focus_param.textContent;
+}
+
 
 
 /** ------------- FOCUS PAGE -------------
@@ -224,9 +219,7 @@ function focus_page(id){
                     element.querySelector('p').style.textAlign="right";
                 }
 
-                
                 element.querySelector('.feuille').appendChild(voile);
-                
                 
                 element.querySelector('.feuille .voile').addEventListener('click',()=>{
                     focus_page(element.id);
@@ -293,7 +286,70 @@ function ajout_page() {
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
 
-    focus_page("page_"+nb_pages);
+    focus_page("page_"+(nb_pages));
+
+    ajout_page_apercue();
+
+}
+
+
+function ajout_page_apercue() {
+
+    if (nb_pages % 2 !== 0 ) {
+        // Création de l'élément <div> avec la classe "bloc_page"
+        var blocPage = document.createElement("div");
+        blocPage.className = "bloc_page";
+
+        // Création de l'élément <header> avec la classe "ligne_page"
+        var header = document.createElement("header");
+        header.className = "ligne_page";
+
+        // Création des éléments <div> avec la classe "hr" pour les séparateurs horizontaux
+        var hr1 = document.createElement("div");
+        hr1.className = "hr";
+        var hr2 = document.createElement("div");
+        hr2.className = "hr";
+
+        // Création de l'élément <div> avec la classe "num_page" pour afficher le numéro de page
+        var numPage = document.createElement("div");
+        numPage.className = "num_page";
+        numPage.textContent = "page 1 / 2";
+
+        // Ajout des éléments <div class="hr"> et <div class="num_page"> à l'élément <header>
+        header.appendChild(hr1);
+        header.appendChild(numPage);
+        header.appendChild(hr2);
+
+        // Ajout de l'élément <header> au <div class="bloc_page">
+        blocPage.appendChild(header);
+
+        // Création de l'élément <div> pour les pages
+        var pagesDiv = document.createElement("div");
+
+        // Création de la première vignette de page
+        var vignettePage1 = document.createElement("div");
+        vignettePage1.className = "vignette_page";
+
+
+        // Création de la deuxième vignette de page
+        var vignettePage2 = document.createElement("div");
+        vignettePage2.className = "vignette_page";
+
+
+
+        // Ajout des vignettes de page à l'élément <div> pour les pages
+        pagesDiv.appendChild(vignettePage1);
+        pagesDiv.appendChild(vignettePage2);
+
+        // Ajout de l'élément <div> pour les pages au <div class="bloc_page">
+        blocPage.appendChild(pagesDiv);
+
+        // Ajout du bloc de page à la page HTML
+        var apercue_main = document.querySelector('#apercu main ')
+        apercue_main.appendChild(blocPage);
+    }
+
+    
 
 }
 
@@ -399,7 +455,10 @@ function apercue_image(){
     image_actuel.style.display = 'flex';
 }
 
-
+/** ------------- PRP APERCUE IMAGE -------------
+ * Cette fonction permet de supprimer la partie apercue le d'image 
+ * Elle sera utilisé surtout dans les cas ou on lance les fct afficher_edit_templates() ou afficher_edit_texte()
+ */
 function rm_apercue_image() {
     
     var image_actuel = document.querySelector(".image_actuel");
@@ -435,7 +494,8 @@ function place_img(event){
 }
 
 
-ajout_page()
+ajout_page();
+
 focus_page('page_1');
 
 var centre = document.getElementById("centre");
