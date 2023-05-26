@@ -164,7 +164,7 @@ body{
             main{
                 margin-top: 90px;
                 position:relative;
-                div{
+                >div{
                     margin-bottom: 40px;
                     p{
                         font-size: 15px;
@@ -203,6 +203,42 @@ body{
                         }
 
                         
+                    }
+                    .image_actuel{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin: 20px 0 ;
+                        >div{
+                            display: flex;
+                            align-items: center;
+                            gap: 15px;
+                            
+                            .image{
+                                width: 100px;
+                                height: 70;
+
+                                background-color: $gristext;
+                                background-position: center;
+
+                                border-radius: 5px;
+                            }
+
+                            .info{                                
+
+                                h4{
+                                    margin: 5px;
+
+                                    font-size: 20px;
+                                }
+                                p{
+                                    margin: 5px;
+                                    
+                                    font-size: 16px;
+                                    font-weight: 300;
+                                }
+                            }
+                        }
                     }
 
                 }
@@ -333,7 +369,8 @@ body{
                     cursor: pointer;
 
                     &.txt{
-                        border: 1px dashed black;
+                        border: 1px dashed $gristext;
+                        background-color: transparent;
 
                         padding: 5px 5px;
 
@@ -354,9 +391,27 @@ body{
                         background-color: $gris;
                         background-size: cover;
                         background-position: center;
+                    
+
+                        &.img_top{
+                            background-position: top;
+                        }
+                        &.img_bottom{
+                            background-position: bottom;
+                        }
+                        &.img_center{
+                            background-position: center;
+                        }
+                        &.img_left{
+                            background-position: left;
+                        }
+                        &.img_right{
+                            background-position: right;
+                        }
                     }
-                    &.border{
-                        border: 4px solid $vert;
+                    &.selected{
+                        outline: 4px solid $vert;
+                        outline-offset: -4px;
                     }
                 }
                 
@@ -693,6 +748,7 @@ body{
             display: flex;
             flex-direction: column;
             gap: 50px;
+            cursor:auto;
 
             height: auto;
             width: 800px;

@@ -58,10 +58,18 @@
 
                         </label>
                     </div>
+                    <div class="image_actuel" style="display:none;">
+
+                    </div>
                 </div>
                 <div>
                     <p>Placer l'image</p>
 
+                    <button onclick="place_img(event)" id="img_top">Haut</button>
+                    <button onclick="place_img(event)" id="img_bottom">Bas</button>
+                    <button onclick="place_img(event)" id="img_center">centre</button>
+                    <button onclick="place_img(event)" id="img_left">Gauche</button>
+                    <button onclick="place_img(event)" id="img_right">Droite</button>
                 </div>
 
             </main>
@@ -270,7 +278,7 @@
     </div>
 
 
-    <div id="modal_final" class="" title="Revenir à l'éditeur">
+    <div id="modal_final" class="">
         <main>
             <header>
                 <div>

@@ -26,10 +26,16 @@ function recuperation_templates() {
 
               div_template.addEventListener('click', function() {
                 let num_page = sessionStorage.getItem("currentpage").split("_")[1];
+                let page = document.querySelector("#page_" + num_page + " .feuille");
 
-                document.querySelector("#page_" + num_page + ">div").innerHTML = ""; // clear la page actuelle
+                page.innerHTML = ""; // clear la page actuelle
 
                 loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
+
+                //attribution de l'id template a la page (en class)
+                page.className = "";
+                page.classList.add("feuille");
+                page.classList.add(div_template.id);
               });
             })
 
@@ -119,44 +125,6 @@ function loadElement(query_target, template, type = 0){
   
       div_template.appendChild(element);
     })
-}
-
-
-
-/* -------------------------------------------------------------------------- */
-/*                                 MAJ TABLEAU                                */
-/* -------------------------------------------------------------------------- */
-/** Tableau contenant tout l'album -> voir "tableau_rendu.md"
- * @param {int} num_page // numéro de la page à modifier
- * @param {string} id_template // id du template choisi
- * @param {array} objs_page // tableau des objets de la page
- *  -> ["Le troisième jour de vacances", "#id_img"]
- * @param {bool} modif // modification ou ajout d'une page
- */
-function majTableau(){
-  let num_page = 1;
-  let id_template = 2;
-  let objs_page = ["Le troisième jour de vacances", "#2"];
-
-  if(sessionStorage.getItem("album") === null){
-    var album = {};
-  }else{
-    var album = JSON.parse(sessionStorage.getItem("album"));
-  }
-
-  console.log(album)
-
-  album[num_page] = [];
-  album[num_page].push(id_template);
-
-  objs_page.forEach(obj => {
-    album[num_page].push(obj);  
-  })
-
-  console.log(album.parse)
-
-  sessionStorage.setItem("album", JSON.stringify(album));
-
 }
 
 

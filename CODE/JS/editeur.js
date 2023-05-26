@@ -21,7 +21,7 @@ function afficher_edit_templates() {
     var template = document.querySelector("#templates");
     if (template.style.display !== "block") {
 
-        element_focus.classList.remove("border");
+        element_focus.classList.remove("selected");
         element_focus = null
         
         template.style.display ="block";
@@ -58,17 +58,19 @@ function afficher_edit_templates() {
 function afficher_edit_image(element_focus_param) {
     if (element_focus_param != element_focus) {
         if (element_focus!=null) {
-            // element_focus.style.border = "none";
-            element_focus.classList.remove("border");
+            element_focus.classList.remove("selected");
         }
         element_focus = element_focus_param;
-        // element_focus.style.border = "4px solid green";
-        element_focus.classList.add("border");
+        element_focus.classList.add("selected");
     }
+
+    // On réinitialise la valeur du input 
+    const fileInput = document.querySelector("#inserer_image");
+    fileInput.value = "";
+
+
     var edit_image = document.querySelector("#edit_image");
     if (edit_image.style.display !== "block") {
-
-
 
         edit_image.style.display ="block";
 
@@ -77,6 +79,7 @@ function afficher_edit_image(element_focus_param) {
 
         var template = document.querySelector("#templates");
         var edit_texte = document.querySelector("#edit_texte");
+
 
         function afficher_edit() {
             if (hauteur > 0) {
@@ -98,6 +101,9 @@ function afficher_edit_image(element_focus_param) {
 
         afficher_edit();
 
+
+        
+
     }
 
 }
@@ -114,7 +120,7 @@ function afficher_edit_texte(element_focus_param) {
     if (element_focus_param != element_focus) {
         if (element_focus!=null) {
             // element_focus.style.border = "none";
-            element_focus.classList.remove("border");
+            element_focus.classList.remove("selected");
         }
         element_focus = element_focus_param;
 
@@ -131,6 +137,9 @@ function afficher_edit_texte(element_focus_param) {
         
 
         edit_texte.style.display ="block";
+
+        var textarea_edit_texte = document.getElementById("textarea_edit_texte");
+        textarea_edit_texte.focus();
         
         var hauteur = 100;
         edit_texte.style.top = hauteur+"%";
@@ -159,7 +168,11 @@ function afficher_edit_texte(element_focus_param) {
 
         afficher_edit();
 
+        
+
     }
+
+    
 }
 
 
@@ -292,14 +305,14 @@ function setBackground(event) {
     });
                     
     reader.readAsDataURL(file);
+    apercue_image();
+
+    
     
 }
 
 /** ------------- TEXTAREA EDIT -------------
  * Modifie le texte dans element_focus
- * RAF :
- *  - sauvegarde du texte 
- *  - changement du texte du input quand on change de div
  */
 function textarea_edit() {
     var textarea_edit_texte = document.getElementById("textarea_edit_texte");
@@ -307,6 +320,92 @@ function textarea_edit() {
 }
 
 
+
+/** ------------- APERCUE IMAGE -------------
+ * Cette fonction affiche les infos de l'image 
+ */
+function apercue_image(){
+    
+
+    // Création du premier div à l'intérieur de divImageActuel
+    var div1 = document.createElement("div");
+
+    // Création de l'élément img avec l'attribut src et alt
+    var img = document.createElement("div");
+    img.className = "image";
+    img.style.backgroundImage = element_focus.style.backgroundImage ;
+    
+
+    // Ajout de l'élément img à l'intérieur de div1
+    div1.appendChild(img);
+
+    // Création de l'élément div avec la classe "info"
+    var divInfo = document.createElement("div");
+    divInfo.className = "info";
+
+    // Création de l'élément h4 et p à l'intérieur de divInfo
+    var h4 = document.createElement("h4");
+    h4.textContent = "Image actuelle";
+
+    var p = document.createElement("p");
+    p.textContent = element_focus.value;
+
+    // Ajout des éléments h4 et p à l'intérieur de divInfo
+    divInfo.appendChild(h4);
+    divInfo.appendChild(p);
+
+    // Ajout de l'élément divInfo à l'intérieur de div1
+    div1.appendChild(divInfo);
+
+
+    // Création de l'élément img pour le bouton de suppression
+    var btnSupprimeImage = document.createElement("img");
+    btnSupprimeImage.src = "ASSETS/img/btn_supprime_image.svg";
+    btnSupprimeImage.alt = "bouton pour supprimé l'image";
+
+    btnSupprimeImage.addEventListener('click',()=>{
+
+        // On réinitialise la valeur du input 
+        const fileInput = document.querySelector("#inserer_image");
+        fileInput.value = "";
+
+        // On remet la couleur en background
+        element_focus.style.backgroundImage = "none";
+
+        var image_actuel = document.querySelector(".image_actuel");
+        image_actuel.style.display = 'none';
+        image_actuel.removeChild(div1);
+        image_actuel.removeChild(btnSupprimeImage);
+    })
+
+
+    // Ajout de divImageActuel à un élément existant dans le document (par exemple, le body)
+    var image_actuel = document.querySelector(".image_actuel");
+    image_actuel.appendChild(div1);
+    image_actuel.appendChild(btnSupprimeImage);
+
+    image_actuel.style.display = 'flex';
+}
+
+
+/** ------------- PLACE IMAGE -------------
+ * Permet de fixer l'image d'un coté du cadre
+ * (Haut, bas, centre, gauche et droite)
+ */
+function place_img(event){
+    let button = event.target;
+    let choix = button.id.split("_")[1];
+
+    let element = document.querySelector("button.selected");
+
+    //supprime la class existante
+    let list_choix = ["top", "bottom", "center", "left", "right"];
+    list_choix.forEach(option => {
+        element.classList.remove("img_" + option);
+    })
+
+    element.classList.add("img_" + choix);
+}
 
 
 ajout_page()
@@ -327,7 +426,59 @@ centre.addEventListener('click',afficher_edit_templates)
 
 
 
+/* -------------------------------------------------------------------------- */
+/*                                 MAJ TABLEAU                                */
+/* -------------------------------------------------------------------------- */
+/** Tableau contenant tout l'album -> voir "tableau_rendu.md"
+ * Scan toutes les pages, et récupère toutes les informations sur chacune d'elle
+ */
+function saveAlbum(){
+    let feuilles = document.querySelectorAll(".feuille");
+    var album = [];
+  
+    //boucle sur toutes les feuilles == pages
+    feuilles.forEach(page => {
+        let buttons = page.querySelectorAll("button");
 
+        let num_page = page.parentNode.id.split("_")[1]; // -> numéro de page
+        //   let id_template = page.parentNode.classList;
+        let id_template = page.classList[1];
+
+        let tab_feuille = [id_template];
+  
+        buttons.forEach(obj => {
+            if(obj.classList.contains("img")){ // -> c'est une image
+
+                let code_img = obj.style.backgroundImage;
+                const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
+
+                //trouver placement de l'image
+                let placement_image = "C";
+                let list_classes = obj.classList;
+                list_classes.forEach(classe => {
+                    if(classe.split("_")[1]){
+                        
+                        //récupère la premiere lettre, soit T, B, C, L ou R
+                        placement_image = classe.split("_")[1].toUpperCase()[0]; 
+                    };
+                })
+
+                tab_feuille.push(placement_image + "#" + img64);
+
+            }else if(obj.classList.contains("txt")){ // -> c'est un texte
+                
+                //récupération du texte
+                tab_feuille.push(obj.innerHTML);
+            }
+        })
+
+        album.push(tab_feuille);
+    })
+  
+    console.log("TABLEAU ALBUM", album);
+    sessionStorage.setItem("album", JSON.stringify(album));
+  
+  }
 
 
 
@@ -359,7 +510,7 @@ function wrap_panier(){
  */
 function go_checkout(){
 
-    majTableau(); // -> sauvegarde l'album dans le sessionStorage
+    saveAlbum(); // -> sauvegarde l'album dans le sessionStorage
 
     open_modal_final();
 }
@@ -371,10 +522,12 @@ function go_checkout(){
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
 
-    modal.addEventListener("click", function(element){
-        element.querySelector("main").stopPropagation();
+    modal.addEventListener("click", function(event){
+        if (event.target !== this) {
+            return; // Ignore le clic sur les éléments enfants de #modal_final
+        }
         modal.classList.remove('actif');
-    })
+    });
 
     if(modal.classList.contains('actif')){
         modal.classList.remove('actif');

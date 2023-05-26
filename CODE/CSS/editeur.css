@@ -116,23 +116,23 @@ body {
   margin-top: 90px;
   position: relative;
 }
-#editeur div#gauche #edit_image main div {
+#editeur div#gauche #edit_image main > div {
   margin-bottom: 40px;
 }
-#editeur div#gauche #edit_image main div p {
+#editeur div#gauche #edit_image main > div p {
   font-size: 15px;
   font-weight: 300;
   line-height: 19px;
   margin-bottom: 15px;
 }
-#editeur div#gauche #edit_image main div .inserer_image {
+#editeur div#gauche #edit_image main > div .inserer_image {
   width: 100%;
   height: 250px;
   border: 1px dashed #18574A;
   background-color: #F0F0F0;
   border-radius: 5px;
 }
-#editeur div#gauche #edit_image main div .inserer_image label {
+#editeur div#gauche #edit_image main > div .inserer_image label {
   width: 100%;
   height: 100%;
   display: flex;
@@ -142,11 +142,38 @@ body {
   font-weight: 300;
   color: #737373;
 }
-#editeur div#gauche #edit_image main div .inserer_image label input {
+#editeur div#gauche #edit_image main > div .inserer_image label input {
   display: none;
 }
-#editeur div#gauche #edit_image main div .inserer_image label:hover {
+#editeur div#gauche #edit_image main > div .inserer_image label:hover {
   cursor: pointer;
+}
+#editeur div#gauche #edit_image main > div .image_actuel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+#editeur div#gauche #edit_image main > div .image_actuel > div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+#editeur div#gauche #edit_image main > div .image_actuel > div .image {
+  width: 100px;
+  height: 70;
+  background-color: #737373;
+  background-position: center;
+  border-radius: 5px;
+}
+#editeur div#gauche #edit_image main > div .image_actuel > div .info h4 {
+  margin: 5px;
+  font-size: 20px;
+}
+#editeur div#gauche #edit_image main > div .image_actuel > div .info p {
+  margin: 5px;
+  font-size: 16px;
+  font-weight: 300;
 }
 #editeur div#gauche #edit_texte {
   display: none;
@@ -226,7 +253,8 @@ body {
   cursor: pointer;
 }
 #editeur #centre .page > div button.txt {
-  border: 1px dashed black;
+  border: 1px dashed #737373;
+  background-color: transparent;
   padding: 5px 5px;
   min-width: 30%;
   min-height: 5%;
@@ -243,8 +271,24 @@ body {
   background-size: cover;
   background-position: center;
 }
-#editeur #centre .page > div button.border {
-  border: 4px solid #18574A;
+#editeur #centre .page > div button.img.img_top {
+  background-position: top;
+}
+#editeur #centre .page > div button.img.img_bottom {
+  background-position: bottom;
+}
+#editeur #centre .page > div button.img.img_center {
+  background-position: center;
+}
+#editeur #centre .page > div button.img.img_left {
+  background-position: left;
+}
+#editeur #centre .page > div button.img.img_right {
+  background-position: right;
+}
+#editeur #centre .page > div button.selected {
+  outline: 4px solid #18574A;
+  outline-offset: -4px;
 }
 #editeur #centre .page img {
   position: absolute;
@@ -475,6 +519,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 50px;
+  cursor: auto;
   height: auto;
   width: 800px;
   max-width: 90%;
