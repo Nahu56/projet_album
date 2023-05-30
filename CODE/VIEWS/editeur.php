@@ -138,7 +138,7 @@
         <!-- /* ----------------------------- panier ---------------------------- */ -->
         <section id="panier" class="roll">
 
-            <header onclick="wrap_panier()">
+            <header >
                 <div>
                     <h3>Panier</h3>
                 </div>

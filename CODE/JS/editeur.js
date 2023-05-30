@@ -211,6 +211,7 @@ function focus_page(id){
             var feuilleElement = element.querySelector('.feuille');
             var hasVoile = feuilleElement.querySelector('.voile') !== null;
 
+
             if (!hasVoile) { 
 
                 if (passe) {
@@ -225,21 +226,38 @@ function focus_page(id){
                     focus_page(element.id);
                 });
 
+                var apercue = document.getElementById('apercue_'+(element.id).substring(5))
+                apercue.style.outline = '2px solid #18574A';
+
+                var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5) +' .suppr_page')
+                suppr_page.style.display='none';
+
             }
 
-      }else {
-
-        passe = true;
-        element.querySelector('p').style.textAlign="center";
-
-        if (element.querySelector('.feuille').hasChildNodes(voile)) { 
-
-            remove = element.querySelector('.feuille .voile');
-            remove.remove();
             
-        }
 
-      }
+
+
+        }else {
+
+            passe = true;
+            element.querySelector('p').style.textAlign="center";
+
+            if (element.querySelector('.feuille').hasChildNodes(voile)) { 
+                
+                remove = element.querySelector('.feuille .voile');
+                remove.remove();
+                
+            }
+
+            var apercue = document.getElementById('apercue_'+(element.id).substring(5))
+            apercue.style.outline = '4px solid #18574A';
+
+            var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5)+' .suppr_page')
+            suppr_page.style.display='block';
+            
+
+        }
 
     });
 
@@ -285,10 +303,9 @@ function ajout_page() {
     // Ajout de divPage1 à la page (body dans cet exemple)
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
-
+    ajout_page_apercue();
     focus_page("page_"+(nb_pages));
 
-    ajout_page_apercue();
 
 }
 
@@ -299,6 +316,7 @@ function ajout_page_apercue() {
         // Création de l'élément <div> avec la classe "bloc_page"
         var blocPage = document.createElement("div");
         blocPage.className = "bloc_page";
+        blocPage.classList.add( "bloc_pages_"+nb_pages+"_"+(nb_pages+1));
 
         // Création de l'élément <header> avec la classe "ligne_page"
         var header = document.createElement("header");
@@ -313,7 +331,7 @@ function ajout_page_apercue() {
         // Création de l'élément <div> avec la classe "num_page" pour afficher le numéro de page
         var numPage = document.createElement("div");
         numPage.className = "num_page";
-        numPage.textContent = "page 1 / 2";
+        numPage.textContent = "page " + nb_pages;
 
         // Ajout des éléments <div class="hr"> et <div class="num_page"> à l'élément <header>
         header.appendChild(hr1);
@@ -327,19 +345,24 @@ function ajout_page_apercue() {
         var pagesDiv = document.createElement("div");
 
         // Création de la première vignette de page
-        var vignettePage1 = document.createElement("div");
-        vignettePage1.className = "vignette_page";
+        var vignettePage= document.createElement("div");
+        vignettePage.className = "vignette_page";
+        vignettePage.id = "apercue_"+nb_pages;
 
+        const i = nb_pages;
+        vignettePage.addEventListener('click',()=>{ focus_page('page_'+i) });
 
-        // Création de la deuxième vignette de page
-        var vignettePage2 = document.createElement("div");
-        vignettePage2.className = "vignette_page";
-
+        var suppr_page = document.createElement('img');
+        suppr_page.src = 'ASSETS/img/suppr_page.svg'
+        suppr_page.classList.add('suppr_page')  
+        suppr_page.addEventListener('click',()=>{
+            supprimer_page(i);
+        })
+        vignettePage.appendChild(suppr_page);
 
 
         // Ajout des vignettes de page à l'élément <div> pour les pages
-        pagesDiv.appendChild(vignettePage1);
-        pagesDiv.appendChild(vignettePage2);
+        pagesDiv.appendChild(vignettePage);
 
         // Ajout de l'élément <div> pour les pages au <div class="bloc_page">
         blocPage.appendChild(pagesDiv);
@@ -347,6 +370,34 @@ function ajout_page_apercue() {
         // Ajout du bloc de page à la page HTML
         var apercue_main = document.querySelector('#apercu main ')
         apercue_main.appendChild(blocPage);
+
+    }else{
+
+        var texte = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages+" header .num_page");
+        texte.textContent = texte.textContent+"/"+nb_pages;
+
+
+        var div_page = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages+" > div");        
+        // Création de la première vignette de page
+        var vignettePage = document.createElement("div");
+        vignettePage.className = "vignette_page";
+        vignettePage.id = ("apercue_"+nb_pages);
+
+        const i = nb_pages;
+        vignettePage.addEventListener('click',()=>{ focus_page("page_"+i) });
+
+        var suppr_page = document.createElement('img');
+        suppr_page.src = 'ASSETS/img/suppr_page.svg'
+        suppr_page.classList.add('suppr_page')  
+        suppr_page.addEventListener('click',()=>{
+            supprimer_page(i);
+        })
+
+        vignettePage.appendChild(suppr_page);
+
+
+        div_page.appendChild(vignettePage);
+
     }
 
     
@@ -369,17 +420,16 @@ function setBackground(event) {
         element_focus.style.backgroundImage = `url(${reader.result})`;
         element_focus.value = file.name;
 
+        var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+        img_apercue.style.backgroundImage = `url(${reader.result})`;
+
         rm_apercue_image();
         apercue_image();
         
         
     });
-                    
+
     reader.readAsDataURL(file);
-
-
-    
-    
 }
 
 /** ------------- TEXTAREA EDIT -------------
@@ -443,6 +493,9 @@ function apercue_image(){
         // On remet la couleur en background
         element_focus.style.backgroundImage = "none";
 
+        var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+        img_apercue.style.backgroundImage = `none`;
+
         rm_apercue_image()
     })
 
@@ -464,8 +517,10 @@ function rm_apercue_image() {
     var image_actuel = document.querySelector(".image_actuel");
     if (image_actuel.childElementCount != 0) {
         var div = document.querySelector(".image_actuel div");
+
         var btnSupprimeImage = document.querySelector(".image_actuel img");
         image_actuel.style.display = 'none';
+        
         image_actuel.removeChild(div);
         image_actuel.removeChild(btnSupprimeImage);
     }
@@ -483,16 +538,40 @@ function place_img(event){
     let choix = button.id.split("_")[1];
 
     let element = document.querySelector("button.selected");
+    var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+
+    
 
     //supprime la class existante
     let list_choix = ["top", "bottom", "center", "left", "right"];
     list_choix.forEach(option => {
         element.classList.remove("img_" + option);
+        img_apercue.classList.remove("img_" + option);
+
     })
 
     element.classList.add("img_" + choix);
+    img_apercue.classList.add("img_" + choix);
+
 }
 
+/** ------------- SUPPRIMER PAGE -------------
+ * Permet de supprimer une page de l'album
+ */
+function supprimer_page(num_page) {
+    alert(num_page);
+
+    var centre = document.getElementById('centre')
+    var element = document.getElementById('page_'+num_page)
+    centre.removeChild(element)
+
+    var apercu = document.querySelector('#apercu main .bloc_page #apercue_'+num_page)
+    var parent_apercu = apercu.parentElement;
+    parent_apercu.removeChild(apercu)
+    focus_page('page_'+(num_page-1))
+
+    
+}
 
 ajout_page();
 
@@ -501,12 +580,6 @@ focus_page('page_1');
 var centre = document.getElementById("centre");
 
 centre.addEventListener('click',afficher_edit_templates)
-
-
-// RAF : 
-// - Petit apercu image
-// - Ajouter plusieurs fois la même image
-// - 
 
 
 
@@ -567,27 +640,55 @@ function saveAlbum(){
   }
 
 
+  /** ------------- VARIABLES PANIER -------------
+ * Ici vous trouverez les variables qui permettent l'ouverture et la fermeture du panier 
+ */
+var panier_ouvert = false; // Pour savoir si le panier est ouvert ou fermer
 
+var panier = document.querySelector('#panier'); // On récupère l'élément panier 
+panier.addEventListener('click',(event)=>{
+    event.stopPropagation();
+})
+
+var btn_panier = document.querySelector('#panier header'); // On récupère le btn pour ouvrir le panier 
+btn_panier.addEventListener('click',(event)=>{
+    event.stopPropagation();
+
+    // On vérifie si le panier est ouvert
+    if (panier_ouvert) { 
+        close_panier();
+    }else{
+        open_panier();
+    }
+});
+
+var body = document.querySelector('body'); // On récupère l'élément body pour le que panier ce ferme quand on clique en dehors de celui ci 
+body.addEventListener('click',close_panier);
 
 /** ------------- WRAP PANIER -------------
  * Permet de dérouler / enrouler le panier
  */
-function wrap_panier(){
+function open_panier() {
     let panier = document.querySelector("#panier");
 
-    if(panier.classList.contains('roll')){
-        panier.classList.remove("roll");
-        panier.classList.add("unrolled");
+    panier.classList.remove("roll");
+    panier.classList.add("unrolled");
 
-        panier.querySelector("img").classList.add("reverse");
-        panier.classList.add("shadow");
-    }else{
-        panier.classList.remove("unrolled");
-        panier.classList.add("roll");
+    panier.querySelector("img").classList.add("reverse");
+    panier.classList.add("shadow");
 
-        panier.querySelector("img").classList.remove("reverse");
-        panier.classList.remove("shadow");
-    }
+    panier_ouvert = true;
+}
+function close_panier() {
+    let panier = document.querySelector("#panier");
+
+    panier.classList.remove("unrolled");
+    panier.classList.add("roll");
+
+    panier.querySelector("img").classList.remove("reverse");
+    panier.classList.remove("shadow"); 
+
+    panier_ouvert = false;
 }
 
 

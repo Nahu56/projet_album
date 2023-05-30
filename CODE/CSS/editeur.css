@@ -346,12 +346,52 @@ body {
   gap: 10px;
 }
 #editeur div#droite #apercu main .bloc_page > div .vignette_page {
+  position: relative;
   width: 125px;
   height: 176.75px;
   outline: 2px solid #18574A;
 }
 #editeur div#droite #apercu main .bloc_page > div .vignette_page div {
   background-color: #F0F0F0;
+  position: absolute;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .txt {
+  height: 5%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  margin: 0;
+  background-color: #18574A;
+  height: 5px;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img {
+  border: none;
+  background-size: cover;
+  background-position: center;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img.img_top {
+  background-position: top;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img.img_bottom {
+  background-position: bottom;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img.img_center {
+  background-position: center;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img.img_left {
+  background-position: left;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .img.img_right {
+  background-position: right;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page .suppr_page {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 10;
+}
+#editeur div#droite #apercu main .bloc_page > div .vignette_page:hover {
+  cursor: pointer;
 }
 #editeur div#droite #panier {
   position: absolute;

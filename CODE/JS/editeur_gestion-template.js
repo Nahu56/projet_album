@@ -27,10 +27,24 @@ function recuperation_templates() {
               div_template.addEventListener('click', function() {
                 let num_page = sessionStorage.getItem("currentpage").split("_")[1];
                 let page = document.querySelector("#page_" + num_page + " .feuille");
+                let apercue = document.querySelector("#apercue_" + num_page);
 
                 page.innerHTML = ""; // clear la page actuelle
-
                 loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
+
+
+
+                apercue.innerHTML = ""; // clear la page actuelle
+
+                var suppr_page = document.createElement('img');
+                suppr_page.src = 'ASSETS/img/suppr_page.svg';
+                suppr_page.classList.add('suppr_page');
+                suppr_page.addEventListener('click',()=>{
+                  supprimer_page(num_page);
+                })
+
+                apercue.appendChild(suppr_page);
+                loadElement("#apercue_" + num_page , templates[div_template.id]);
 
                 //attribution de l'id template a la page (en class)
                 page.className = "";
@@ -64,12 +78,14 @@ function loadElement(query_target, template, type = 0){
 
     // boucle sur les objets du template
     template_obj_list.forEach(obj => {
+      
       let element;
       count += 1;
 
       // Création de l'objet
       if(type == 1){
         element = document.createElement("button"); // -> INPUT fonctionnel
+        element.classList.add('obj_'+count)
 
         // element.id = 
         // console.log(div_template.parentNode.id) // -> numéro de page
@@ -79,7 +95,7 @@ function loadElement(query_target, template, type = 0){
           element.onclick = function(event){ // -> Met l'image upload au background de l'input
             event.stopPropagation();
             afficher_edit_image(this);
-          }
+          }          
           
 
   
@@ -96,6 +112,7 @@ function loadElement(query_target, template, type = 0){
 
       }else{
         element = document.createElement("div"); // -> DIV pour affichage
+        element.classList.add('obj_'+count)
   
       }
   

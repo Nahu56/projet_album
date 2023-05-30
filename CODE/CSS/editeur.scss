@@ -435,13 +435,7 @@ body{
 
     }
 
-    // TODO : a enlever 
-    // #centre_bis{
-    //     position: fixed;
-    //     top: 50vh;
-    //     left: 45%;
-    // }
-    
+
 
 
 
@@ -497,6 +491,7 @@ body{
                 overflow-y: scroll;
 
                 .bloc_page{
+                    
                     width: 100%;
 
                     >div{
@@ -504,7 +499,11 @@ body{
                         justify-content: space-between;
                         gap: 10px;
 
+                        
+
                         .vignette_page{
+                            position: relative; 
+
                             $width: 125px;
 
                             width: $width;
@@ -514,6 +513,49 @@ body{
                             
                             div{
                                 background-color: $gris;
+                                position: absolute;
+                            }
+                            .txt{
+                                height: 5%;
+                                width: 30%;
+                                transform: translate(-50%, -50%);
+
+                                border-radius: 50px;
+                                margin: 0;
+                                background-color: $vert;
+                                height: 5px;
+                            }
+                            .img{
+                                border: none;
+                                background-size: cover;
+                                background-position: center;
+
+                                &.img_top{
+                                    background-position: top;
+                                }
+                                &.img_bottom{
+                                    background-position: bottom;
+                                }
+                                &.img_center{
+                                    background-position: center;
+                                }
+                                &.img_left{
+                                    background-position: left;
+                                }
+                                &.img_right{
+                                    background-position: right;
+                                }
+                            }
+
+                            .suppr_page{
+                                position: absolute;
+                                top: -14px;
+                                right: -14px;
+                                z-index: 10;
+                            }
+
+                            &:hover{
+                                cursor: pointer;
                             }
                         }
                     }
