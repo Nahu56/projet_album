@@ -244,7 +244,25 @@ body{
                             }
                         }
                     }
+                    
 
+                }
+                .placer_image > div{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    >div{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        >div{
+                            height: 150px;
+                            width: 150px;
+                            background-color: rgb(61, 61, 61);
+                            border-radius: 5px;
+                            margin: 10px;
+                        }
+                    }
                 }
 
             }

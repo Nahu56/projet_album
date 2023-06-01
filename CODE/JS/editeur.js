@@ -203,22 +203,25 @@ function focus_page(id){
     var pages = document.getElementsByClassName('page');
 
     
-    const passe = false;
+    var passe = false;
     Array.from(pages).forEach(element => {
+        
 
         if (element.getAttribute('id') !== id) {
 
             var feuilleElement = element.querySelector('.feuille');
             var hasVoile = feuilleElement.querySelector('.voile') !== null;
 
+            if (passe) { 
+                element.querySelector('p').style.textAlign="left";
+            }else{
+                element.querySelector('p').style.textAlign="right";
+            }
+
 
             if (!hasVoile) { 
 
-                if (passe) {
-                    element.querySelector('p').style.textAlign="left";
-                }else{
-                    element.querySelector('p').style.textAlign="right";
-                }
+
 
                 element.querySelector('.feuille').appendChild(voile);
                 
@@ -240,7 +243,7 @@ function focus_page(id){
 
         }else {
 
-            const passe = true;
+            passe = true;
 
             element.querySelector('p').style.textAlign="center";
 
@@ -251,11 +254,19 @@ function focus_page(id){
                 
             }
 
+            var div_apercu = document.querySelector('#apercu main');
+            var bloc_apercu = document.querySelector('#apercu main .apercue_'+element.id.substring(5))
+
             var apercue = document.getElementById('apercue_'+(element.id).substring(5))
             apercue.style.outline = '4px solid #18574A';
 
             var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5)+' .suppr_page')
             suppr_page.style.display='block';
+
+            div_apercu.scrollTo({
+                top: bloc_apercu.offsetTop - div_apercu.clientHeight * 0.25, // Le pourcentage peut être modifié 
+                behavior: 'smooth'
+            });
             
 
         }
@@ -450,7 +461,10 @@ function setBackground(event) {
  */
 function textarea_edit() {
     var textarea_edit_texte = document.getElementById("textarea_edit_texte");
-    element_focus.textContent  = textarea_edit_texte.value;
+    let dernier_charactere = textarea_edit_texte.value.substring(textarea_edit_texte.value.length - 1)
+
+    element_focus.textContent = dernier_charactere;
+    
 }
 
 
@@ -630,7 +644,6 @@ function supprimer_page(num_page) {
 
         let i_bis = +i + 1;
         const apercue_suivant = document.querySelector('#apercu main .bloc_page #apercue_'+(i_bis));
-        // console.log(apercue_suivant)
 
         apercue_suivant.id='apercue_'+i;
         
@@ -672,7 +685,6 @@ function supprimer_page(num_page) {
         ajout_page()
     }else{
         if (nb_pages + 1 == num_page) {
-            console.log('page_'+(+num_page-1)) // TODO : erreur apres ca mais je sais pas pk ? 
             focus_page('page_'+(+num_page-1))
         }else{
             focus_page('page_'+(num_page))

@@ -60,14 +60,23 @@
                     </div>
                     <div class="image_actuel" style="display:none;"></div>
                 </div>
-                <div>
+                <div class="placer_image">
                     <p>Placer l'image</p>
 
-                    <button onclick="place_img(event)" id="img_top">Haut</button>
-                    <button onclick="place_img(event)" id="img_bottom">Bas</button>
-                    <button onclick="place_img(event)" id="img_center">centre</button>
-                    <button onclick="place_img(event)" id="img_left">Gauche</button>
-                    <button onclick="place_img(event)" id="img_right">Droite</button>
+                    <div>
+                        <img src="ASSETS/img/fleche_triangle.svg" alt="fleche haut" height="30" onclick="place_img(event)" id="img_top">
+
+                        <div>
+                            <img src="ASSETS/img/fleche_triangle.svg" style="transform:rotate(-90deg);" alt="fleche bas" height="30" onclick="place_img(event)" id="img_left">
+
+                            <div onclick="place_img(event)" id="img_center"></div>
+
+                            <img src="ASSETS/img/fleche_triangle.svg" style="transform:rotate(90deg);" alt="fleche bas" height="30" onclick="place_img(event)" id="img_right">
+                        </div>
+
+                        <img src="ASSETS/img/fleche_triangle.svg" style="transform:rotate(180deg);" alt="fleche bas" height="30" onclick="place_img(event)" id="img_bottom">
+                    </div>
+
                 </div>
 
             </main>
