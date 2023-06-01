@@ -203,7 +203,7 @@ function focus_page(id){
     var pages = document.getElementsByClassName('page');
 
     
-    var passe = false;
+    const passe = false;
     Array.from(pages).forEach(element => {
 
         if (element.getAttribute('id') !== id) {
@@ -222,9 +222,9 @@ function focus_page(id){
 
                 element.querySelector('.feuille').appendChild(voile);
                 
-                element.querySelector('.feuille .voile').addEventListener('click',()=>{
+                element.querySelector('.feuille .voile').onclick = function(){
                     focus_page(element.id);
-                });
+                };
 
                 var apercue = document.getElementById('apercue_'+(element.id).substring(5))
                 apercue.style.outline = '2px solid #18574A';
@@ -240,7 +240,8 @@ function focus_page(id){
 
         }else {
 
-            passe = true;
+            const passe = true;
+
             element.querySelector('p').style.textAlign="center";
 
             if (element.querySelector('.feuille').hasChildNodes(voile)) { 
@@ -266,6 +267,9 @@ function focus_page(id){
     sessionStorage.setItem("currentpage", id); // -> assignation de la nouvelle page courante
 
 }
+
+
+
 
 
 
@@ -317,6 +321,8 @@ function ajout_page_apercue() {
         var blocPage = document.createElement("div");
         blocPage.className = "bloc_page";
         blocPage.classList.add( "bloc_pages_"+nb_pages+"_"+(nb_pages+1));
+        blocPage.classList.add( "apercue_"+nb_pages);
+        
 
         // Création de l'élément <header> avec la classe "ligne_page"
         var header = document.createElement("header");
@@ -350,14 +356,17 @@ function ajout_page_apercue() {
         vignettePage.id = "apercue_"+nb_pages;
 
         const i = nb_pages;
-        vignettePage.addEventListener('click',()=>{ focus_page('page_'+i) });
+        vignettePage.onclick = null;
+        vignettePage.onclick = function(){
+            focus_page('page_'+i);
+        };
 
         var suppr_page = document.createElement('img');
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
-        suppr_page.addEventListener('click',()=>{
-            supprimer_page(i);
-        })
+        suppr_page.onclick = function(){supprimer_page(i)};
+        
+
         vignettePage.appendChild(suppr_page);
 
 
@@ -373,6 +382,9 @@ function ajout_page_apercue() {
 
     }else{
 
+        var blocPage = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages);
+        blocPage.classList.add("apercue_"+(nb_pages))
+
         var texte = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages+" header .num_page");
         texte.textContent = texte.textContent+"/"+nb_pages;
 
@@ -384,14 +396,15 @@ function ajout_page_apercue() {
         vignettePage.id = ("apercue_"+nb_pages);
 
         const i = nb_pages;
-        vignettePage.addEventListener('click',()=>{ focus_page("page_"+i) });
+        vignettePage.onclick = null;
+        vignettePage.onclick = function(){
+            focus_page('page_'+i);
+        };
 
         var suppr_page = document.createElement('img');
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
-        suppr_page.addEventListener('click',()=>{
-            supprimer_page(i);
-        })
+        suppr_page.onclick = function(){supprimer_page(i)};
 
         vignettePage.appendChild(suppr_page);
 
@@ -469,7 +482,12 @@ function apercue_image(){
     h4.textContent = "Image actuelle";
 
     var p = document.createElement("p");
-    p.textContent = element_focus.value;
+    if (element_focus.value.length > 18) {
+        p.textContent = element_focus.value.substring(0,18,-4) + '...';
+    }else{
+        p.textContent = element_focus.value;
+    }
+    
 
     // Ajout des éléments h4 et p à l'intérieur de divInfo
     divInfo.appendChild(h4);
@@ -556,22 +574,118 @@ function place_img(event){
 }
 
 /** ------------- SUPPRIMER PAGE -------------
- * Permet de supprimer une page de l'album
+ * Permet de supprimer une page de l'album dans
+ * Permet de supprimer une page dans le #centre et dans l'apercu 
+ * @param {integer} num_page est le numéro de la que l'on veut supprimer 
  */
 function supprimer_page(num_page) {
-    alert(num_page);
 
+    alert(num_page); // TODO : à changer avec une vraie page de vérification 
+
+    // On enleve la page dans le centre 
     var centre = document.getElementById('centre')
     var element = document.getElementById('page_'+num_page)
     centre.removeChild(element)
 
-    var apercu = document.querySelector('#apercu main .bloc_page #apercue_'+num_page)
-    var parent_apercu = apercu.parentElement;
-    parent_apercu.removeChild(apercu)
-    focus_page('page_'+(num_page-1))
+    // On replace les éléments dans le centre
+    for (let i = num_page; i < nb_pages; i++) {
+        let i_bis = +i + 1 ;
+        var page = document.getElementById('page_'+(i_bis));
+        page.id = 'page_'+i;
+
+        if (i % 2 !== 0) {
+            page.style.marginRight = '0px';
+            var icone = page.querySelector('img');
+            page.removeChild(icone)
+        }else{
+            page.style.marginRight = '100px';
+
+            var icone = document.createElement("img");
+            icone.src = "ASSETS/img/icones/liaison_page.svg";
+            icone.alt = "icone liaison entre les pages";
+            page.appendChild(icone);
+        }
+
+        var page_texte = page.querySelector('p');
+        page_texte.textContent = 'Page '+i;
+
+        var voile = page.querySelector('.voile');
+        voile.onclick = null;
+        voile.onclick = function(){
+            focus_page('page_'+i);
+        };
+
+    }
+
+
+
+
+    // On enleve l'élément dans l'apercu
+    var apercu_icone = document.querySelector('#apercu main .bloc_page #apercue_'+num_page)
+    var parent_apercu = apercu_icone.parentElement;
+    parent_apercu.removeChild(apercu_icone);
+    
+    // On replace l'élément dans l'apercu 
+    for (let i = num_page; i < nb_pages; i++) {
+
+        let i_bis = +i + 1;
+        const apercue_suivant = document.querySelector('#apercu main .bloc_page #apercue_'+(i_bis));
+        // console.log(apercue_suivant)
+
+        apercue_suivant.id='apercue_'+i;
+        
+        apercue_suivant.onclick = null;
+        apercue_suivant.onclick = function(){
+            focus_page('page_'+i);
+        };
+        
+        
+
+        apercue_suivant.querySelector('img').onclick = null;
+        apercue_suivant.querySelector('img').onclick = function(){supprimer_page(i)}
+        
+
+
+        if (apercue_suivant.parentElement.parentElement.classList.contains(apercue_suivant.id)) { }else{
+            var new_parent = document.querySelector('#apercu main .'+apercue_suivant.id)
+            new_parent.querySelector('.vignette_page').parentElement.appendChild(apercue_suivant);
+        }
+
+    }
+
+    nb_pages -= 1 ;
+
+
+    // On change le dernier élément de l'apercu en fonction de ce qu'on 
+    if (nb_pages % 2 == 0) {
+        var liste_apercu = document.querySelector('#apercu main')
+        var dernier_element = document.querySelector('#apercu main').lastChild
+        liste_apercu.removeChild(dernier_element);
+    }else{
+        var txt_dernier_element = document.querySelector('#apercu main').lastChild.querySelector('.num_page');
+        txt_dernier_element.textContent = txt_dernier_element.textContent.substring(0, txt_dernier_element.textContent.length - 2)
+
+    }
+
+
+    if (nb_pages == 0) {
+        ajout_page()
+    }else{
+        if (nb_pages + 1 == num_page) {
+            console.log('page_'+(+num_page-1)) // TODO : erreur apres ca mais je sais pas pk ? 
+            focus_page('page_'+(+num_page-1))
+        }else{
+            focus_page('page_'+(num_page))
+        }
+    }
 
     
+
+
+    
+    
 }
+
 
 ajout_page();
 

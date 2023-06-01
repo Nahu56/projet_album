@@ -39,9 +39,8 @@ function recuperation_templates() {
                 var suppr_page = document.createElement('img');
                 suppr_page.src = 'ASSETS/img/suppr_page.svg';
                 suppr_page.classList.add('suppr_page');
-                suppr_page.addEventListener('click',()=>{
-                  supprimer_page(num_page);
-                })
+                suppr_page.onclick =  function(){supprimer_page(num_page)};
+                
 
                 apercue.appendChild(suppr_page);
                 loadElement("#apercue_" + num_page , templates[div_template.id]);
