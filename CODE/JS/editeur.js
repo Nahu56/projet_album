@@ -7,6 +7,11 @@ var nb_pages = 0;
 var element_focus = null;
 
 
+// Prix : 
+var prix_page = 5.99;
+var prix_bordure = 12.99; 
+// ...
+
 
 /** ----- FONCTIONS AFFICHAGE PAGES EDIT -----
  * Fonction qui permet d'afficher ou de cacher la partie edit
@@ -185,43 +190,44 @@ function maj_textarea(element_focus_param) {
  */
 function focus_page(id){
 
+    // On récupère les éléments 
     var page = document.getElementById(id);
     var centre = document.getElementById('centre');
 
     
-
+    // On scroll jusque l'élément visé
     centre.scrollTo({
         top: 0,
         left: page.offsetLeft - window.innerWidth * 0.35,
         behavior: 'smooth'
     });
 
-    
+    // On créée le voile qu
     var voile = document.createElement('div');
     voile.className = 'voile';
 
+    // On récuère toutes les pages de l'album
     var pages = document.getElementsByClassName('page');
-
     
+
     var passe = false;
     Array.from(pages).forEach(element => {
-        
 
+        // On vérifie si c'est pas l'élément focus 
         if (element.getAttribute('id') !== id) {
 
             var feuilleElement = element.querySelector('.feuille');
             var hasVoile = feuilleElement.querySelector('.voile') !== null;
 
+            // On place le texte en fct de si le focus est passé ou pas 
             if (passe) { 
                 element.querySelector('p').style.textAlign="left";
             }else{
                 element.querySelector('p').style.textAlign="right";
             }
 
-
+            // Si il n'a pas de voile on lui en rajoute un 
             if (!hasVoile) { 
-
-
 
                 element.querySelector('.feuille').appendChild(voile);
                 
@@ -237,18 +243,14 @@ function focus_page(id){
 
             }
 
-            
-
-
-
+        // Si c'est l'élémet focus 
         }else {
-
             passe = true;
 
             element.querySelector('p').style.textAlign="center";
 
+            // On enleve le voile 
             if (element.querySelector('.feuille').hasChildNodes(voile)) { 
-                
                 remove = element.querySelector('.feuille .voile');
                 remove.remove();
                 
@@ -263,6 +265,7 @@ function focus_page(id){
             var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5)+' .suppr_page')
             suppr_page.style.display='block';
 
+            // On met a jour le placement de la page dans l'apercue
             div_apercu.scrollTo({
                 top: bloc_apercu.offsetTop - div_apercu.clientHeight * 0.25, // Le pourcentage peut être modifié 
                 behavior: 'smooth'
@@ -273,8 +276,9 @@ function focus_page(id){
 
     });
 
-
+    // On raffiche edit_templates
     afficher_edit_templates()
+
     sessionStorage.setItem("currentpage", id); // -> assignation de la nouvelle page courante
 
 }
@@ -419,7 +423,6 @@ function ajout_page_apercue() {
 
         vignettePage.appendChild(suppr_page);
 
-
         div_page.appendChild(vignettePage);
 
     }
@@ -461,9 +464,8 @@ function setBackground(event) {
  */
 function textarea_edit() {
     var textarea_edit_texte = document.getElementById("textarea_edit_texte");
-    let dernier_charactere = textarea_edit_texte.value.substring(textarea_edit_texte.value.length - 1)
 
-    element_focus.textContent = dernier_charactere;
+    element_focus.textContent = textarea_edit_texte.value;
     
 }
 
@@ -673,7 +675,7 @@ function supprimer_page(num_page) {
     if (nb_pages % 2 == 0) {
         var liste_apercu = document.querySelector('#apercu main')
         var dernier_element = document.querySelector('#apercu main').lastChild
-        liste_apercu.removeChild(dernier_element);
+        liste_apercu.removeChild(dernier_element); 
     }else{
         var txt_dernier_element = document.querySelector('#apercu main').lastChild.querySelector('.num_page');
         txt_dernier_element.textContent = txt_dernier_element.textContent.substring(0, txt_dernier_element.textContent.length - 2)
@@ -681,6 +683,7 @@ function supprimer_page(num_page) {
     }
 
 
+    // En fonction du nombre de page on change l'action (derniere page -> on reviens a celle d'avant, page milieu -> on reste sur la page, page 0 -> on ajoute une nouvelle page )
     if (nb_pages == 0) {
         ajout_page()
     }else{
@@ -704,7 +707,6 @@ ajout_page();
 focus_page('page_1');
 
 var centre = document.getElementById("centre");
-
 centre.addEventListener('click',afficher_edit_templates)
 
 
@@ -766,7 +768,7 @@ function saveAlbum(){
   }
 
 
-  /** ------------- VARIABLES PANIER -------------
+ /** ------------------ VARIABLES PANIER ------------------
  * Ici vous trouverez les variables qui permettent l'ouverture et la fermeture du panier 
  */
 var panier_ouvert = false; // Pour savoir si le panier est ouvert ou fermer
@@ -791,7 +793,7 @@ btn_panier.addEventListener('click',(event)=>{
 var body = document.querySelector('body'); // On récupère l'élément body pour le que panier ce ferme quand on clique en dehors de celui ci 
 body.addEventListener('click',close_panier);
 
-/** ------------- WRAP PANIER -------------
+/** -------------------- WRAP PANIER --------------------
  * Permet de dérouler / enrouler le panier
  */
 function open_panier() {

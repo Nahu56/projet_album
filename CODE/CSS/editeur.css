@@ -191,7 +191,7 @@ body {
 #editeur div#gauche #edit_image main .placer_image > div > div > div {
   height: 150px;
   width: 150px;
-  background-color: rgb(61, 61, 61);
+  background-color: #dddddd;
   border-radius: 5px;
   margin: 10px;
 }
@@ -617,5 +617,5 @@ body {
   background-color: #F0F0F0;
 }
 #editeur #modal_final > main > footer > div {
-  background-color: white;
+  background-color: #F0F0F0;
 }/*# sourceMappingURL=editeur.css.map */

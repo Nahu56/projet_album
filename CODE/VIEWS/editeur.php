@@ -22,6 +22,8 @@
     </script>
     
 
+   <?php  $CLIENT_ID = "AZPGXAEFcPRSHidHeDpKxinr5THwSIrBZ-Oj8vfA_RaKU4ZTO-lBQzYKMYXOb6lW48ZBK0PF_lDpnLyl"; ?>
+
 
     
 
@@ -235,7 +237,104 @@
                     album
                 </div>
 
-                <button> << Paypal >> </button>
+                
+                <!-- Le conteneur des boutons PayPal -->
+                <div id="paypal-boutons"></div>
+
+                <!-- Importation de la SDK JavaScript PayPal -->
+                <script src="https://www.paypal.com/sdk/js?client-id=<?php echo $CLIENT_ID ?>&currency=EUR&locale=fr_FR"></script>
+                <script>
+                    var reliure_album = "Gold";
+                    var pages_album = 52 ;
+                    var format_album = "A4";
+
+                    // 2. Afficher le bouton PayPal
+                    paypal.Buttons({
+
+                        style: {
+                            layout: 'vertical',
+                            color:  'gold',
+                            shape:  'pill',
+                            label:  'paypal'
+                        },
+
+                        // Configurer la transaction
+                        createOrder : function (data, actions) {
+
+                            // Les produits à payer avec leurs details
+                            var produits = [
+                                {
+                                    name : "Album Photo",
+                                    quantity : 1,
+                                    description : "Un album photo de qualité ",
+                                    unit_amount : { value : 79.99, currency_code : "EUR" }
+                                }
+                            ];
+
+                            // Le total des produits
+                            var total_amount = produits.reduce(function (total, product) {
+                                return total + product.unit_amount.value * product.quantity;
+                            }, 0);
+
+                            // La transaction
+                            return actions.order.create({
+                                purchase_units : [{
+                                    items : produits,
+                                    amount : {
+                                        value : total_amount,
+                                        currency_code : "EUR",
+                                        breakdown : {
+                                            item_total : { value : total_amount, currency_code : "EUR" }
+                                        }
+                                    },
+                                }]
+                            });
+                        },
+
+                        // Capturer la transaction après l'approbation de l'utilisateur
+                        onApprove : function (data, actions) {
+                            return actions.order.capture().then(function(details) {
+
+                                // Afficher les details de la transaction dans la console
+                                console.log(details);
+
+                                // Récupérer la date 
+                                const dateStr = details.update_time;
+                                var date = new Date(dateStr);
+                                var date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+
+
+                                $_SESSION['date'] = date;
+                                $_SESSION['id'] = details.id;
+                                $_SESSION['nom'] = details.payer.name.surname;
+                                $_SESSION['prenom'] = details.payer.name.given_name;
+                                $_SESSION['email'] = details.payer.email_address;
+                                
+                                $_SESSION['nom_album'] = details.purchase_units[0].items[0].name;
+                                $_SESSION['qtt_album'] = details.purchase_units[0].items[0].quantity;
+                                $_SESSION['reliure'] = reliure_album;
+                                $_SESSION['format'] = format_album;
+                                $_SESSION['pages'] = pages_album;
+
+                                $_SESSION['total'] = details.purchase_units[0].amount.value;
+
+                                // Envoie des infos 
+                                window.location.href = "recuperation_data.php";
+
+                                // On affiche un message de succès
+                                // alert(details.payer.name.given_name + ' ' + details.payer.name.surname + ', votre transaction est effectuée. Vous allez recevoir une notification très bientôt lorsque nous validons votre paiement.');
+
+                            });
+                        },
+
+                        // Annuler la transaction
+                        onCancel : function (data) {
+                            alert("Transaction annulée !");
+                        }
+
+                    }).render("#paypal-boutons");
+
+                </script>
             </footer>
         </main>
     </div>
