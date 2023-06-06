@@ -6,6 +6,8 @@ var focus = "page_0";
 var nb_pages = 0;
 var element_focus = null;
 
+//vide le sessionStorage
+sessionStorage.setItem("album", "");
 
 // Prix : 
 var prix_page = 5.99;
@@ -392,7 +394,7 @@ function ajout_page_apercue() {
         blocPage.appendChild(pagesDiv);
 
         // Ajout du bloc de page à la page HTML
-        var apercue_main = document.querySelector('#apercu main ')
+        var apercue_main = document.querySelector('#apercu main .list_pages')
         apercue_main.appendChild(blocPage);
 
     }else{
@@ -673,11 +675,11 @@ function supprimer_page(num_page) {
 
     // On change le dernier élément de l'apercu en fonction de ce qu'on 
     if (nb_pages % 2 == 0) {
-        var liste_apercu = document.querySelector('#apercu main')
-        var dernier_element = document.querySelector('#apercu main').lastChild
+        var liste_apercu = document.querySelector('#apercu main .list_pages')
+        var dernier_element = document.querySelector('#apercu main .list_pages').lastChild
         liste_apercu.removeChild(dernier_element); 
     }else{
-        var txt_dernier_element = document.querySelector('#apercu main').lastChild.querySelector('.num_page');
+        var txt_dernier_element = document.querySelector('#apercu main .list_pages').lastChild.querySelector('.num_page');
         txt_dernier_element.textContent = txt_dernier_element.textContent.substring(0, txt_dernier_element.textContent.length - 2)
 
     }
@@ -727,8 +729,6 @@ function saveAlbum(){
     feuilles.forEach(page => {
         let buttons = page.querySelectorAll("button");
 
-        let num_page = page.parentNode.id.split("_")[1]; // -> numéro de page
-        //   let id_template = page.parentNode.classList;
         let id_template = page.classList[1];
 
         let tab_feuille = [id_template];
@@ -745,8 +745,17 @@ function saveAlbum(){
                 list_classes.forEach(classe => {
                     if(classe.split("_")[1]){
                         
-                        //récupère la premiere lettre, soit T, B, C, L ou R
-                        placement_image = classe.split("_")[1].toUpperCase()[0]; 
+                        let tag = classe.split("_")[1];
+
+                        if(tag == "T" || tag == "B" || tag == "C" || tag == "L" || tag == "R"){
+                            //récupère la premiere lettre, soit T, B, C, L ou R
+                            placement_image = classe.split("_")[1].toUpperCase()[0]; 
+                        }else{
+                            placement_image = "C"; 
+                        }
+
+                        
+
                     };
                 })
 

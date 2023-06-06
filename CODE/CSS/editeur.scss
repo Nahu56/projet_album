@@ -211,6 +211,7 @@ body{
                         justify-content: space-between;
                         align-items: center;
                         margin: 20px 0 ;
+
                         >div{
                             display: flex;
                             align-items: center;
@@ -241,6 +242,10 @@ body{
                                     font-weight: 300;
                                     width: 80%;
                                 }
+                            }
+
+                            &>img{
+                                cursor: pointer; 
                             }
                         }
                     }
@@ -500,7 +505,6 @@ body{
 
             main{
                 box-sizing: border-box;
-                
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
@@ -511,16 +515,13 @@ body{
 
                 overflow-y: scroll;
 
-                .bloc_page{
-                    
+                .bloc_couv{
                     width: 100%;
 
                     >div{
                         display: flex;
                         justify-content: space-between;
                         gap: 10px;
-
-                        
 
                         .vignette_page{
                             position: relative; 
@@ -531,52 +532,84 @@ body{
                             height: calc($width * 1.414);
 
                             outline: 2px solid $vert;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .list_pages{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 30px;
+
+
+                    .bloc_page{
+                    
+                        width: 100%;
+    
+                        >div{
+                            display: flex;
+                            justify-content: space-between;
+                            gap: 10px;
+    
                             
-                            div{
-                                background-color: $gris;
-                                position: absolute;
-                            }
-                            .txt{
-                                height: 5%;
-                                width: 30%;
-                                transform: translate(-50%, -50%);
-
-                                border-radius: 50px;
-                                margin: 0;
-                                background-color: $vert;
-                                height: 5px;
-                            }
-                            .img{
-                                border: none;
-                                background-size: cover;
-                                background-position: center;
-
-                                &.img_top{
-                                    background-position: top;
+    
+                            .vignette_page{
+                                position: relative; 
+    
+                                $width: 125px;
+    
+                                width: $width;
+                                height: calc($width * 1.414);
+    
+                                outline: 2px solid $vert;
+                                
+                                div{
+                                    background-color: $gris;
+                                    position: absolute;
                                 }
-                                &.img_bottom{
-                                    background-position: bottom;
+                                .txt{
+                                    height: 5%;
+                                    width: 30%;
+                                    transform: translate(-50%, -50%);
+    
+                                    border-radius: 50px;
+                                    margin: 0;
+                                    background-color: $vert;
+                                    height: 5px;
                                 }
-                                &.img_center{
+                                .img{
+                                    border: none;
+                                    background-size: cover;
                                     background-position: center;
+    
+                                    &.img_top{
+                                        background-position: top;
+                                    }
+                                    &.img_bottom{
+                                        background-position: bottom;
+                                    }
+                                    &.img_center{
+                                        background-position: center;
+                                    }
+                                    &.img_left{
+                                        background-position: left;
+                                    }
+                                    &.img_right{
+                                        background-position: right;
+                                    }
                                 }
-                                &.img_left{
-                                    background-position: left;
+    
+                                .suppr_page{
+                                    position: absolute;
+                                    top: -14px;
+                                    right: -14px;
+                                    z-index: 2;
                                 }
-                                &.img_right{
-                                    background-position: right;
+    
+                                &:hover{
+                                    cursor: pointer;
                                 }
-                            }
-
-                            .suppr_page{
-                                position: absolute;
-                                top: -14px;
-                                right: -14px;
-                                z-index: 2;
-                            }
-
-                            &:hover{
-                                cursor: pointer;
                             }
                         }
                     }

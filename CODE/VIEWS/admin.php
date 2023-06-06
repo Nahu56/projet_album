@@ -6,7 +6,6 @@
     $data = json_decode($json_string, true);
 
 
-
     /* -------------------------------------------------------------------------- */
     /*                    ON TESTE SI UN AFFICHAGE EST ATTENDUE                   */
     /* -------------------------------------------------------------------------- */
@@ -59,7 +58,33 @@
             
             
         }else {
-            // Si c'est le tout on change rien
+            // Extraire les dates du tableau d'origine
+            $dates = array_keys($data);
+
+
+            // Convertir les dates en objets DateTime
+            $dateObjects = array_map(function ($date) {
+                return DateTime::createFromFormat('d/m/Y', $date);
+            }, $dates);
+            
+
+            // Trier les dates du plus ancien au plus récent
+            asort($dateObjects);
+            
+            // On remet les valeurs de data avec les dates trié dans le fichier $result
+            $result = array();
+            foreach ($dateObjects as $dateObject) {
+                $formattedDate = $dateObject->format('d/m/Y');
+                foreach ($data[$formattedDate] as $key => $value) {
+                    $result[$formattedDate][$key] = $value;
+                }
+
+            }
+            $result = array_reverse($result, true);
+
+            // On enleve les commandes qui ont déjà été téléchargé ou supprimé 
+            $data = array();
+            $data = $result;
         }
     }else {
         // Si aucun affichage attendue on met le en_attente
