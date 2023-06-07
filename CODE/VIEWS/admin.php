@@ -399,10 +399,6 @@
                                     <p>Adresse mail </p>
                                     <p> '.$tab['email'] .' </p>
                                 </div>
-                                <div>
-                                    <p>Téléphone </p>
-                                    <p> 01 23 45 67 89 </p>
-                                </div>
                             </div>
                             
                         
@@ -447,7 +443,7 @@
                         <hr>
 
                         <div class="action_pdf">  ';                  
-                        if (($tab['supprime']==true) ) {
+                        if (($tab['supprime']==true) || (is_readable("STOCKAGE/PDF_commandes/'.$key.'.pdf")) ) {
                             echo '
                             <div class="pdf_supprime">
                                 <p>PDF supprimé</p>

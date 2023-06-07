@@ -11,7 +11,7 @@
             "pages": 28,
             "total": 110,
             "deja_telecharge": true,
-            "supprime": false
+            "supprime": true
         }
     },
     "23\/04\/2023": {
@@ -41,7 +41,7 @@
             "pages": 28,
             "total": 10,
             "deja_telecharge": false,
-            "supprime": false
+            "supprime": true
         }
     },
     "21\/04\/2023": {
@@ -108,7 +108,7 @@
             "pages": "52",
             "total": "79.99",
             "deja_telecharge": false,
-            "supprime": false
+            "supprime": true
         }
     },
     "19\/04\/2023": {
@@ -123,7 +123,7 @@
             "pages": 28,
             "total": 180,
             "deja_telecharge": true,
-            "supprime": false
+            "supprime": true
         }
     },
     "13\/04\/2023": {
@@ -203,7 +203,7 @@
         "87L258710V175744D": {
             "nom": "Doe",
             "prenom": "John",
-            "email": "sb-43zoiv25000455@personal.example.com",
+            "email": "sb-43z5000455@example.com",
             "nom_album": "Album Photo",
             "qtt_album": 1,
             "reliure": "Gold",
@@ -211,7 +211,7 @@
             "pages": 52,
             "total": 1.99,
             "deja_telecharge": false,
-            "supprime": false
+            "supprime": true
         }
     }
 }

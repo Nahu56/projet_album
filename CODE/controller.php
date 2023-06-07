@@ -1,4 +1,5 @@
 <?php
+    session_start();
 
 /* -------------------------------------------------------------------------- */
 /*                                   ROUTEUR                                  */
@@ -7,14 +8,19 @@
 if (isset($_GET['function'])) {
 
     switch ($_GET['function']) {
-        case 'validation_commande':
-            validation_commande();
+
+        case 'part1':
+            creation_commande();
+            tab64toIMG();
             break;
+        case 'part2':
         
-        case 'generationPDF':
             generationPDF();
+            // destroyIMG_SESSION(); TODO
+
+            header("Location: ./VIEWS/confirmation.php");
+
             break;
-            
         default:
             
             echo "Erreur, aucune fonction appelée";
@@ -30,25 +36,15 @@ if (isset($_GET['function'])) {
 /* -------------------------------------------------------------------------- */
 
 
-/* ----------------------- PROCESS VALIDATION COMMANDE ---------------------- */
-function validation_commande(){
-
-    // $_POST["tableau_commande"]
-    // $_POST["tableau_album"]
-
-    // creation_commande();
-
-    tab64toIMG();
-
-   
-}
-
 function creation_commande(){
     
     /* -------------------------- CREATION COMMANDE ------------------------- */
+    
     $tableau_commande = json_decode($_POST["tableau_commande"]);
 
-    $date = date('d/m/Y', strtotime($tableau_commande[0]));
+    $date = date('m/d/Y', strtotime($tableau_commande[0]));
+
+    $_SESSION['id_commande'] = $tableau_commande[1];
 
 
     // Lire le contenu du fichier JSON
@@ -56,6 +52,8 @@ function creation_commande(){
 
     // Convertir le JSON en un tableau associatif en PHP
     $commandes = json_decode($json, true);
+
+    
 
     if (isset($commandes[$date][$tableau_commande[1]])) {
 
@@ -97,7 +95,6 @@ function creation_commande(){
 
     // Enregistrer le JSON dans le fichier
     file_put_contents('../ASSETS/json/commandes.json', $json);
-    
 
 }
 
@@ -110,67 +107,135 @@ function creation_commande(){
 function tab64toIMG(){
     $album = json_decode($_POST['tableau_album']);
 
-    foreach ($album as $key => $page) {
-
-        foreach($page as $key => $element){
+    foreach ($album as $key_page => $page) {
+        
+        foreach($page as $key_element => $element){
 
             //vérifie si c'est une image
-            if($value[1] == "#"){
-                echo json_encode($element);
+            if($element[1] == "#" && isset($element[2])){
+
+                $image64 = explode("#", $element)[1];
+                $image = base64_decode($image64); // Décodage de l'image en base64
+
+                // Extraire l'extension de l'image
+                $extension = explode("/", explode(";", $image64)[0])[1];
+
+                // $filename = uniqid() . "jpeg"; // Génération d'un nom de fichier unique avec l'extension
+                $filename = uniqid() . "." . $extension; // Génération d'un nom de fichier unique avec l'extension
+                $filepath = '../STOCKAGE/IMG_temporaires/' . $filename;
+
+                //enlève les métadonnées en préfixe pour garder que le code de l'image
+                $image_parts = explode(";base64,", $image64);
+                $image_en_base64 = base64_decode($image_parts[1]);
+
+
+                //Ajoute de nouveau le préfixe avec le placement de l'image, et
+                //change la valeur base64 dans le tableau par le chemin vers l'image
+                $page[$key_element] = explode("#", $element)[0] . "#" . $filepath;
+
+
+                file_put_contents($filepath, $image_en_base64); // Enregistrement de l'image décodée dans le fichier  
 
             }
-        }
-        // if($value[2]){
-
-        // }
-
-        // if (str_contains('#', $value)){
-        //     //sauvegarde l'image sur le serveur
-        //     //remplace le code64 par l'url de l'image
-
-        //     // Récupérer l'image en base64
-        //     // $data = $value; // Récupération de l'image en base64 depuis la requête POST
-
-        //     // $decodedData = base64_decode($data); // Décodage de l'image en base64
-
-
-
-
-        //     // $filename = uniqid() . '.jpg'; // Génération d'un nom de fichier unique avec l'extension .jpg
-        //     // $filepath = '/' . $filename;
             
-        //     // file_put_contents($filepath, $decodedData); // Enregistrement de l'image décodée dans le fichier  
+        }
 
-        //     // echo json_encode("hello");
-        // }
-
-
+        $album[$key_page] = $page;
     }
-    
-    echo json_encode("hello");
 
+    $_SESSION["album"] = $album;
 }
 
 
 /* ---------------------------- GENERATION DU PDF --------------------------- */
 function generationPDF(){
 
-}
+    $tableau = $_SESSION["album"];
 
+    echo $_SESSION['id_commande'];
+     
 
-/* ------------------------- COMPRESSION DES IMAGES ------------------------- */
-function compressionIMG(){
+    $json_data = file_get_contents('../ASSETS/json/templates_a4.json');
 
-    try{
-        \Tinify\setKey(API_KEY);
-        \Tinify\validate();
-    
-        $source = \Tinify\fromFile("path/to/unoptimized.jpg"); // -> image originale
-        $source->toFile("path/to/optimized.jpg"); // -> image compressée
+    $data = json_decode($json_data, true);
+    $templates = [];
 
-    }catch(\tinify\Exception $e){
-        echo "Erreur concernant la clé API";
+    foreach ($data as $id => $value) {
+        $templates[$id] = $value;
     }
+    ob_start();
+
+    require('../TCPDF/tcpdf.php');
+
+    $unicode = true;
+    $format = "UTF-8";
+
+    $pdf = new TCPDF('P', 'px', 'A4', true, 'UTF-8', false);
+
+    $pdf->SetPrintHeader(false);
+    $pdf->SetPrintFooter(false);
+
+
+    $pdf->SetAutoPageBreak(false, 0);
+
+
+    // $font = 'saycomic';
+    // $pdf->SetFont($font, '', 200);
+
+
+    foreach ($tableau as $key => $page) {
+        $pdf->AddPage('P', array(2480 , 3508));
+
+        $pdfWidth = $pdf->getPageWidth();
+        $pdfHeight = $pdf->getPageHeight();
+
+        // //  Ajouter couleur de fond au pdf 
+        // $pdf->SetFillColor(255, 0, 0); // La couleur (ici rouge) 
+        // $pdf->SetXY(0,0); // Positionnement de la Cell 
+        // $pdf->Cell($pdfWidth, $pdfHeight, '', 0, 0, 'C', true);
+
+        // //  Ajouter image de fond au pdf 
+        // $pdf->Image('../assets/IMG/pluie.jpg',0 ,0 , $pdfWidth, $pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, false);
+
+
+
+        foreach ($page as $obj => $element) {
+            
+            if (!str_starts_with($element, "id")) {
+                
+                if ($templates[$page[0]]['obj_'.$obj]['type']=='img') {
+                
+                    $chemin = explode("#", $element)[1];
+                    if ($chemin != null) {
+                        cropImage($chemin,$element[0],($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth,($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight);
+                        $pdf->Image($chemin,($templates[$page[0]]['obj_'.$obj]['data']['x'] / 100)*$pdfWidth ,( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight , ( $templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth, ( $templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, $fitonpage=false);
+                    }
+                    
+                }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
+
+                    $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
+                    $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
+
+                }
+            }   
+        }
+    }
+
+    
+
+    // $nb_fichiers = count(glob("../STOCKAGE/PDF_commandes/*.*")) + 1;
+    // $id = uniqid();
+    // $nom = 'fichier_'.$id.'.pdf';
+    $nom = $_SESSION['id_commande'] . ".pdf";
+    // Générer le fichier PDF
+
+    // Générer le fichier PDF sur le serveur
+
+
+    $pdf->Output('C:\xampp\htdocs\projet_album\STOCKAGE\PDF_commandes\\'.$nom, 'F');
+    
+
+
 }
 
 
@@ -233,21 +298,21 @@ function cropImage($imagePath,$placement,$template_w,$template_h){
     }
 
 
-    if($placement == "H" || $placement == "B"){
+    if($placement == "T" || $placement == "B"){
         //placement en vertical - horizontal centré
 
-        if($placement == "H"){
+        if($placement == "T"){
             $y = 0;
         }else if($placement == "B"){
             $y = $height - $h;
         }
 
-    }else if($placement == "G" || $placement == "D"){
+    }else if($placement == "L" || $placement == "R"){
         //placement en horizontal - vertical centré
 
-        if($placement == "G"){
+        if($placement == "L"){
             $x = 0;
-        }else if($placement == "D"){
+        }else if($placement == "R"){
             $x = $width - $w;
         }
 
@@ -274,9 +339,34 @@ function cropImage($imagePath,$placement,$template_w,$template_h){
     $cropped_image = imagecrop($resized_image, ['x' => $x, 'y' => $y, 'width' => $w, 'height' => $h]);
 
     // Enregistre l'image recadrée avec un nouveau nom
-    imagejpeg($cropped_image, $imagePath.'_bis.jpg');
+    imagejpeg($cropped_image, $imagePath);
 
     // Libère la mémoire utilisée par les images
     imagedestroy($image);
     imagedestroy($cropped_image);
+}
+
+
+
+/* ------------------ SUPPRESSION DES IMAGES APRES CREA PDF ----------------- */
+function destroyIMG_SESSION(){
+    $album = $_SESSION['album'];
+
+    foreach ($album as $num_page => $page) {
+        foreach ($page as $num_element => $element) {
+            
+            //vérifie si c'est une image
+            if($element[1] == "#" && isset($element[2])){
+                $chemin = explode("#", $element)[1];
+
+                //vérification et suppression du fichier
+                if (file_exists($chemin)) {
+                    unlink($chemin);
+                }
+            }
+        }
+    }
+
+    //destruction de la session
+    session_destroy();
 }

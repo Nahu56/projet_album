@@ -9,4 +9,5 @@ RewriteEngine On
 RewriteRule ^admin$ CODE/VIEWS/admin.php [L]
 RewriteRule ^editeur$ CODE/VIEWS/editeur.php [L]
 RewriteRule ^options$ CODE/VIEWS/options.php [L]
+RewriteRule ^confirmation$ CODE/VIEWS/confirmation.php [L]
 RewriteRule ^$ index.php [L]

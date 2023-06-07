@@ -156,15 +156,16 @@ body #commande .date .album .info_vendeur .visible p {
 }
 body #commande .date .album .info_vendeur .cache {
   display: none;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  margin-left: 45px;
+  margin: 0 30px;
+  padding-bottom: 30px;
 }
 body #commande .date .album .info_vendeur .cache div {
   background-color: #FFFFFF;
   font-weight: 700;
   padding: 10px 25px;
-  margin-right: 20px;
 }
 body #commande .date .album .info_vendeur .cache div p:first-child {
   color: #A0A0A0;
@@ -197,15 +198,16 @@ body #commande .date .album .info_album .visible .prx_totale {
 }
 body #commande .date .album .info_album .cache {
   display: none;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  margin-left: 45px;
+  margin: 0 30px;
+  padding-bottom: 30px;
 }
 body #commande .date .album .info_album .cache div {
   background-color: #FFFFFF;
   font-weight: 700;
   padding: 10px 25px;
-  margin-right: 20px;
   width: 20%;
 }
 body #commande .date .album .info_album .cache div p:first-child {

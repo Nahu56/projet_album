@@ -161,6 +161,7 @@ function addImageBg(element) {
       // On définit la propriété background-image de l'élément avec l'URL du fichier
       element.style.backgroundImage = 'url(' + reader.result + ')';
     };
+
     // On lit les données du premier fichier de l'élément
     reader.readAsDataURL(element.files[0]);
   }

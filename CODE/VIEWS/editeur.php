@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="CODE/CSS/editeur.css">
     
     <!-- Appel header -->
-    <?php require '../components/header.php' ?>
+    <?php 
+    require '../components/header.php' ;
+    ?>
 
     <script>
         // TODO : A decocher plus tard
@@ -27,6 +29,10 @@
 
 </head>
 <body id="editeur">
+
+    <div id="notifications">
+        
+    </div>
     
     <!-- ------------------------------------------------------------------------ */
     /*                                   GAUCHE                                   */
@@ -227,7 +233,6 @@
 
             <footer>
                 <button onclick="go_checkout()" class="black_btn">Terminer</button>
-                <button onclick="test_validation()" class="black_btn">TEST</button>
             </footer>
         </section>
     </div>
@@ -247,7 +252,16 @@
             </header>
 
             <main>
-                -- Ici les miniatures des pages --
+                <div>
+                    <p>Page 1</p>
+                    <div class="miniature_page"></div> 
+                </div>
+                <div>
+                    <p>Page 2</p>
+                    <div class="miniature_page"></div> 
+                </div>
+                
+                
             </main>
 
             <footer>
@@ -264,82 +278,6 @@
                 <!-- Importation de la SDK JavaScript PayPal -->
                 <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID ?>&currency=EUR&locale=fr_FR"></script>
                 <script>
-
-                    function test_validation(){
-
-                        var reliure_album = "Gold";
-                        var pages_album = 52 ;
-                        var format_album = "A4"; 
-
-                        // Afficher les details de la transaction dans la console
-                        details  = {"id": "87L258710V175744D", "intent": "CAPTURE", "status": "COMPLETED", "purchase_units": [ { "reference_id": "default", "amount": { "currency_code": "EUR", "value": "1.99", "breakdown": { "item_total": { "currency_code": "EUR", "value": "1.99" }, "shipping": { "currency_code": "EUR", "value": "0.00" }, "handling": { "currency_code": "EUR", "value": "0.00" }, "insurance": { "currency_code": "EUR", "value": "0.00" }, "shipping_discount": { "currency_code": "EUR", "value": "0.00" } } }, "payee": { "email_address": "sb-kxgpb20393803@business.example.com", "merchant_id": "V5Q2F8SMUFXMW" }, "description": "Album Photo", "items": [ { "name": "Album Photo", "unit_amount": { "currency_code": "EUR", "value": "1.99" }, "tax": { "currency_code": "EUR", "value": "0.00" }, "quantity": "1", "description": "Un album photo de qualité ", "image_url": "" } ], "shipping": { "name": { "full_name": "John Doe" }, "address": { "address_line_1": "Av. de la Pelouse, 87648672 Mayet", "admin_area_2": "Paris", "admin_area_1": "Alsace", "postal_code": "75002", "country_code": "FR" } }, "payments": { "captures": [ { "id": "2NJ45344AE7044432", "status": "COMPLETED", "amount": { "currency_code": "EUR", "value": "1.99" }, "final_capture": true, "disbursement_mode": "INSTANT", "seller_protection": { "status": "ELIGIBLE", "dispute_categories": [ "ITEM_NOT_RECEIVED", "UNAUTHORIZED_TRANSACTION" ] }, "create_time": "2023-06-06T12:09:59Z", "update_time": "2023-06-06T12:09:59Z" } ] } } ], "payer": { "name": { "given_name": "John", "surname": "Doe" }, "email_address": "sb-43zoiv25000455@personal.example.com", "payer_id": "YHBQKJAZCGALY", "address": { "country_code": "FR" } }, "create_time": "2023-06-06T12:09:51Z", "update_time": "2023-06-06T12:09:59Z", "links": [ { "href": "https://api.sandbox.paypal.com/v2/checkout/orders/87L258710V175744D", "rel": "self", "method": "GET" } ]}
-
-                        // Récupérer la date 
-                        const dateStr = details.update_time;
-                        var date = new Date(dateStr);
-                        var date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-
-                        var tableau_commande = []; 
-
-                        tableau_commande[0] = date;
-                        tableau_commande[1] = details.id;
-                        tableau_commande[2] = details.payer.name.surname;
-                        tableau_commande[3] = details.payer.name.given_name;
-                        tableau_commande[4] = details.payer.email_address;
-                        
-                        tableau_commande[5] = details.purchase_units[0].items[0].name;
-                        tableau_commande[6] = details.purchase_units[0].items[0].quantity;
-                        tableau_commande[7] = reliure_album;
-                        tableau_commande[8] = format_album;
-                        tableau_commande[9] = pages_album;
-
-                        tableau_commande[10] = details.purchase_units[0].amount.value;
-
-
-                        let tableau_album = sessionStorage.getItem("album"); // -> tableau de l'album
-
-
-                        /* -------------------------------------------------------------------------- */
-                        /*                                REQUETE AJAX                                */
-                        /* -------------------------------------------------------------------------- */
-                        /** Requete AJAX permettant de passer les informations de commande, ainsi que le tableau contenant l'album
-                         * @param {array} tableau_commande //date, id, nom, prenom, email nom_album, qtt_album, reliure, format, nb_page, total
-                         * @param {array} tableau_album //tableau de l'album
-                        */
-                        
-                        // Création d'un objet XMLHttpRequest
-                        let xhr = new XMLHttpRequest();
-
-                        xhr.open("POST", 'CODE/controller.php?function=validation_commande');
-                        xhr.responseType = "json";
-
-                        // Création d'un objet FormData
-                        let formData = new FormData();
-                        formData.append('tableau_commande', JSON.stringify(tableau_commande));
-                        formData.append('tableau_album', tableau_album);
-
-                        xhr.onload = function() {
-                        // Si le statut HTTP n'est pas 200...
-                        if (xhr.status !== 200) { 
-                            // ...On affiche le statut et le message correspondant
-                            alert("Erreur " + xhr.status + " : " + xhr.statusText);
-                        } else {
-                            // Si le statut HTTP est 200, on affiche la réponse
-                            alert("Réussi ! -> " + xhr.response);
-                        }
-                        };
-
-                        // Envoi des données avec la méthode send()
-                        xhr.send(formData);
-
-                    }
-
-            
-                    /* -------------------------------------------------------------------------- */
-                    /* -------------------------------------------------------------------------- */
-                    /* -------------------------------------------------------------------------- */
-
-
 
                     var reliure_album = "Gold";
                     var pages_album = 52 ;
@@ -362,7 +300,7 @@
                             var produits = [
                                 {
                                     name : "Album Photo",
-                                    quantity : 1,
+                                    quantity : 2,
                                     description : "Un album photo de qualité ",
                                     unit_amount : { value : 1.99, currency_code : "EUR" }
                                 }
@@ -392,14 +330,81 @@
                         onApprove : function (data, actions) {
                             return actions.order.capture().then(function(details) {
 
+
+                                var reliure_album = "Gold";
+                                var pages_album = 52 ;
+                                var format_album = "A4"; 
+
+                                // Afficher les details de la transaction dans la console
+
+                                // Récupérer la date 
+                                const dateStr = details.update_time;
+                                var date = new Date(dateStr);
+                                var date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+
+                                var tableau_commande = []; 
+
+                                tableau_commande[0] = date;
+                                tableau_commande[1] = details.id;
+                                tableau_commande[2] = details.payer.name.surname;
+                                tableau_commande[3] = details.payer.name.given_name;
+                                tableau_commande[4] = details.payer.email_address;
                                 
+                                tableau_commande[5] = details.purchase_units[0].items[0].name;
+                                tableau_commande[6] = details.purchase_units[0].items[0].quantity;
+                                tableau_commande[7] = reliure_album;
+                                tableau_commande[8] = format_album;
+                                tableau_commande[9] = pages_album;
+
+                                tableau_commande[10] = details.purchase_units[0].amount.value;
+
+
+                                let tableau_album = sessionStorage.getItem("album"); // -> tableau de l'album
+
+
+                                /* -------------------------------------------------------------------------- */
+                                /*                                REQUETE AJAX                                */
+                                /* -------------------------------------------------------------------------- */
+                                /** Requete AJAX permettant de passer les informations de commande, ainsi que le tableau contenant l'album
+                                 * @param {array} tableau_commande //date, id, nom, prenom, email nom_album, qtt_album, reliure, format, nb_page, total
+                                 * @param {array} tableau_album //tableau de l'album
+                                */
+                                
+                                // Création d'un objet XMLHttpRequest
+                                let xhr = new XMLHttpRequest();
+
+                                xhr.open("POST", 'CODE/controller.php?function=part1');
+                                xhr.responseType = "json";
+
+                                // Création d'un objet FormData
+                                let formData = new FormData();
+                                formData.append('tableau_commande', JSON.stringify(tableau_commande));
+                                formData.append('tableau_album', tableau_album);
+
+                                xhr.onload = function() {
+                                // Si le statut HTTP n'est pas 200...
+                                if (xhr.status !== 200) { 
+                                    // ...On affiche le statut et le message correspondant
+                                    console.log("Erreur " + xhr.status + " : " + xhr.statusText);
+                                } else {
+                                    // Si le statut HTTP est 200, on affiche la réponse
+                                    console.log(xhr.response);
+                                }
+                                };
+
+                                // Envoi des données avec la méthode send()
+                                xhr.send(formData);
+
+
+                                window.location = 'CODE/controller.php?function=part2';
+
 
                             });
                         },
 
                         // Annuler la transaction
                         onCancel : function (data) {
-                            alert("Transaction annulée !");
+                            notifications(false,' transaction annulée ');
                         }
 
                     }).render("#paypal-boutons");

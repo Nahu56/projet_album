@@ -743,18 +743,10 @@ function saveAlbum(){
                 let placement_image = "C";
                 let list_classes = obj.classList;
                 list_classes.forEach(classe => {
-                    if(classe.split("_")[1]){
-                        
-                        let tag = classe.split("_")[1];
 
-                        if(tag == "T" || tag == "B" || tag == "C" || tag == "L" || tag == "R"){
-                            //récupère la premiere lettre, soit T, B, C, L ou R
-                            placement_image = classe.split("_")[1].toUpperCase()[0]; 
-                        }else{
-                            placement_image = "C"; 
-                        }
-
-                        
+                    if(classe.startsWith("img_")){
+    
+                        placement_image = classe.split("_")[1].toUpperCase()[0]; 
 
                     };
                 })
@@ -858,4 +850,60 @@ function open_modal_final(){
     }else{
         modal.classList.add('actif');
     }
+}
+
+
+/** ------------- FONCTION NOTIFICATIONS  -------------
+ * Permet de faire apparaitre le modal récapitulatif
+ */
+function notifications(etat,texte){
+
+    if (etat == false) {
+        // Sélectionner l'élément avec l'ID "notifications"
+        var notificationsElement = document.getElementById("notifications");
+
+        // Créer un nouvel élément div
+        var erreurElement = document.createElement("div");
+        erreurElement.classList.add("erreur");
+
+        // Créer un élément de paragraphe
+        var pElement = document.createElement("p");
+        pElement.textContent = "Erreur : " + texte;
+
+        // Créer un élément d'image
+        var imgElement = document.createElement("img");
+        imgElement.setAttribute("src", "ASSETS/img/Warning.png");
+        imgElement.setAttribute("alt", "warning");
+
+        // Ajouter les éléments au div erreurElement
+        erreurElement.appendChild(pElement);
+        erreurElement.appendChild(imgElement);
+
+        // Ajouter le div erreurElement à l'élément notificationsElement
+        notificationsElement.appendChild(erreurElement);
+    }else{
+        // Sélectionner l'élément avec l'ID "notifications"
+        var notificationsElement = document.getElementById("notifications");
+
+        // Créer un nouvel élément div
+        var erreurElement = document.createElement("div");
+        erreurElement.classList.add("valid");
+
+        // Créer un élément de paragraphe
+        var pElement = document.createElement("p");
+        pElement.textContent = texte;
+
+        // Créer un élément d'image
+        var imgElement = document.createElement("img");
+        imgElement.setAttribute("src", "ASSETS/img/Partying_Face.png");
+        imgElement.setAttribute("alt", "smiley fête");
+
+        // Ajouter les éléments au div erreurElement
+        erreurElement.appendChild(pElement);
+        erreurElement.appendChild(imgElement);
+
+        // Ajouter le div erreurElement à l'élément notificationsElement
+        notificationsElement.appendChild(erreurElement);
+    }
+
 }

@@ -4,6 +4,7 @@ $gris2: #dddddd;
 $gristext: #737373;
 
 $vert: #18574A;
+$vert2: rgb(195, 242, 231);
 $vert_fond: #EBF0EF;
 
 
@@ -17,9 +18,64 @@ body{
 /*                                   EDITEUR                                  */
 /* -------------------------------------------------------------------------- */
 #editeur{
+
+
+
     position: relative;
 
     background-color: $vert_fond;
+
+    #notifications{
+        position: absolute;
+        top: 30px;
+        right: 30px;
+
+        z-index: 999;
+
+        div{
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            padding:  15px 35px  ;
+            background-color: #EBF0EF;
+            box-shadow: 5px 5px 0px #000000;
+
+            animation: arrive 0.5s forwards, sortie 1s 4s forwards;
+
+
+            img{
+                height: 20px;
+                width: 20px;
+                margin: 10px;
+            }
+            span{
+                font-weight: 700;
+            }
+        }
+        .erreur{
+            border: 3px solid #792222;
+        }
+        .valid{
+            border: 3px solid #18574A;
+        }
+    }
+    @keyframes sortie {
+        0% {
+            transform: translateX(0) ;
+        }
+        100% {
+            transform: translateX(600px) ;
+            display: none;
+        }
+    }
+    @keyframes arrive {
+        0% {
+            transform: translateY(-300px) ;
+        }
+        100% {
+            transform: translateX(0) ;
+        }
+    }
  
     section{
         border: 2px solid black;
@@ -244,9 +300,13 @@ body{
                                 }
                             }
 
-                            &>img{
+                            
+                        }
+                        &>img{
+                            &:hover{
                                 cursor: pointer; 
                             }
+                            
                         }
                     }
                     
@@ -365,6 +425,7 @@ body{
                 height: $width * $ratio ;
                 width: $width;
 
+
                 background-color:white; 
 
                 border: 4px solid #18574A;
@@ -414,7 +475,9 @@ body{
                         transform: translate(-50%, -50%);
                     }
                     &.img{
-                        border: none;
+                        outline: 2px solid $transparent;
+                        outline-offset: -2px;
+
                         background-color: $gris;
                         background-size: cover;
                         background-position: center;
@@ -434,6 +497,13 @@ body{
                         }
                         &.img_right{
                             background-position: right;
+                        }
+
+                        transition: all 0.2s ease-in;
+                        &:hover{
+                            background-color: $vert2;
+
+                            outline: 2px solid $vert;
                         }
                     }
                     &.selected{
@@ -880,7 +950,27 @@ body{
                 }
             }
             >main{
-                //Miniatures pages
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                >div{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .miniature_page{
+                        $width : 160px;
+                        $ratio: 1.414;
+                        height: $width * $ratio ;
+                        width: $width;
+                        border: 2px solid #18574A;
+    
+                        margin: 2px;
+                    }
+                }
+                
+                
             }
             >footer{
                 display: flex;
