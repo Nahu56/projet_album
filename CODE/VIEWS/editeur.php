@@ -21,6 +21,8 @@
         //     event.returnValue = ""; // Requiert une chaîne vide pour les navigateurs plus anciens
         //     alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
         // });
+
+        var nb_pages = 0;
     </script>
     
 
@@ -187,45 +189,45 @@
                 <header>
                     <h6>Titre de l'album</h6>
 
-                    <input type="text" placeholder="Mon album">
+                    <input type="text" placeholder="Mon album" oninput="nom_album = this.value;">
                 </header>
                 <main>
                     <div id="options_album">
-                        <div>
+                        <div class="prix_base">
                             <p>Base</p>
-                            <span id=""> 9,90€</span>
+                            <span id=""> </span>
                         </div>
-                        <div>
+                        <div class="prix_reliure">
                             <p>Reliure</p>
-                            <span id=""> 6,50€</span>
+                            <span id=""> </span>
                         </div>
-                        <div>
-                            <p>Format</p>
-                            <span id=""> 2,00€</span>
+                        <div class="prix_couverture">
+                            <p>Couverture</p>
+                            <span id=""> </span>
                         </div>
-                        <div>
-                            <p>Pages x24</p>
-                            <span id=""> 12,00€</span>
+                        <div class="prix_pages">
+                            <p>Pages x1</p>
+                            <span id=""></span>
                         </div>
                     </div>
 
-                    <div>
+                    <div class="txt_prix_album">
                         <p>Album</p>
                         <span>30,40€</span>
                     </div>
                 </main>
                 <footer>
-                    <div>
-                        <button> + </button>
-                        <p>2</p>
-                        <button> - </button>
+                    <div class="qtt">
+                        <button onclick="changer_qtt(-1)" > - </button>
+                        <p>1</p>
+                        <button onclick="changer_qtt(1)" > + </button>
                     </div>
 
-                    <div>
-                        <div>
+                    <div class="total">
+                        <!-- <div>
                             <span>63,80€</span>
                             <p>-10%</p>
-                        </div>
+                        </div> -->
                         <p>54,72€</p>
                     </div>
                 </footer>
@@ -236,7 +238,6 @@
             </footer>
         </section>
     </div>
-
 
     <div id="modal_final" class="">
         <main>
@@ -252,15 +253,6 @@
             </header>
 
             <main>
-                <div>
-                    <p>Page 1</p>
-                    <div class="miniature_page"></div> 
-                </div>
-                <div>
-                    <p>Page 2</p>
-                    <div class="miniature_page"></div> 
-                </div>
-                
                 
             </main>
 
@@ -280,7 +272,7 @@
                 <script>
 
                     var reliure_album = "Gold";
-                    var pages_album = 52 ;
+                    var pages_album = nb_pages ;
                     var format_album = "A4";
 
                     // 2. Afficher le bouton PayPal
@@ -299,10 +291,10 @@
                             // Les produits à payer avec leurs details
                             var produits = [
                                 {
-                                    name : "Album Photo",
-                                    quantity : 2,
-                                    description : "Un album photo de qualité ",
-                                    unit_amount : { value : 1.99, currency_code : "EUR" }
+                                    name : nom_album,
+                                    quantity : qtt,
+                                    description : "Album photo made in Print Shop CREA ",
+                                    unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
                                 }
                             ];
 
@@ -413,12 +405,13 @@
             </footer>
         </main>
     </div>
+    
 
 </body>
 </html>
-
 <script src="CODE/JS/editeur.js"></script>
 <script src="CODE/JS/editeur_gestion-template.js"></script>
+
 
 <script>
     /* -------------------------------------------------------------------------- */

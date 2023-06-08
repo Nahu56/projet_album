@@ -25,9 +25,11 @@ function recuperation_templates() {
             box_templates.querySelectorAll("a").forEach(div_template => {
 
               div_template.addEventListener('click', function() {
+
                 let num_page = sessionStorage.getItem("currentpage").split("_")[1];
                 let page = document.querySelector("#page_" + num_page + " .feuille");
                 let apercue = document.querySelector("#apercue_" + num_page);
+                let miniature = document.querySelector("#miniature_" + num_page + " .miniature_page");
 
                 page.innerHTML = ""; // clear la page actuelle
                 loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
@@ -44,6 +46,10 @@ function recuperation_templates() {
 
                 apercue.appendChild(suppr_page);
                 loadElement("#apercue_" + num_page , templates[div_template.id]);
+
+                miniature.innerHTML= "";
+                loadElement("#miniature_" + num_page +' .miniature_page' , templates[div_template.id]);
+
 
                 //attribution de l'id template a la page (en class)
                 page.className = "";

@@ -1,6 +1,6 @@
 body {
   margin: 0px;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -20,7 +20,7 @@ body {
   /* -------------------------------------------------------------------------- */
 }
 #editeur #notifications {
-  position: absolute;
+  position: fixed;
   top: 30px;
   right: 30px;
   z-index: 999;
@@ -335,7 +335,8 @@ body {
   transform: translate(-50%, -50%);
 }
 #editeur #centre .page > div button.img {
-  border: 2px solid transparent;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
   background-color: #F0F0F0;
   background-size: cover;
   background-position: center;
@@ -358,7 +359,7 @@ body {
 }
 #editeur #centre .page > div button.img:hover {
   background-color: rgb(195, 242, 231);
-  border: 2px solid #18574A;
+  outline: 2px solid #18574A;
 }
 #editeur #centre .page > div button.selected {
   outline: 4px solid #18574A;
@@ -588,6 +589,7 @@ body {
 #editeur div#droite #panier > main > footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #editeur div#droite #panier > main > footer > div:first-child {
   display: flex;
@@ -638,12 +640,13 @@ body {
   padding: 0 20px 20px 20px;
 }
 #editeur #modal_final {
+  display: none;
   position: absolute;
   top: 100vh;
+  left: 0;
   overflow-y: scroll;
   z-index: 910;
   width: 100vw;
-  height: 100vh;
   padding: 20vh 0;
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
@@ -656,10 +659,8 @@ body {
 #editeur #modal_final > main {
   display: flex;
   flex-direction: column;
-  gap: 50px;
   cursor: auto;
-  height: auto;
-  width: 800px;
+  width: 820px;
   max-width: 90%;
   margin: 0 auto;
   padding: 50px;
@@ -684,18 +685,64 @@ body {
 #editeur #modal_final > main > main {
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  width: 89%;
+  margin: 20px auto;
 }
 #editeur #modal_final > main > main > div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  margin-bottom: 15px;
+}
+#editeur #modal_final > main > main > div img {
+  position: absolute;
+  top: 14px;
+  left: -9px;
+  width: 15px;
 }
 #editeur #modal_final > main > main > div .miniature_page {
   height: 226.24px;
   width: 160px;
   border: 2px solid #18574A;
-  margin: 2px;
+  position: relative;
+}
+#editeur #modal_final > main > main > div .miniature_page p {
+  font-size: 10px;
+}
+#editeur #modal_final > main > main > div .miniature_page div {
+  background-color: #F0F0F0;
+  position: absolute;
+}
+#editeur #modal_final > main > main > div .miniature_page .txt {
+  height: 5%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  margin: 0;
+  background-color: #18574A;
+  height: 5px;
+}
+#editeur #modal_final > main > main > div .miniature_page .img {
+  border: none;
+  background-size: cover;
+  background-position: center;
+}
+#editeur #modal_final > main > main > div .miniature_page .img.img_top {
+  background-position: top;
+}
+#editeur #modal_final > main > main > div .miniature_page .img.img_bottom {
+  background-position: bottom;
+}
+#editeur #modal_final > main > main > div .miniature_page .img.img_center {
+  background-position: center;
+}
+#editeur #modal_final > main > main > div .miniature_page .img.img_left {
+  background-position: left;
+}
+#editeur #modal_final > main > main > div .miniature_page .img.img_right {
+  background-position: right;
 }
 #editeur #modal_final > main > footer {
   display: flex;

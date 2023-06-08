@@ -3,16 +3,26 @@
  */
 
 var focus = "page_0";
-var nb_pages = 0;
+// var nb_pages = 0;
 var element_focus = null;
 
 //vide le sessionStorage
 sessionStorage.setItem("album", "");
 
 // Prix : 
-var prix_page = 5.99;
-var prix_bordure = 12.99; 
+var qtt = 1 ;
+
+var prix_base = 9.90;
+
+var prix_page = 5.99 ;
+var prix_reliure = 12.99 ; 
+var prix_couverture = 9.99 ;
+
+var prix_total = 0;
+var prix_album = 0;
 // ...
+
+var nom_album = "";
 
 
 /** ----- FONCTIONS AFFICHAGE PAGES EDIT -----
@@ -297,6 +307,18 @@ function ajout_page() {
 
     nb_pages += 1;
 
+
+    // On met à jour la ligne dans le panier 
+    var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span');
+    prix_pages_prx.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p');
+    prix_pages_txt.textContent= 'Pages x'+nb_pages;
+    // On met a jour le prix de l'album
+    maj_prix_album();
+    maj_prix_total()
+    
+    
+
     // Création de l'élément div avec l'ID "page_1" et la classe "page"
     var divPage = document.createElement("div");
     divPage.id = "page_"+nb_pages;
@@ -325,6 +347,7 @@ function ajout_page() {
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
     ajout_page_apercue();
+    ajout_page_miniature();
     focus_page("page_"+(nb_pages));
 
 
@@ -433,6 +456,47 @@ function ajout_page_apercue() {
 
 }
 
+function ajout_page_miniature(){
+    // Créer un élément div
+    var miniature = document.createElement("div");
+    miniature.id = "miniature_"+nb_pages;
+
+    // Créer un élément p
+    var paragraphe = document.createElement("p");
+    paragraphe.textContent = "Page "+nb_pages;
+
+    // Créer un élément div avec la classe "miniature_page"
+    var page = document.createElement("div");
+    page.className = "miniature_page";
+
+    // Ajouter le paragraphe à la div principale
+    miniature.appendChild(paragraphe);
+
+    // Ajouter la div enfant à la div principale
+    miniature.appendChild(page);
+
+    if (nb_pages % 2 == 0){
+        page.style.borderLeft = 'none'
+
+        var icone = document.createElement("img");
+        icone.src = "ASSETS/img/icones/liaison_page.svg";
+        icone.alt = "icone liaison entre les pages";
+        miniature.appendChild(icone);
+
+    }
+    if (nb_pages % 4 == 2) {
+        miniature.style.marginRight = '60px';
+
+
+    }
+
+    // Ajouter la div principale à un élément existant de la page (par exemple, le body)
+    var main_miniature = document.querySelector('#modal_final main main')
+    main_miniature.appendChild(miniature);
+
+
+}
+
 
 /** ------------- SET BACKGROUND -------------
  * Cette fonction modifie le fond de l'élément element_focus qui est initialisé dans l'apparition de la page edit 
@@ -451,6 +515,9 @@ function setBackground(event) {
 
         var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
         img_apercue.style.backgroundImage = `url(${reader.result})`;
+
+        var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
+        img_miniature.style.backgroundImage = `url(${reader.result})`;
 
         rm_apercue_image();
         apercue_image();
@@ -532,6 +599,9 @@ function apercue_image(){
         var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
         img_apercue.style.backgroundImage = `none`;
 
+        var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
+        img_miniature.style.backgroundImage = `none`;
+
         rm_apercue_image()
     })
 
@@ -574,7 +644,9 @@ function place_img(event){
     let choix = button.id.split("_")[1];
 
     let element = document.querySelector("button.selected");
-    var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+    var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0]);
+    var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
+
 
     
 
@@ -583,11 +655,14 @@ function place_img(event){
     list_choix.forEach(option => {
         element.classList.remove("img_" + option);
         img_apercue.classList.remove("img_" + option);
+        img_miniature.classList.remove("img_" + option);
 
     })
 
     element.classList.add("img_" + choix);
     img_apercue.classList.add("img_" + choix);
+    img_miniature.classList.add("img_" + choix);
+
 
 }
 
@@ -670,7 +745,52 @@ function supprimer_page(num_page) {
 
     }
 
+    // On enleve la page dans le centre 
+    var list_miniatures = document.querySelector('#modal_final MAIN MAIN')
+    var miniature_ = document.getElementById('miniature_'+num_page)
+    list_miniatures.removeChild(miniature_)
+
+    // On replace les éléments dans le centre
+    for (let i = num_page; i < nb_pages; i++) {
+        let i_bis = +i + 1 ;
+        var miniature = document.getElementById('miniature_'+(i_bis));
+        miniature.id = 'miniature_'+i;
+
+        miniature.style.marginRight = '0px';
+        if (i % 4 == 2) {
+            miniature.style.marginRight = '60px';
+        } else if (i % 2 !== 0) {
+            var icone = miniature.querySelector('img');
+            miniature.removeChild(icone)
+
+            let miniature_page = miniature.querySelector('.miniature_page');
+            miniature_page.style.borderLeft = '2px solid #18574A'
+        }else{
+
+            var icone = document.createElement("img");
+            icone.src = "ASSETS/img/icones/liaison_page.svg";
+            icone.alt = "icone liaison entre les pages";
+            miniature.appendChild(icone);
+
+            let miniature_page = miniature.querySelector('.miniature_page');
+            miniature_page.style.borderLeft = 'none'
+        }
+
+        var miniature_texte = miniature.querySelector('p');
+        miniature_texte.textContent = 'Page '+i;
+    }
+
     nb_pages -= 1 ;
+
+
+    // On met à jour la ligne dans le panier 
+    var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span ');
+    prix_pages_prx.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p ');
+    prix_pages_txt.textContent= 'Pages x'+nb_pages;
+    // On met a jour le prix de l'album
+    maj_prix_album();
+    maj_prix_total()
 
 
     // On change le dernier élément de l'apercu en fonction de ce qu'on 
@@ -826,9 +946,14 @@ function close_panier() {
  */
 function go_checkout(){
 
-    saveAlbum(); // -> sauvegarde l'album dans le sessionStorage
+    if (nb_pages % 2 == 0) {
+        saveAlbum(); // -> sauvegarde l'album dans le sessionStorage
 
-    open_modal_final();
+        open_modal_final();
+    }else{
+        notifications(false,'Il faut un nombre paire de page')
+    }
+
 }
 
 
@@ -838,19 +963,35 @@ function go_checkout(){
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
 
+    body.removeEventListener('click', close_panier);
+
     modal.addEventListener("click", function(event){
         if (event.target !== this) {
             return; // Ignore le clic sur les éléments enfants de #modal_final
         }
+
+        body.addEventListener('click', close_panier);
+
         modal.classList.remove('actif');
-    });
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 600); // Délai de 600 millisecondes (0,6 seconde)
+    })
 
     if(modal.classList.contains('actif')){
         modal.classList.remove('actif');
-    }else{
-        modal.classList.add('actif');
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 600); // Délai de 600 millisecondes (0,6 seconde)
+        body.addEventListener('click', close_panier);
+    } else {
+        modal.style.display = "block";
+        setTimeout(function() {
+            modal.classList.add('actif');
+        }, 010); // Délai de 600 millisecondes (0,6 seconde)
     }
 }
+
 
 
 /** ------------- FONCTION NOTIFICATIONS  -------------
@@ -905,5 +1046,59 @@ function notifications(etat,texte){
         // Ajouter le div erreurElement à l'élément notificationsElement
         notificationsElement.appendChild(erreurElement);
     }
+
+}
+
+
+/** ------------- FONCTION MAJ PRIX TOTAL -------------
+ * Cette fonction met à jour les informations 
+ */
+function maj_prix_total(){
+    prix_total = prix_album * qtt; 
+
+    var txt_prix_total = document.querySelector('#panier main footer .total > p')
+    txt_prix_total.textContent = prix_total.toFixed(2).replace('.', ',')+'€';
+
+}
+function maj_prix_album(){
+    prix_album = prix_base + (nb_pages * prix_page) + prix_reliure + prix_couverture ;
+    
+
+    var txt_prix_album = document.querySelector('#panier main main .txt_prix_album span')
+
+    txt_prix_album.textContent = prix_album.toFixed(2).replace('.', ',')+'€';
+}
+
+affichage_options_album();
+maj_prix_album();
+maj_prix_total();
+
+/** ------------- FONCTION CHANGER QTT  -------------
+ * Cette fonction change la quantité à l'aide des boutons et met a jour le prix 
+ */
+function changer_qtt(nb){
+    qtt = qtt + nb;
+    if (qtt > 0) {
+        var texte = document.querySelector('#panier main footer .qtt p')
+        texte.textContent = qtt;
+    }else{
+        qtt = 1;
+    }
+
+    maj_prix_total()
+
+
+}
+
+
+function affichage_options_album(){
+    var prx_base = document.querySelector('#options_album .prix_base span');
+    prx_base.textContent = prix_base.toFixed(2).replace('.', ',')+'€';
+
+    var prx_reliure = document.querySelector('#options_album .prix_reliure span');
+    prx_reliure.textContent = prix_reliure.toFixed(2).replace('.', ',')+'€';
+
+    var prx_couverture = document.querySelector('#options_album .prix_couverture span');
+    prx_couverture.textContent = prix_couverture.toFixed(2).replace('.', ',')+'€';
 
 }
