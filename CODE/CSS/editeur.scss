@@ -38,7 +38,11 @@ body{
             background-color: #EBF0EF;
             box-shadow: 5px 5px 0px #000000;
 
+            transition: 1s;
+
             animation: arrive 0.5s forwards, sortie 1s 4s forwards;
+
+            margin: 10px;
 
 
             img{
@@ -651,6 +655,8 @@ body{
                                     border: none;
                                     background-size: cover;
                                     background-position: center;
+
+                                    transition: all 0.2s ease-in;
     
                                     &.img_top{
                                         background-position: top;
@@ -1048,7 +1054,64 @@ body{
                     border: 1px solid black;
                     background-color: $gris;
 
-                    >div{
+
+                    #panier_modal{
+                        
+                        width: 70%;
+                        margin: 10px auto;
+
+                        >p{
+                            font-size: 25px;
+                            font-weight: 500;
+                        }
+                        .options{
+
+                            border: 1px solid $gristext;
+                            padding: 15px;
+
+                            font-size: 18px;
+
+                            >div{
+                                margin: 5px auto;
+                                display: flex;
+                                justify-content: space-between;
+
+                                span{
+                                    color: $gristext;
+                                }
+                            }
+                            &>div:last-child{
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                
+                                outline: 2px solid black;
+                                background-color: rgba(195, 242, 231, 1);
+                                padding: 10px 15px;
+                                span{color: black;}
+                            }
+                        }
+                        .qtt_total{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            margin: 20px auto;
+
+                            p:first-child{
+                                font-size: 21px;
+                                font-weight: 400;
+                            }
+                            p:last-child{
+                                font-size: 25px;
+                                font-weight: 900;
+                            }
+                        }
+                    }
+
+                    .paypal{
+                        width: 85%;
+                        margin: 10px auto;
                         background-color: $gris;
                     }
                 }

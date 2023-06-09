@@ -32,7 +32,9 @@ body {
   padding: 15px 35px;
   background-color: #EBF0EF;
   box-shadow: 5px 5px 0px #000000;
+  transition: 1s;
   animation: arrive 0.5s forwards, sortie 1s 4s forwards;
+  margin: 10px;
 }
 #editeur #notifications div img {
   height: 20px;
@@ -464,6 +466,7 @@ body {
   border: none;
   background-size: cover;
   background-position: center;
+  transition: all 0.2s ease-in;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_top {
   background-position: top;
@@ -753,6 +756,54 @@ body {
   border: 1px solid black;
   background-color: #F0F0F0;
 }
-#editeur #modal_final > main > footer > div {
+#editeur #modal_final > main > footer #panier_modal {
+  width: 70%;
+  margin: 10px auto;
+}
+#editeur #modal_final > main > footer #panier_modal > p {
+  font-size: 25px;
+  font-weight: 500;
+}
+#editeur #modal_final > main > footer #panier_modal .options {
+  border: 1px solid #737373;
+  padding: 15px;
+  font-size: 18px;
+}
+#editeur #modal_final > main > footer #panier_modal .options > div {
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-between;
+}
+#editeur #modal_final > main > footer #panier_modal .options > div span {
+  color: #737373;
+}
+#editeur #modal_final > main > footer #panier_modal .options > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: 2px solid black;
+  background-color: rgb(195, 242, 231);
+  padding: 10px 15px;
+}
+#editeur #modal_final > main > footer #panier_modal .options > div:last-child span {
+  color: black;
+}
+#editeur #modal_final > main > footer #panier_modal .qtt_total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px auto;
+}
+#editeur #modal_final > main > footer #panier_modal .qtt_total p:first-child {
+  font-size: 21px;
+  font-weight: 400;
+}
+#editeur #modal_final > main > footer #panier_modal .qtt_total p:last-child {
+  font-size: 25px;
+  font-weight: 900;
+}
+#editeur #modal_final > main > footer .paypal {
+  width: 85%;
+  margin: 10px auto;
   background-color: #F0F0F0;
 }/*# sourceMappingURL=editeur.css.map */

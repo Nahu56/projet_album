@@ -22,7 +22,7 @@
         //     alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
         // });
 
-        var nb_pages = 0;
+
     </script>
     
 
@@ -62,7 +62,7 @@
                         
                         <label for="inserer_image">
                             Ouvrir un fichier
-                            <input type="file" name="inserer_image" id="inserer_image" value="Inserer une image"  onchange="setBackground(event)">
+                            <input type="file" accept=".jpeg, .jpg, .png, .svg" name="inserer_image" id="inserer_image" value="Inserer une image"  onchange="setBackground(event)">
 
                         </label>
                     </div>
@@ -189,7 +189,7 @@
                 <header>
                     <h6>Titre de l'album</h6>
 
-                    <input type="text" placeholder="Mon album" oninput="nom_album = this.value;">
+                    <input type="text" placeholder="Mon album" oninput="nom_album = this.value; document.getElementById('nom_album_modal').textContent = nom_album;">
                 </header>
                 <main>
                     <div id="options_album">
@@ -206,14 +206,14 @@
                             <span id=""> </span>
                         </div>
                         <div class="prix_pages">
-                            <p>Pages x1</p>
+                            <p></p>
                             <span id=""></span>
                         </div>
                     </div>
 
                     <div class="txt_prix_album">
                         <p>Album</p>
-                        <span>30,40€</span>
+                        <span></span>
                     </div>
                 </main>
                 <footer>
@@ -228,7 +228,7 @@
                             <span>63,80€</span>
                             <p>-10%</p>
                         </div> -->
-                        <p>54,72€</p>
+                        <p></p>
                     </div>
                 </footer>
             </main>
@@ -259,20 +259,45 @@
             <footer>
                 <h3>Votre panier</h3>
 
-                <div>
-                    album
+                <div id="panier_modal">
+                    <p id="nom_album_modal">Album photo</p>
+                    <div class="options">
+                        <div class="prix_base">
+                            <p>Base</p>
+                            <span></span>
+                        </div>
+                        <div class="prix_reliure">
+                            <p>Reliure</p>
+                            <span></span>
+                        </div>
+                        <div class="prix_couverture">
+                            <p>Couverture</p>
+                            <span></span>
+                        </div>
+                        <div class="prix_pages">
+                            <p>Page x10</p>
+                            <span></span>
+                        </div>
+                        <div class="txt_prix_album">
+                            <p>Album</p>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="qtt_total">
+                        <p class="exemplaires"> 1 Exemplaires </p>
+                        <p class="total"></p>
+                    </div>
                 </div>
 
                 
                 <!-- Le conteneur des boutons PayPal -->
-                <div id="paypal-boutons"></div>
+                <div class="paypal" id="paypal-boutons"></div>
 
                 <!-- Importation de la SDK JavaScript PayPal -->
                 <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID ?>&currency=EUR&locale=fr_FR"></script>
                 <script>
 
                     var reliure_album = "Gold";
-                    var pages_album = nb_pages ;
                     var format_album = "A4";
 
                     // 2. Afficher le bouton PayPal
@@ -322,11 +347,6 @@
                         onApprove : function (data, actions) {
                             return actions.order.capture().then(function(details) {
 
-
-                                var reliure_album = "Gold";
-                                var pages_album = 52 ;
-                                var format_album = "A4"; 
-
                                 // Afficher les details de la transaction dans la console
 
                                 // Récupérer la date 
@@ -346,7 +366,7 @@
                                 tableau_commande[6] = details.purchase_units[0].items[0].quantity;
                                 tableau_commande[7] = reliure_album;
                                 tableau_commande[8] = format_album;
-                                tableau_commande[9] = pages_album;
+                                tableau_commande[9] = nb_pages;
 
                                 tableau_commande[10] = details.purchase_units[0].amount.value;
 
