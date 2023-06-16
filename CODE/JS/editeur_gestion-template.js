@@ -27,12 +27,12 @@ function recuperation_templates() {
               div_template.addEventListener('click', function() {
 
                 let num_page = sessionStorage.getItem("currentpage").split("_")[1];
-                let page = document.querySelector("#page_" + num_page + " .feuille");
+                let page = document.querySelector("#page_" + num_page + " .feuille .zone");
                 let apercue = document.querySelector("#apercue_" + num_page);
                 let miniature = document.querySelector("#miniature_" + num_page + " .miniature_page");
 
                 page.innerHTML = ""; // clear la page actuelle
-                loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
+                loadElement("#page_" + num_page + " .feuille .zone", templates[div_template.id], 1);
 
 
 
@@ -53,7 +53,8 @@ function recuperation_templates() {
 
                 //attribution de l'id template a la page (en class)
                 page.className = "";
-                page.classList.add("feuille");
+                // page.classList.add("feuille");
+                page.classList.add("zone");
                 page.classList.add(div_template.id);
               });
             })

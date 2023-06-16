@@ -394,15 +394,9 @@ body{
         align-items: center;
 
         overflow: hidden; 
-        // overflow: scroll;
-
-        behavior: smooth;
 
 
         .page{
-
-            $width: 550px;
-            width: $width;
 
             display: flex;
             align-items: center;
@@ -422,12 +416,12 @@ body{
                 transition: all ease 1s;   
                 width: 90%;             
             }
-            >div{
+            >.feuille{
                 
                 $ratio: 1.414;
-                height: $width * $ratio ;
+                $width: 550px;
                 width: $width;
-
+                height: $width * $ratio ;
 
                 background-color:white; 
 
@@ -437,14 +431,31 @@ body{
                 position: relative;
                 z-index: 0;
 
+                >.zone{
+
+                    $marge: 10px;
+                    margin: $marge;
+                    height: calc(100% - $marge * 2);
+                    width: calc(100% - $marge * 2);
+
+                    &.id1{
+                        $marge : 0px;
+                        margin: $marge;
+                        height: calc(100% - $marge * 2);
+                        width: calc(100% - $marge * 2);
+                    }
+
+                    position: relative;
+                }
+
                 .voile{
                     position: absolute;
                     top: 0;
                     left: 0;
-    
+
                     height: 100%;
                     width: 100%;
-    
+
                     background-color: #18574a55;
 
                     z-index: 10;

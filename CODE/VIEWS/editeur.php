@@ -22,7 +22,6 @@
         //     alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
         // });
 
-
     </script>
     
 

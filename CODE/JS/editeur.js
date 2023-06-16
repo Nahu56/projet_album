@@ -5,14 +5,35 @@
 var focus = "page_0";
 var nb_pages = 0;
 var element_focus = null;
+// Quantité d'albums : par défaut à zéro
+var qtt = 1 ;
 
 //vide le sessionStorage
 sessionStorage.setItem("album", "");
 
-// Prix : TODO -> a changer 
-var qtt = 1 ;
 
-var prix_base = 4.90;
+// --------- Appelle toutes les fonctions liées au prix ---------
+fetch("ASSETS/json/variables.json")
+    .then(response => response.json())
+    .then(function(json){
+
+        //crée une variable de session avec les prix
+        sessionStorage.setItem("PRIX", JSON.stringify(json));
+
+        ajout_page();
+        affichage_options_album();
+        maj_prix_album();
+        maj_prix_total();
+
+        focus_page('page_1');
+
+    })
+
+var centre = document.getElementById("centre");
+centre.addEventListener('click',afficher_edit_templates)
+
+
+//var prix_base = 4.90;
 
 var prix_page = 2 ;
 var prix_reliure = 5 ; 
@@ -204,7 +225,7 @@ function focus_page(id){
     // On récupère les éléments 
     var page = document.getElementById(id);
     var centre = document.getElementById('centre');
-
+    console.log(page.offsetLeft)
     
     // On scroll jusque l'élément visé
     centre.scrollTo({
@@ -254,23 +275,22 @@ function focus_page(id){
 
             }
 
-        // Si c'est l'élémet focus 
+        // Si c'est l'élément focus 
         }else {
             passe = true;
 
             element.querySelector('p').style.textAlign="center";
 
             // On enleve le voile 
-            if (element.querySelector('.feuille').hasChildNodes(voile)) { 
-                remove = element.querySelector('.feuille .voile');
-                remove.remove();
-                
+            if (element.querySelector('.feuille div.voile')) { 
+                divVoile = element.querySelector('.feuille .voile');
+                divVoile.remove();
             }
 
             var div_apercu = document.querySelector('#apercu main');
             var bloc_apercu = document.querySelector('#apercu main .apercue_'+element.id.substring(5))
 
-            var apercue = document.getElementById('apercue_'+(element.id).substring(5))
+            var apercue = document.querySelector('#apercue_'+(element.id).substring(5))
             apercue.style.outline = '4px solid #18574A';
 
             var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5)+' .suppr_page')
@@ -303,19 +323,20 @@ function focus_page(id){
  * fonction qui permet d'ajouter une div dans #centre et de la focus 
  */
 function ajout_page() {
+    let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
     nb_pages += 1;
 
 
     // On met à jour la ligne dans le panier 
     var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span');
-    prix_pages_prx.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    prix_pages_prx.textContent= (nb_pages*PRIX["page"]["a4"]).toFixed(2).replace('.', ',')+'€' ;
     var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p');
     prix_pages_txt.textContent= 'Pages x'+nb_pages;
 
     // On met a jour dans le panier modal 
     var prix_pages_prx_modal = document.querySelector('#panier_modal .prix_pages span');
-    prix_pages_prx_modal.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    prix_pages_prx_modal.textContent= (nb_pages*PRIX["page"]["a4"]).toFixed(2).replace('.', ',')+'€' ;
     var prix_pages_txt_modal = document.querySelector('#panier_modal .prix_pages p');
     prix_pages_txt_modal.textContent= 'Pages x'+nb_pages;
 
@@ -330,14 +351,20 @@ function ajout_page() {
     divPage.id = "page_"+nb_pages;
     divPage.className = "page";
 
-    // Création de l'élément p à l'intérieur de divPage1
+    // Création de l'élément p avec le numéro de page
     var pElement = document.createElement("p");
     pElement.textContent = "Page "+nb_pages;
     divPage.appendChild(pElement);
 
-    // Création de l'élément div vide à l'intérieur de divPage1
+    // Création de l'élément div (la feuille) vide à l'intérieur de divPage
     var divElement = document.createElement("div");
     divElement.className = "feuille";
+
+    //Création de la zone d'édit de la feuille et ajout a cette dernière
+    var divZone = document.createElement("div");
+    divZone.className = "zone"; 
+    divElement.appendChild(divZone);
+
     divPage.appendChild(divElement);
 
     if(nb_pages % 2 === 0 ){
@@ -349,7 +376,7 @@ function ajout_page() {
         divPage.appendChild(icone);
     }
 
-    // Ajout de divPage1 à la page (body dans cet exemple)
+    // Ajout de divPage1 à la page
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
     ajout_page_apercue();
@@ -410,8 +437,17 @@ function ajout_page_apercue() {
         var suppr_page = document.createElement('img');
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
-        suppr_page.onclick = function(){supprimer_page(i)};
-        
+
+        suppr_page.onclick = function() {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
+              supprimer_page(i);
+
+              txt = "Supprimer";
+            }else{
+              txt = "annuler";
+
+            }
+          };        
 
         vignettePage.appendChild(suppr_page);
 
@@ -450,7 +486,18 @@ function ajout_page_apercue() {
         var suppr_page = document.createElement('img');
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
-        suppr_page.onclick = function(){supprimer_page(i)};
+        // suppr_page.onclick = function(){supprimer_page(i)};
+
+        suppr_page.onclick = function() {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
+              supprimer_page(i);
+
+              txt = "Supprimer";
+            }else{
+              txt = "annuler";
+
+            }
+          };
 
         vignettePage.appendChild(suppr_page);
 
@@ -519,10 +566,12 @@ function setBackground(event) {
         element_focus.style.backgroundImage = `url(${reader.result})`;
         element_focus.value = file.name;
 
-        var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+        let id_page = element_focus.parentElement.parentElement.parentElement.id.substring(5);
+
+        var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
         img_apercue.style.backgroundImage = `url(${reader.result})`;
 
-        var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
+        var img_miniature = document.querySelector('#miniature_' + id_page +' .miniature_page .'+element_focus.classList[0])
         img_miniature.style.backgroundImage = `url(${reader.result})`;
 
         rm_apercue_image();
@@ -602,13 +651,15 @@ function apercue_image(){
         // On remet la couleur en background
         element_focus.style.backgroundImage = "none";
 
-        var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0])
+        let id_page = element_focus.parentElement.parentElement.parentElement.id.substring(5);
+
+        var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
         img_apercue.style.backgroundImage = `none`;
 
-        var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
+        var img_miniature = document.querySelector('#miniature_' + id_page +' .miniature_page .'+element_focus.classList[0])
         img_miniature.style.backgroundImage = `none`;
 
-        notifications(true,'Image supprimé');
+        notifications(true,'Image supprimée');
 
         rm_apercue_image()
     })
@@ -651,11 +702,11 @@ function place_img(event){
     let button = event.target;
     let choix = button.id.split("_")[1];
 
+    let id_page = element_focus.parentElement.parentElement.parentElement.id.substring(5);
+
     let element = document.querySelector("button.selected");
-    var img_apercue = document.querySelector('#apercue_'+element_focus.parentElement.parentElement.id.substring(5)+' .'+element_focus.classList[0]);
-    var img_miniature = document.querySelector('#miniature_'+element_focus.parentElement.parentElement.id.substring(5)+' .miniature_page .'+element_focus.classList[0])
-
-
+    var img_apercue = document.querySelector('#apercue_' + id_page + ' .'+element_focus.classList[0]);
+    var img_miniature = document.querySelector('#miniature_' + id_page + ' .miniature_page .'+element_focus.classList[0])
     
 
     //supprime la class existante
@@ -680,8 +731,7 @@ function place_img(event){
  * @param {integer} num_page est le numéro de la que l'on veut supprimer 
  */
 function supprimer_page(num_page) {
-
-    alert(num_page); // TODO : à changer avec une vraie page de vérification 
+    let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
     // On enleve la page dans le centre 
     var centre = document.getElementById('centre')
@@ -794,13 +844,13 @@ function supprimer_page(num_page) {
 
     // On met à jour la ligne dans le panier 
     var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span ');
-    prix_pages_prx.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    prix_pages_prx.textContent= (nb_pages*PRIX["page"]["a4"]).toFixed(2).replace('.', ',')+'€' ;
     var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p ');
     prix_pages_txt.textContent= 'Pages x'+nb_pages;
 
     // On met a jour dans le panier modal 
     var prix_pages_prx_modal = document.querySelector('#panier_modal .prix_pages span');
-    prix_pages_prx_modal.textContent= (nb_pages*prix_page).toFixed(2).replace('.', ',')+'€' ;
+    prix_pages_prx_modal.textContent= (nb_pages*PRIX["page"]["a4"]).toFixed(2).replace('.', ',')+'€' ;
     var prix_pages_txt_modal = document.querySelector('#panier_modal .prix_pages p');
     prix_pages_txt_modal.textContent= 'Pages x'+nb_pages;
 
@@ -827,7 +877,7 @@ function supprimer_page(num_page) {
     }
 
 
-    notifications(true,'Page supprimé');
+    notifications(true,'Page supprimée');
     // En fonction du nombre de page on change l'action (derniere page -> on reviens a celle d'avant, page milieu -> on reste sur la page, page 0 -> on ajoute une nouvelle page )
     if (nb_pages == 0) {
         ajout_page()
@@ -845,14 +895,6 @@ function supprimer_page(num_page) {
     
     
 }
-
-
-ajout_page();
-
-focus_page('page_1');
-
-var centre = document.getElementById("centre");
-centre.addEventListener('click',afficher_edit_templates)
 
 
 
@@ -880,7 +922,7 @@ function saveAlbum(){
             if(obj.classList.contains("img")){ // -> c'est une image
 
                 let code_img = obj.style.backgroundImage;
-                const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
+                // const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
 
                 //trouver placement de l'image
                 let placement_image = "C";
@@ -894,7 +936,8 @@ function saveAlbum(){
                     };
                 })
 
-                tab_feuille.push(placement_image + "#" + img64);
+                // tab_feuille.push(placement_image + "#" + img64);
+                tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
 
             }else if(obj.classList.contains("txt")){ // -> c'est un texte
                 
@@ -909,7 +952,7 @@ function saveAlbum(){
     console.log("TABLEAU ALBUM", album);
     sessionStorage.setItem("album", JSON.stringify(album));
   
-  }
+}
 
 
  /** ------------------ VARIABLES PANIER ------------------
@@ -974,7 +1017,7 @@ function go_checkout(){
 
         open_modal_final();
     }else{
-        notifications(false,'Il faut un nombre paire de page')
+        notifications(false,'Il faut un nombre paire de pages')
     }
 
 }
@@ -1100,7 +1143,9 @@ function maj_prix_total(){
 
 }
 function maj_prix_album(){
-    prix_album = prix_base + (nb_pages * prix_page) + prix_reliure + prix_couverture ;
+    let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
+
+    prix_album = PRIX["base"]["1"] + (nb_pages * PRIX["page"]["a4"]) + PRIX["reliure"]["plastique"] + prix_couverture ;
     
 
     var txt_prix_album = document.querySelector('#panier main main .txt_prix_album span')
@@ -1114,9 +1159,7 @@ function maj_prix_album(){
 
 
 
-affichage_options_album();
-maj_prix_album();
-maj_prix_total();
+
 
 /** ------------- FONCTION CHANGER QTT  -------------
  * Cette fonction change la quantité à l'aide des boutons et met a jour le prix 
@@ -1138,13 +1181,14 @@ function changer_qtt(nb){
 
 
 function affichage_options_album(){
+    let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
     // Pour le panier 
     var prx_base = document.querySelector('#options_album .prix_base span');
-    prx_base.textContent = prix_base.toFixed(2).replace('.', ',')+'€';
+    prx_base.textContent = PRIX["base"]["1"].toFixed(2).replace('.', ',')+'€';
 
     var prx_reliure = document.querySelector('#options_album .prix_reliure span');
-    prx_reliure.textContent = prix_reliure.toFixed(2).replace('.', ',')+'€';
+    prx_reliure.textContent = PRIX["reliure"]["plastique"].toFixed(2).replace('.', ',')+'€';
 
     var prx_couverture = document.querySelector('#options_album .prix_couverture span');
     prx_couverture.textContent = prix_couverture.toFixed(2).replace('.', ',')+'€';
@@ -1152,10 +1196,10 @@ function affichage_options_album(){
 
     // Pour le panier du modal
     var prx_base_modal = document.querySelector('#panier_modal .options .prix_base span');
-    prx_base_modal.textContent = prix_base.toFixed(2).replace('.', ',')+'€';
+    prx_base_modal.textContent = PRIX["base"]["1"].toFixed(2).replace('.', ',')+'€';
 
     var prx_reliure_modal = document.querySelector('#panier_modal .options .prix_reliure span');
-    prx_reliure_modal.textContent = prix_reliure.toFixed(2).replace('.', ',')+'€';
+    prx_reliure_modal.textContent = PRIX["reliure"]["plastique"].toFixed(2).replace('.', ',')+'€';
 
     var prx_couverture_modal = document.querySelector('#panier_modal .options .prix_couverture span');
     prx_couverture_modal.textContent = prix_couverture.toFixed(2).replace('.', ',')+'€';

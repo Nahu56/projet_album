@@ -281,10 +281,8 @@ body {
   display: flex;
   align-items: center;
   overflow: hidden;
-  behavior: smooth;
 }
 #editeur #centre .page {
-  width: 550px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -298,16 +296,27 @@ body {
   transition: all ease 1s;
   width: 90%;
 }
-#editeur #centre .page > div {
-  height: 777.7px;
+#editeur #centre .page > .feuille {
   width: 550px;
+  height: 777.7px;
   background-color: white;
   border: 4px solid #18574A;
   box-shadow: 13px 13px 0px #000000;
   position: relative;
   z-index: 0;
 }
-#editeur #centre .page > div .voile {
+#editeur #centre .page > .feuille > .zone {
+  margin: 10px;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  position: relative;
+}
+#editeur #centre .page > .feuille > .zone.id1 {
+  margin: 0px;
+  height: calc(100% - 0px);
+  width: calc(100% - 0px);
+}
+#editeur #centre .page > .feuille .voile {
   position: absolute;
   top: 0;
   left: 0;
@@ -316,14 +325,14 @@ body {
   background-color: rgba(24, 87, 74, 0.3333333333);
   z-index: 10;
 }
-#editeur #centre .page > div .voile:hover {
+#editeur #centre .page > .feuille .voile:hover {
   cursor: pointer;
 }
-#editeur #centre .page > div button {
+#editeur #centre .page > .feuille button {
   position: absolute;
   cursor: pointer;
 }
-#editeur #centre .page > div button.txt {
+#editeur #centre .page > .feuille button.txt {
   border: 1px dashed #737373;
   background-color: transparent;
   padding: 5px 5px;
@@ -336,7 +345,7 @@ body {
   border-radius: 10px;
   transform: translate(-50%, -50%);
 }
-#editeur #centre .page > div button.img {
+#editeur #centre .page > .feuille button.img {
   outline: 2px solid transparent;
   outline-offset: -2px;
   background-color: #F0F0F0;
@@ -344,26 +353,26 @@ body {
   background-position: center;
   transition: all 0.2s ease-in;
 }
-#editeur #centre .page > div button.img.img_top {
+#editeur #centre .page > .feuille button.img.img_top {
   background-position: top;
 }
-#editeur #centre .page > div button.img.img_bottom {
+#editeur #centre .page > .feuille button.img.img_bottom {
   background-position: bottom;
 }
-#editeur #centre .page > div button.img.img_center {
+#editeur #centre .page > .feuille button.img.img_center {
   background-position: center;
 }
-#editeur #centre .page > div button.img.img_left {
+#editeur #centre .page > .feuille button.img.img_left {
   background-position: left;
 }
-#editeur #centre .page > div button.img.img_right {
+#editeur #centre .page > .feuille button.img.img_right {
   background-position: right;
 }
-#editeur #centre .page > div button.img:hover {
+#editeur #centre .page > .feuille button.img:hover {
   background-color: rgb(195, 242, 231);
   outline: 2px solid #18574A;
 }
-#editeur #centre .page > div button.selected {
+#editeur #centre .page > .feuille button.selected {
   outline: 4px solid #18574A;
   outline-offset: -4px;
 }
