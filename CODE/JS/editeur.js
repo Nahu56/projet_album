@@ -215,6 +215,15 @@ function maj_textarea(element_focus_param) {
 }
 
 
+function getStackTrace() {
+    const error = new Error();
+    if (error.stack) {
+      return error.stack;
+    }
+    return 'Stack trace not available.';
+  }
+
+
 
 /** ------------- FOCUS PAGE -------------
  * fonction qui affiche la page avec l'id qui est mis en paramètre 
@@ -222,10 +231,23 @@ function maj_textarea(element_focus_param) {
  */
 function focus_page(id){
 
+
+                    
+                    
+    console.log("---------")
+    console.log(nb_pages)
+    console.log(id)
+
+    if(id.split("_")[1] > nb_pages){
+        console.log(getStackTrace())
+    }
+
     // On récupère les éléments 
     var page = document.getElementById(id);
+    
+
+
     var centre = document.getElementById('centre');
-    console.log(page.offsetLeft)
     
     // On scroll jusque l'élément visé
     centre.scrollTo({
@@ -233,6 +255,11 @@ function focus_page(id){
         left: page.offsetLeft - window.innerWidth * 0.35,
         behavior: 'smooth'
     });
+
+
+
+
+
 
     // On créée le voile qu
     var voile = document.createElement('div');
@@ -264,6 +291,7 @@ function focus_page(id){
                 element.querySelector('.feuille').appendChild(voile);
                 
                 element.querySelector('.feuille .voile').onclick = function(){
+
                     focus_page(element.id);
                 };
 
@@ -360,10 +388,10 @@ function ajout_page() {
     var divElement = document.createElement("div");
     divElement.className = "feuille";
 
-    //Création de la zone d'édit de la feuille et ajout a cette dernière
-    var divZone = document.createElement("div");
-    divZone.className = "zone"; 
-    divElement.appendChild(divZone);
+    // //Création de la zone d'édit de la feuille et ajout a cette dernière
+    // var divZone = document.createElement("div");
+    // divZone.className = "zone"; 
+    // divElement.appendChild(divZone);
 
     divPage.appendChild(divElement);
 
@@ -566,7 +594,7 @@ function setBackground(event) {
         element_focus.style.backgroundImage = `url(${reader.result})`;
         element_focus.value = file.name;
 
-        let id_page = element_focus.parentElement.parentElement.parentElement.id.substring(5);
+        let id_page = element_focus.parentElement.parentElement.id.substring(5);
 
         var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
         img_apercue.style.backgroundImage = `url(${reader.result})`;
@@ -702,7 +730,7 @@ function place_img(event){
     let button = event.target;
     let choix = button.id.split("_")[1];
 
-    let id_page = element_focus.parentElement.parentElement.parentElement.id.substring(5);
+    let id_page = element_focus.parentElement.parentElement.id.substring(5);
 
     let element = document.querySelector("button.selected");
     var img_apercue = document.querySelector('#apercue_' + id_page + ' .'+element_focus.classList[0]);
@@ -726,7 +754,6 @@ function place_img(event){
 }
 
 /** ------------- SUPPRIMER PAGE -------------
- * Permet de supprimer une page de l'album dans
  * Permet de supprimer une page dans le #centre et dans l'apercu 
  * @param {integer} num_page est le numéro de la que l'on veut supprimer 
  */
@@ -839,6 +866,7 @@ function supprimer_page(num_page) {
         miniature_texte.textContent = 'Page '+i;
     }
 
+
     nb_pages -= 1 ;
 
 
@@ -922,7 +950,7 @@ function saveAlbum(){
             if(obj.classList.contains("img")){ // -> c'est une image
 
                 let code_img = obj.style.backgroundImage;
-                // const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
+                const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
 
                 //trouver placement de l'image
                 let placement_image = "C";
@@ -936,8 +964,8 @@ function saveAlbum(){
                     };
                 })
 
-                // tab_feuille.push(placement_image + "#" + img64);
-                tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
+                tab_feuille.push(placement_image + "#" + img64); // -> garde l'img64
+                // tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
 
             }else if(obj.classList.contains("txt")){ // -> c'est un texte
                 
@@ -949,8 +977,7 @@ function saveAlbum(){
         album.push(tab_feuille);
     })
   
-    console.log("TABLEAU ALBUM", album);
-    sessionStorage.setItem("album", JSON.stringify(album));
+    return album;
   
 }
 
@@ -1013,7 +1040,6 @@ function close_panier() {
 function go_checkout(){
 
     if (nb_pages % 2 == 0) {
-        saveAlbum(); // -> sauvegarde l'album dans le sessionStorage
 
         open_modal_final();
     }else{

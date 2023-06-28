@@ -234,17 +234,21 @@ body {
   flex-direction: column;
   align-items: center;
 }
+#editeur div#gauche #edit_image main .placer_image > div img,
+#editeur div#gauche #edit_image main .placer_image > div div > * {
+  cursor: pointer;
+}
 #editeur div#gauche #edit_image main .placer_image > div > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 #editeur div#gauche #edit_image main .placer_image > div > div > div {
-  height: 150px;
-  width: 150px;
+  height: 40px;
+  width: 40px;
   background-color: #dddddd;
-  border-radius: 5px;
-  margin: 10px;
+  border-radius: 100px;
+  margin: 25px;
 }
 #editeur div#gauche #edit_texte {
   display: none;

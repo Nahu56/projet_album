@@ -318,7 +318,8 @@
                                     name : nom_album,
                                     quantity : qtt,
                                     description : "Album photo made in Print Shop CREA ",
-                                    unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
+                                    // unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
+                                    unit_amount : { value : 1 , currency_code : "EUR" } // TODO à supprimer et garder le commentaire au dessus
                                 }
                             ];
 
@@ -369,8 +370,9 @@
 
                                 tableau_commande[10] = details.purchase_units[0].amount.value;
 
-
-                                let tableau_album = sessionStorage.getItem("album"); // -> tableau de l'album
+                                let tableau_album = saveAlbum();
+                                console.log("LE TABLEAU", tableau_album)
+                                // let tableau_album = sessionStorage.getItem("album"); // -> tableau de l'album
 
 
                                 /* -------------------------------------------------------------------------- */
@@ -390,16 +392,20 @@
                                 // Création d'un objet FormData
                                 let formData = new FormData();
                                 formData.append('tableau_commande', JSON.stringify(tableau_commande));
-                                formData.append('tableau_album', tableau_album);
+                                formData.append('tableau_album', JSON.stringify(tableau_album));
 
                                 xhr.onload = function() {
                                 // Si le statut HTTP n'est pas 200...
                                 if (xhr.status !== 200) { 
                                     // ...On affiche le statut et le message correspondant
                                     console.log("Erreur " + xhr.status + " : " + xhr.statusText);
+
                                 } else {
                                     // Si le statut HTTP est 200, on affiche la réponse
-                                    console.log(xhr.response);
+                                    console.log("Réussite " + xhr.response);
+                                    
+                                    //et on renvoie vers la suite
+                                    window.location = 'CODE/controller.php?function=part2';
                                 }
                                 };
 
@@ -407,7 +413,6 @@
                                 xhr.send(formData);
 
 
-                                window.location = 'CODE/controller.php?function=part2';
 
 
                             });

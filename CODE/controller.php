@@ -18,7 +18,7 @@ if (isset($_GET['function'])) {
             generationPDF();
             // destroyIMG_SESSION(); TODO
 
-            header("Location: ./VIEWS/confirmation.php");
+            // header("Location: ./VIEWS/confirmation.php"); TODO
 
             break;
         default:
@@ -120,7 +120,6 @@ function tab64toIMG(){
                 // Extraire l'extension de l'image
                 $extension = explode("/", explode(";", $image64)[0])[1];
 
-                // $filename = uniqid() . "jpeg"; // Génération d'un nom de fichier unique avec l'extension
                 $filename = uniqid() . "." . $extension; // Génération d'un nom de fichier unique avec l'extension
                 $filepath = '../STOCKAGE/IMG_temporaires/' . $filename;
 
@@ -151,40 +150,45 @@ function tab64toIMG(){
 function generationPDF(){
 
     $tableau = $_SESSION["album"];
+    echo json_encode($tableau);
 
-    echo $_SESSION['id_commande'];
-     
 
+    //récupère la liste des templates
     $json_data = file_get_contents('../ASSETS/json/templates_a4.json');
 
     $data = json_decode($json_data, true);
     $templates = [];
 
+    //Crée un tableau clé = valeur des templates
     foreach ($data as $id => $value) {
         $templates[$id] = $value;
     }
     ob_start();
 
+
+    // -------- Génération du PDF --------
     require('../TCPDF/tcpdf.php');
 
+    // parametres
     $unicode = true;
     $format = "UTF-8";
-
     $pdf = new TCPDF('P', 'px', 'A4', true, 'UTF-8', false);
 
     $pdf->SetPrintHeader(false);
     $pdf->SetPrintFooter(false);
-
-
     $pdf->SetAutoPageBreak(false, 0);
-
 
     // $font = 'saycomic';
     // $pdf->SetFont($font, '', 200);
 
 
+    // Boucle pour créer chaque page 
     foreach ($tableau as $key => $page) {
+
         $pdf->AddPage('P', array(2480 , 3508));
+
+        $pdf->SetY(100);
+        $pdf->SetX(200);
 
         $pdfWidth = $pdf->getPageWidth();
         $pdfHeight = $pdf->getPageHeight();
@@ -197,8 +201,6 @@ function generationPDF(){
         // //  Ajouter image de fond au pdf 
         // $pdf->Image('../assets/IMG/pluie.jpg',0 ,0 , $pdfWidth, $pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, false);
 
-
-
         foreach ($page as $obj => $element) {
             
             if (!str_starts_with($element, "id")) {
@@ -207,8 +209,24 @@ function generationPDF(){
                 
                     $chemin = explode("#", $element)[1];
                     if ($chemin != null) {
-                        cropImage($chemin,$element[0],($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth,($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight);
-                        $pdf->Image($chemin,($templates[$page[0]]['obj_'.$obj]['data']['x'] / 100)*$pdfWidth ,( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight , ( $templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth, ( $templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, $fitonpage=false);
+                        cropImage(
+                            $chemin,
+                            $element[0],
+                            ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth,
+                            ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight
+                        );
+                            
+                        $pdf->Image(
+                            $chemin, //chemin
+                            ($templates[$page[0]]['obj_'.$obj]['data']['x'] / 100)*$pdfWidth, // position X
+                            ($templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight, // position Y
+                            ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth, // Largeur
+                            ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight, // Hauteur
+                            '', '', '', 
+                            true, // Resize
+                            150, // résolution DPI
+                            '', false, false, 0, false, false, $fitonpage=false
+                        );
                     }
                     
                 }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
