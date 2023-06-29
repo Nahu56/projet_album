@@ -279,20 +279,20 @@ body {
   font-weight: 300;
   padding: 50px 20px;
 }
-#editeur #centre {
+#editeur .centre {
   height: 100vh;
   padding: 0 35%;
   display: flex;
   align-items: center;
   overflow: hidden;
 }
-#editeur #centre .page {
+#editeur .centre .page {
   display: flex;
   align-items: center;
   flex-direction: column;
   position: relative;
 }
-#editeur #centre .page p {
+#editeur .centre .page p {
   font-size: 15px;
   font-weight: 300;
   text-align: center;
@@ -300,7 +300,7 @@ body {
   transition: all ease 1s;
   width: 90%;
 }
-#editeur #centre .page > .feuille {
+#editeur .centre .page > .feuille {
   width: 550px;
   height: 777.7px;
   background-color: white;
@@ -309,18 +309,18 @@ body {
   position: relative;
   z-index: 0;
 }
-#editeur #centre .page > .feuille > .zone {
+#editeur .centre .page > .feuille > .zone {
   margin: 10px;
   height: calc(100% - 20px);
   width: calc(100% - 20px);
   position: relative;
 }
-#editeur #centre .page > .feuille > .zone.id1 {
+#editeur .centre .page > .feuille > .zone.id1 {
   margin: 0px;
   height: calc(100% - 0px);
   width: calc(100% - 0px);
 }
-#editeur #centre .page > .feuille .voile {
+#editeur .centre .page > .feuille .voile {
   position: absolute;
   top: 0;
   left: 0;
@@ -329,14 +329,14 @@ body {
   background-color: rgba(24, 87, 74, 0.3333333333);
   z-index: 10;
 }
-#editeur #centre .page > .feuille .voile:hover {
+#editeur .centre .page > .feuille .voile:hover {
   cursor: pointer;
 }
-#editeur #centre .page > .feuille button {
+#editeur .centre .page > .feuille button {
   position: absolute;
   cursor: pointer;
 }
-#editeur #centre .page > .feuille button.txt {
+#editeur .centre .page > .feuille button.txt {
   border: 1px dashed #737373;
   background-color: transparent;
   padding: 5px 5px;
@@ -349,7 +349,7 @@ body {
   border-radius: 10px;
   transform: translate(-50%, -50%);
 }
-#editeur #centre .page > .feuille button.img {
+#editeur .centre .page > .feuille button.img {
   outline: 2px solid transparent;
   outline-offset: -2px;
   background-color: #F0F0F0;
@@ -357,30 +357,30 @@ body {
   background-position: center;
   transition: all 0.2s ease-in;
 }
-#editeur #centre .page > .feuille button.img.img_top {
+#editeur .centre .page > .feuille button.img.img_top {
   background-position: top;
 }
-#editeur #centre .page > .feuille button.img.img_bottom {
+#editeur .centre .page > .feuille button.img.img_bottom {
   background-position: bottom;
 }
-#editeur #centre .page > .feuille button.img.img_center {
+#editeur .centre .page > .feuille button.img.img_center {
   background-position: center;
 }
-#editeur #centre .page > .feuille button.img.img_left {
+#editeur .centre .page > .feuille button.img.img_left {
   background-position: left;
 }
-#editeur #centre .page > .feuille button.img.img_right {
+#editeur .centre .page > .feuille button.img.img_right {
   background-position: right;
 }
-#editeur #centre .page > .feuille button.img:hover {
+#editeur .centre .page > .feuille button.img:hover {
   background-color: rgb(195, 242, 231);
   outline: 2px solid #18574A;
 }
-#editeur #centre .page > .feuille button.selected {
+#editeur .centre .page > .feuille button.selected {
   outline: 4px solid #18574A;
   outline-offset: -4px;
 }
-#editeur #centre .page img {
+#editeur .centre .page img {
   position: absolute;
   top: 10px;
   left: -15px;
@@ -428,45 +428,42 @@ body {
   padding: 100px 10px 110px 30px;
   overflow-y: scroll;
 }
-#editeur div#droite #apercu main .bloc_couv {
-  width: 100%;
-}
-#editeur div#droite #apercu main .bloc_couv > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-#editeur div#droite #apercu main .bloc_couv > div .vignette_page {
-  position: relative;
-  width: 125px;
-  height: 176.75px;
-  outline: 2px solid #18574A;
-  cursor: pointer;
-}
-#editeur div#droite #apercu main .list_pages {
+#editeur div#droite #apercu main .list_pages,
+#editeur div#droite #apercu main div {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page {
+#editeur div#droite #apercu main .list_pages .bloc_page, #editeur div#droite #apercu main .list_pages.bloc_couv,
+#editeur div#droite #apercu main div .bloc_page,
+#editeur div#droite #apercu main div.bloc_couv {
   width: 100%;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div {
+#editeur div#droite #apercu main .list_pages .bloc_page > div, #editeur div#droite #apercu main .list_pages.bloc_couv > div,
+#editeur div#droite #apercu main div .bloc_page > div,
+#editeur div#droite #apercu main div.bloc_couv > div {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  flex-direction: initial;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page {
   position: relative;
   width: 125px;
   height: 176.75px;
   outline: 2px solid #18574A;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page div {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page div, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page div,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page div,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page div {
   background-color: #F0F0F0;
   position: absolute;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .txt {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .txt, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .txt,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .txt,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .txt {
   height: 5%;
   width: 30%;
   transform: translate(-50%, -50%);
@@ -475,34 +472,50 @@ body {
   background-color: #18574A;
   height: 5px;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img {
   border: none;
   background-size: cover;
   background-position: center;
   transition: all 0.2s ease-in;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_top {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_top, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img.img_top,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img.img_top,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img.img_top {
   background-position: top;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_bottom {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_bottom, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img.img_bottom,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img.img_bottom,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img.img_bottom {
   background-position: bottom;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_center {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_center, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img.img_center,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img.img_center,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img.img_center {
   background-position: center;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_left {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_left, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img.img_left,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img.img_left,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img.img_left {
   background-position: left;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_right {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .img.img_right, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .img.img_right,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .img.img_right,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .img.img_right {
   background-position: right;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .suppr_page {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .suppr_page, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .suppr_page,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page .suppr_page,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page .suppr_page {
   position: absolute;
   top: -14px;
   right: -14px;
   z-index: 2;
 }
-#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page:hover {
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page:hover, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page:hover,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page:hover,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page:hover {
   cursor: pointer;
 }
 #editeur div#droite #panier {

@@ -182,6 +182,7 @@ body{
                     outline: 2px solid $vert;
                     // outline-offset: -2px;
 
+
                     &:hover{
                         cursor: pointer;
                     }
@@ -393,8 +394,9 @@ body{
     /* -------------------------------------------------------------------------- */
     /*                                   CENTRE                                   */
     /* -------------------------------------------------------------------------- */
-    
-    #centre{
+
+
+    .centre{
         height: 100vh;
         padding: 0 35%;
         display: flex;
@@ -606,35 +608,15 @@ body{
 
                 overflow-y: scroll;
 
-                .bloc_couv{
-                    width: 100%;
-
-                    >div{
-                        display: flex;
-                        justify-content: space-between;
-                        gap: 10px;
-
-                        .vignette_page{
-                            position: relative; 
-
-                            $width: 125px;
-
-                            width: $width;
-                            height: calc($width * 1.414);
-
-                            outline: 2px solid $vert;
-                            cursor: pointer;
-                        }
-                    }
-                }
-
-                .list_pages{
+                .list_pages,
+                div{
                     display: flex;
                     flex-direction: column;
                     gap: 30px;
 
 
-                    .bloc_page{
+                    .bloc_page,
+                    &.bloc_couv{
                     
                         width: 100%;
     
@@ -642,7 +624,7 @@ body{
                             display: flex;
                             justify-content: space-between;
                             gap: 10px;
-    
+                            flex-direction: initial;
                             
     
                             .vignette_page{

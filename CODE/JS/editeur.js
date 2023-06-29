@@ -215,6 +215,8 @@ function maj_textarea(element_focus_param) {
 }
 
 
+
+
 function getStackTrace() {
     const error = new Error();
     if (error.stack) {
@@ -225,29 +227,45 @@ function getStackTrace() {
 
 
 
-/** ------------- FOCUS PAGE -------------
+/** ------------- FOCUS PAGE & COUVERTURES -------------
  * fonction qui affiche la page avec l'id qui est mis en paramètre 
  * @param {string} id // Identifiant de la page que l'ont veut mettre en evidence 
  */
-function focus_page(id){
+function focus_page(id, context = "pages"){
+
+    var centre = document.getElementById("centre");
+
+    if(context == "pages"){ //  -> si on focus une page
+
+        // ------- flex les pages & none les couvertures --------
+        centre.style.display = "flex";
+
+        let centre_couv = document.getElementById("centre_couv");
+        centre_couv.style.display = "none";
+
+    }else if(context == "couv"){ // -> si on focus une couverture
+
+        // ------- flex les couvertures & none les pages --------
+        centre.style.display = "none";
+
+        let centre_couv = document.getElementById("centre_couv");
+        centre_couv.style.display = "flex";
+
+        centre = centre_couv; // -> le "centre" est la div couv
 
 
-                    
-                    
-    console.log("---------")
-    console.log(nb_pages)
-    console.log(id)
-
-    if(id.split("_")[1] > nb_pages){
-        console.log(getStackTrace())
+        focus_couverture();
     }
+
+    
+
+
+
 
     // On récupère les éléments 
     var page = document.getElementById(id);
     
 
-
-    var centre = document.getElementById('centre');
     
     // On scroll jusque l'élément visé
     centre.scrollTo({
@@ -259,18 +277,25 @@ function focus_page(id){
 
 
 
-
-
-    // On créée le voile qu
+    // On créée le voile
     var voile = document.createElement('div');
     voile.className = 'voile';
 
-    // On récuère toutes les pages de l'album
-    var pages = document.getElementsByClassName('page');
-    
+
+
+    // On récupère les pages de l'album / ou les couvertures, en fonction de "centre"
+    var pages = centre.getElementsByClassName('page');    
 
     var passe = false;
     Array.from(pages).forEach(element => {
+
+        var id_apercu;
+        if(context == "pages"){
+            id_apercu = element.id.substring(5);
+        }else{
+            id_apercu = element.id;
+        }
+
 
         // On vérifie si c'est pas l'élément focus 
         if (element.getAttribute('id') !== id) {
@@ -292,14 +317,16 @@ function focus_page(id){
                 
                 element.querySelector('.feuille .voile').onclick = function(){
 
-                    focus_page(element.id);
+                    focus_page(element.id, context);
                 };
 
-                var apercue = document.getElementById('apercue_'+(element.id).substring(5))
+                var apercue = document.getElementById('apercue_'+id_apercu)
                 apercue.style.outline = '2px solid #18574A';
 
-                var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5) +' .suppr_page')
-                suppr_page.style.display='none';
+                if(context == "pages"){
+                    var suppr_page = document.querySelector('#apercue_'+id_apercu +' .suppr_page')
+                    suppr_page.style.display='none';
+                }
 
             }
 
@@ -315,14 +342,20 @@ function focus_page(id){
                 divVoile.remove();
             }
 
+            //gestion de l'apercu de la page selectionnée
             var div_apercu = document.querySelector('#apercu main');
-            var bloc_apercu = document.querySelector('#apercu main .apercue_'+element.id.substring(5))
+        
 
-            var apercue = document.querySelector('#apercue_'+(element.id).substring(5))
+            var bloc_apercu = document.querySelector('#apercu main .apercue_'+id_apercu)
+
+            var apercue = document.querySelector('#apercue_'+id_apercu)
             apercue.style.outline = '4px solid #18574A';
 
-            var suppr_page = document.querySelector('#apercue_'+(element.id).substring(5)+' .suppr_page')
-            suppr_page.style.display='block';
+
+            if(context == "pages"){
+                var suppr_page = document.querySelector('#apercue_'+id_apercu +' .suppr_page')
+                suppr_page.style.display='block';
+            }
 
             // On met a jour le placement de la page dans l'apercue
             div_apercu.scrollTo({
@@ -343,6 +376,19 @@ function focus_page(id){
 }
 
 
+function focus_couverture(){
+
+    let div_template = document.querySelectorAll("#templates main a");
+
+    div_template.forEach(element => {
+
+        if(element.id.startsWith("couv")){
+            element.style.display = "block";
+        }else{
+            element.style.display = "none"
+        }
+    })
+}
 
 
 

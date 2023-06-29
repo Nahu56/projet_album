@@ -16,11 +16,19 @@ if (isset($_GET['function'])) {
         case 'part2':
         
             generationPDF();
-            // destroyIMG_SESSION(); TODO
 
-            // header("Location: ./VIEWS/confirmation.php"); TODO
+            // -> Images détruites à la page confirmation destroyIMG_SESSION();
+
+            header("Location: ./VIEWS/confirmation.php");
 
             break;
+
+        case 'destroyIMG':
+
+            destroyIMG_SESSION();
+
+            break;
+        
         default:
             
             echo "Erreur, aucune fonction appelée";
@@ -54,7 +62,7 @@ function creation_commande(){
     $commandes = json_decode($json, true);
 
     
-
+    //vérifie si le tableau commandes existe
     if (isset($commandes[$date][$tableau_commande[1]])) {
 
         $commandes[$date][$tableau_commande[1]]['nom'] = $tableau_commande[2];
@@ -178,6 +186,8 @@ function generationPDF(){
     $pdf->SetPrintFooter(false);
     $pdf->SetAutoPageBreak(false, 0);
 
+    $pdf->SetFontSize(60);
+
     // $font = 'saycomic';
     // $pdf->SetFont($font, '', 200);
 
@@ -240,16 +250,10 @@ function generationPDF(){
     }
 
     
-
-    // $nb_fichiers = count(glob("../STOCKAGE/PDF_commandes/*.*")) + 1;
-    // $id = uniqid();
-    // $nom = 'fichier_'.$id.'.pdf';
+    //Défini le nom du fichier
     $nom = $_SESSION['id_commande'] . ".pdf";
-    // Générer le fichier PDF
 
     // Générer le fichier PDF sur le serveur
-
-
     $pdf->Output('C:\xampp\htdocs\projet_album\STOCKAGE\PDF_commandes\\'.$nom, 'F');
     
 
@@ -368,6 +372,7 @@ function cropImage($imagePath,$placement,$template_w,$template_h){
 
 /* ------------------ SUPPRESSION DES IMAGES APRES CREA PDF ----------------- */
 function destroyIMG_SESSION(){
+
     $album = $_SESSION['album'];
 
     foreach ($album as $num_page => $page) {
@@ -377,9 +382,13 @@ function destroyIMG_SESSION(){
             if($element[1] == "#" && isset($element[2])){
                 $chemin = explode("#", $element)[1];
 
+                //corrige le chemin pour trouver le fichier depuis confirmation.php
+                $newchemin = str_replace("..", "../..", $chemin);
+
                 //vérification et suppression du fichier
-                if (file_exists($chemin)) {
-                    unlink($chemin);
+                if (file_exists($newchemin)) {
+
+                    unlink($newchemin);
                 }
             }
         }

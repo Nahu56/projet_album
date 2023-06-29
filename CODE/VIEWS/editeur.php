@@ -117,12 +117,28 @@
 
 
     <!-- ------------------------------------------------------------------------ */
-    /*                                    PAGE                                    */
+    /*                                    PAGES                                   */
     /* ------------------------------------------------------------------------- -->
     
+    <!---------- COUVERTURES ---------->
 
+    <div id="centre_couv" class="centre">
+        <div id="couv_2" class="page">
+            <p style="text-align: center;">Dernière couverture</p>
+            <div class="feuille"></div>
+        </div>
+
+        <div id="couv_1" class="page">
+            <p style="text-align: center;">Première couverture</p>
+            <div class="feuille"></div>
+        </div>
+
+
+    </div>
+
+    <!------------ PAGES ------------>
     
-    <div id="centre"></div>
+    <div id="centre" class="centre"></div>
 
 
 
@@ -142,7 +158,8 @@
                         <div class="hr"></div><div class="num_page">1ère couverture</div><div class="hr"></div>
                     </header>
                     <div>
-                    <div class="vignette_page" id="" style=""></div>
+                        <div class="vignette_page" id="apercue_couv_1" style="" onclick="focus_page('couv_1', 'couv')">
+                        </div>
                     </div>
                 </div>
 
@@ -158,7 +175,8 @@
                         <div class="hr"></div><div class="num_page">Dernière couverture</div><div class="hr"></div>
                     </header>
                     <div>
-                    <div class="vignette_page" id="" style=""></div>
+                        <div class="vignette_page" id="apercue_couv_2" style="" onclick="focus_page('couv_2', 'couv')">
+                        </div>
                     </div>
                 </div>
 

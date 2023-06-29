@@ -14,6 +14,15 @@ function recuperation_templates() {
                 let card = document.createElement("a");
 
                 card.id = template;
+
+                if(template.startsWith("couv")){ // -> c'est un template de couverture
+
+                  card.style.display = "none";
+                }else if(template.startsWith("id")){ // -> c'est un template de page
+
+                  card.style.display = "block";
+                }
+
                 div_template.appendChild(card);
                 loadElement("#templates main #" + template, templates[template]);
             }
@@ -33,7 +42,7 @@ function recuperation_templates() {
 
                 page.innerHTML = ""; // clear la page actuelle
                 loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
-
+                focus_couverture();
 
 
                 apercue.innerHTML = ""; // clear la page actuelle
