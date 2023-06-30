@@ -47,7 +47,6 @@ function recuperation_templates() {
                   apercue = document.querySelector("#apercue_" + num_page);
                 }
 
-                console.log(id_page)
                 let miniature = document.querySelector("#miniature_" + id_page + " .miniature_page");
 
 
@@ -66,10 +65,27 @@ function recuperation_templates() {
                   loadElement("#apercue_" + id_page , templates[div_template.id]);
                 }else if(id_page.startsWith("page")){
 
+                  let num_page = id_page.split("_")[1];
+
                   var suppr_page = document.createElement('img');
                   suppr_page.src = 'ASSETS/img/suppr_page.svg';
                   suppr_page.classList.add('suppr_page');
-                  suppr_page.onclick =  function(){supprimer_page(num_page)};
+
+                  suppr_page.onclick = function(e) {
+                    if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
+                      supprimer_page(num_page);
+        
+                      txt = "Supprimer";
+                    }else{
+                      txt = "annuler";
+        
+                    }
+
+                    // évite qu'au clic de la croix, la vignette soit sélectionnée
+                    // et donc focus page appélé sur une page inexistante
+                    e.stopPropagation(); 
+
+                  };
   
                   apercue.appendChild(suppr_page);
                   loadElement("#apercue_" + num_page , templates[div_template.id]);
@@ -122,8 +138,6 @@ function loadElement(query_target, template, type = 0){
         element = document.createElement("button"); // -> INPUT fonctionnel
         element.classList.add('obj_'+count)
 
-        // element.id = 
-        // console.log(div_template.parentNode.id) // -> numéro de page
   
         if(obj.type == "img"){
           

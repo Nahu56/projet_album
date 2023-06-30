@@ -522,7 +522,7 @@ function ajout_page_apercue() {
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
 
-        suppr_page.onclick = function() {
+        suppr_page.onclick = function(e) {
             if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
               supprimer_page(i);
 
@@ -531,6 +531,10 @@ function ajout_page_apercue() {
               txt = "annuler";
 
             }
+
+            // évite qu'au clic de la croix, la vignette soit sélectionnée
+            // et donc focus page appélé sur une page inexistante
+            e.stopPropagation();
           };        
 
         vignettePage.appendChild(suppr_page);
@@ -570,9 +574,9 @@ function ajout_page_apercue() {
         var suppr_page = document.createElement('img');
         suppr_page.src = 'ASSETS/img/suppr_page.svg'
         suppr_page.classList.add('suppr_page')  
-        // suppr_page.onclick = function(){supprimer_page(i)};
 
-        suppr_page.onclick = function() {
+        
+        suppr_page.onclick = function(e) {
             if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
               supprimer_page(i);
 
@@ -581,6 +585,11 @@ function ajout_page_apercue() {
               txt = "annuler";
 
             }
+
+            // évite qu'au clic de la croix, la vignette soit sélectionnée
+            // et donc focus page appélé sur une page inexistante
+            e.stopPropagation();
+
           };
 
         vignettePage.appendChild(suppr_page);
@@ -866,7 +875,8 @@ function supprimer_page(num_page) {
         voile.onclick = null;
         voile.onclick = function(){
 
-            focus_page('page_'+i);
+            let num_page = i - 1;
+            focus_page('page_'+num_page);
         };
 
     }
