@@ -612,7 +612,7 @@ body{
                 div{
                     display: flex;
                     flex-direction: column;
-                    gap: 30px;
+                    gap: 10px;
 
 
                     .bloc_page,
@@ -635,7 +635,12 @@ body{
                                 width: $width;
                                 height: calc($width * 1.414);
     
-                                outline: 2px solid $vert;
+                                &.selected{
+                                    outline: 4px solid $vert;
+                                }
+                                &.unselected{
+                                    outline: 2px solid $vert;
+                                }
                                 
                                 div{
                                     background-color: $gris;
@@ -966,82 +971,91 @@ body{
                     }
                 }
                 >main{
-                    display: flex;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    width: 89%;
-                    margin: 20px auto;
+                    display: block;
+                    padding-top: 30px;
 
-                    >div{
+                    h3{
+                        color: $gristext;
+                    }
+
+                    #minia_couvertures,
+                    #minia_pages{
+
                         display: flex;
-                        flex-direction: column;
                         align-items: center;
+                        flex-wrap: wrap;
+                        width: 89%;
+                        margin: 20px auto;
 
-                        position: relative;
+                        >div{
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
 
-                        margin-bottom: 15px;
-
-                        img{
-                            position: absolute;
-                            top: 14px;
-                            left: -9px;
-            
-                            width: 15px;
-                        }
-
-                        .miniature_page{
-                            $width : 160px;
-                            $ratio: 1.414;
-                            height: $width * $ratio ;
-                            width: $width;
-                            border: 2px solid #18574A;
                             position: relative;
 
-                            p{
-                                font-size: 10px;
-                            }
+                            margin-bottom: 15px;
 
-                            div{
-                                background-color: $gris;
+                            img{
                                 position: absolute;
+                                top: 14px;
+                                left: -9px;
+                
+                                width: 15px;
                             }
-                            .txt{
-                                height: 5%;
-                                width: 30%;
-                                transform: translate(-50%, -50%);
 
-                                border-radius: 50px;
-                                margin: 0;
-                                background-color: $vert;
-                                height: 5px;
-                            }
-                            .img{
-                                border: none;
-                                background-size: cover;
-                                background-position: center;
+                            .miniature_page{
+                                $width : 160px;
+                                $ratio: 1.414;
+                                height: $width * $ratio ;
+                                width: $width;
+                                border: 2px solid #18574A;
+                                position: relative;
 
-                                &.img_top{
-                                    background-position: top;
+                                p{
+                                    font-size: 10px;
                                 }
-                                &.img_bottom{
-                                    background-position: bottom;
+
+                                div{
+                                    background-color: $gris;
+                                    position: absolute;
                                 }
-                                &.img_center{
+                                .txt{
+                                    height: 5%;
+                                    width: 30%;
+                                    transform: translate(-50%, -50%);
+
+                                    border-radius: 50px;
+                                    margin: 0;
+                                    background-color: $vert;
+                                    height: 5px;
+                                }
+                                .img{
+                                    border: none;
+                                    background-size: cover;
                                     background-position: center;
+
+                                    &.img_top{
+                                        background-position: top;
+                                    }
+                                    &.img_bottom{
+                                        background-position: bottom;
+                                    }
+                                    &.img_center{
+                                        background-position: center;
+                                    }
+                                    &.img_left{
+                                        background-position: left;
+                                    }
+                                    &.img_right{
+                                        background-position: right;
+                                    }
                                 }
-                                &.img_left{
-                                    background-position: left;
-                                }
-                                &.img_right{
-                                    background-position: right;
-                                }
+            
+                                
                             }
-        
-                            
                         }
                     }
-                    
-                    
                 }
                 >footer{
                     display: flex;

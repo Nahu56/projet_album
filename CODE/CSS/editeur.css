@@ -432,7 +432,7 @@ body {
 #editeur div#droite #apercu main div {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page, #editeur div#droite #apercu main .list_pages.bloc_couv,
 #editeur div#droite #apercu main div .bloc_page,
@@ -453,6 +453,15 @@ body {
   position: relative;
   width: 125px;
   height: 176.75px;
+}
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page.selected, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page.selected,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page.selected,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page.selected {
+  outline: 4px solid #18574A;
+}
+#editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page.unselected, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page.unselected,
+#editeur div#droite #apercu main div .bloc_page > div .vignette_page.unselected,
+#editeur div#droite #apercu main div.bloc_couv > div .vignette_page.unselected {
   outline: 2px solid #18574A;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page div, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page div,
@@ -712,39 +721,53 @@ body {
   width: 20px;
 }
 #editeur #modal_final > main > main {
+  display: block;
+  padding-top: 30px;
+}
+#editeur #modal_final > main > main h3 {
+  color: #737373;
+}
+#editeur #modal_final > main > main #minia_couvertures,
+#editeur #modal_final > main > main #minia_pages {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   width: 89%;
   margin: 20px auto;
 }
-#editeur #modal_final > main > main > div {
+#editeur #modal_final > main > main #minia_couvertures > div,
+#editeur #modal_final > main > main #minia_pages > div {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   margin-bottom: 15px;
 }
-#editeur #modal_final > main > main > div img {
+#editeur #modal_final > main > main #minia_couvertures > div img,
+#editeur #modal_final > main > main #minia_pages > div img {
   position: absolute;
   top: 14px;
   left: -9px;
   width: 15px;
 }
-#editeur #modal_final > main > main > div .miniature_page {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page {
   height: 226.24px;
   width: 160px;
   border: 2px solid #18574A;
   position: relative;
 }
-#editeur #modal_final > main > main > div .miniature_page p {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page p,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page p {
   font-size: 10px;
 }
-#editeur #modal_final > main > main > div .miniature_page div {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page div,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page div {
   background-color: #F0F0F0;
   position: absolute;
 }
-#editeur #modal_final > main > main > div .miniature_page .txt {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .txt,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .txt {
   height: 5%;
   width: 30%;
   transform: translate(-50%, -50%);
@@ -753,24 +776,30 @@ body {
   background-color: #18574A;
   height: 5px;
 }
-#editeur #modal_final > main > main > div .miniature_page .img {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img {
   border: none;
   background-size: cover;
   background-position: center;
 }
-#editeur #modal_final > main > main > div .miniature_page .img.img_top {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img.img_top,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img.img_top {
   background-position: top;
 }
-#editeur #modal_final > main > main > div .miniature_page .img.img_bottom {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img.img_bottom,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img.img_bottom {
   background-position: bottom;
 }
-#editeur #modal_final > main > main > div .miniature_page .img.img_center {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img.img_center,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img.img_center {
   background-position: center;
 }
-#editeur #modal_final > main > main > div .miniature_page .img.img_left {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img.img_left,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img.img_left {
   background-position: left;
 }
-#editeur #modal_final > main > main > div .miniature_page .img.img_right {
+#editeur #modal_final > main > main #minia_couvertures > div .miniature_page .img.img_right,
+#editeur #modal_final > main > main #minia_pages > div .miniature_page .img.img_right {
   background-position: right;
 }
 #editeur #modal_final > main > footer {

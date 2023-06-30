@@ -153,12 +153,12 @@
                 <p>de votre album</p>
             </header>
             <main>
-                <div class="bloc_couv">
+                <div class="bloc_couv apercue_couv_1">
                     <header class="ligne_page">
                         <div class="hr"></div><div class="num_page">1ère couverture</div><div class="hr"></div>
                     </header>
                     <div>
-                        <div class="vignette_page" id="apercue_couv_1" style="" onclick="focus_page('couv_1', 'couv')">
+                        <div class="vignette_page " id="apercue_couv_1" style="" onclick="focus_page('couv_1', 'couv')">
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                 </div>
 
 
-                <div class="bloc_couv">
+                <div class="bloc_couv apercue_couv_2">
                     <header class="ligne_page">
                         <div class="hr"></div><div class="num_page">Dernière couverture</div><div class="hr"></div>
                     </header>
@@ -270,7 +270,25 @@
             </header>
 
             <main>
-                
+                <h3>Couverture de l'album</h3>
+                <div id="minia_couvertures">
+
+                    <div id="miniature_couv_2">
+                        <p>Dernière</p>
+                        <div class="miniature_page"></div>
+                    </div>
+                    <div id="miniature_couv_1">
+                        <p>Première</p>
+                        <div class="miniature_page"></div>
+                        <img src="ASSETS/img/icones/liaison_page.svg" alt="icone liaison entre les pages">
+                    </div>
+                </div>
+
+                <h3>Pages de l'album</h3>
+
+                <div id="minia_pages">
+
+                </div>
             </main>
 
             <footer>
@@ -371,6 +389,8 @@
                                 const dateStr = details.update_time;
                                 var date = new Date(dateStr);
                                 var date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+
+                                console.log(date);
 
                                 var tableau_commande = []; 
 

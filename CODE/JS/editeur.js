@@ -25,7 +25,7 @@ fetch("ASSETS/json/variables.json")
         maj_prix_album();
         maj_prix_total();
 
-        focus_page('page_1');
+        focus_page("couv_1", "couv");
 
     })
 
@@ -216,14 +216,14 @@ function maj_textarea(element_focus_param) {
 
 
 
-
+// permet de récup l'historique du code avant erreur
 function getStackTrace() {
     const error = new Error();
     if (error.stack) {
       return error.stack;
     }
     return 'Stack trace not available.';
-  }
+}
 
 
 
@@ -234,39 +234,34 @@ function getStackTrace() {
 function focus_page(id, context = "pages"){
 
     var centre = document.getElementById("centre");
+    let centre_couv = document.getElementById("centre_couv");
 
     if(context == "pages"){ //  -> si on focus une page
 
         // ------- flex les pages & none les couvertures --------
         centre.style.display = "flex";
-
-        let centre_couv = document.getElementById("centre_couv");
         centre_couv.style.display = "none";
+
+        correct_templates(2);
+        unfocus_apercu();
 
     }else if(context == "couv"){ // -> si on focus une couverture
 
         // ------- flex les couvertures & none les pages --------
         centre.style.display = "none";
-
-        let centre_couv = document.getElementById("centre_couv");
         centre_couv.style.display = "flex";
 
-        centre = centre_couv; // -> le "centre" est la div couv
+        centre = centre_couv; // -> la div couv devient le "centre"
 
-
-        focus_couverture();
+        correct_templates(1);
+        unfocus_apercu();
     }
-
-    
-
 
 
 
     // On récupère les éléments 
     var page = document.getElementById(id);
-    
 
-    
     // On scroll jusque l'élément visé
     centre.scrollTo({
         top: 0,
@@ -282,11 +277,12 @@ function focus_page(id, context = "pages"){
     voile.className = 'voile';
 
 
-
     // On récupère les pages de l'album / ou les couvertures, en fonction de "centre"
-    var pages = centre.getElementsByClassName('page');    
+    var pages = centre.getElementsByClassName('page');
 
     var passe = false;
+
+
     Array.from(pages).forEach(element => {
 
         var id_apercu;
@@ -295,7 +291,6 @@ function focus_page(id, context = "pages"){
         }else{
             id_apercu = element.id;
         }
-
 
         // On vérifie si c'est pas l'élément focus 
         if (element.getAttribute('id') !== id) {
@@ -320,8 +315,7 @@ function focus_page(id, context = "pages"){
                     focus_page(element.id, context);
                 };
 
-                var apercue = document.getElementById('apercue_'+id_apercu)
-                apercue.style.outline = '2px solid #18574A';
+                // l'aperçu est géré au début de focus_page
 
                 if(context == "pages"){
                     var suppr_page = document.querySelector('#apercue_'+id_apercu +' .suppr_page')
@@ -332,8 +326,8 @@ function focus_page(id, context = "pages"){
 
         // Si c'est l'élément focus 
         }else {
-            passe = true;
 
+            passe = true;
             element.querySelector('p').style.textAlign="center";
 
             // On enleve le voile 
@@ -349,8 +343,8 @@ function focus_page(id, context = "pages"){
             var bloc_apercu = document.querySelector('#apercu main .apercue_'+id_apercu)
 
             var apercue = document.querySelector('#apercue_'+id_apercu)
-            apercue.style.outline = '4px solid #18574A';
-
+            apercue.classList.remove("unselected");
+            apercue.classList.add("selected");
 
             if(context == "pages"){
                 var suppr_page = document.querySelector('#apercue_'+id_apercu +' .suppr_page')
@@ -376,17 +370,33 @@ function focus_page(id, context = "pages"){
 }
 
 
-function focus_couverture(){
+function correct_templates(context = 2){
+    //context == 1 -> template de couverture
+    //context == 2 -> template de page
 
     let div_template = document.querySelectorAll("#templates main a");
 
     div_template.forEach(element => {
 
-        if(element.id.startsWith("couv")){
+        element.style.display = "none"; // tout en none
+
+        if(context == 1 && element.id.startsWith("couv")){ //affiche si on choisi couv et c'est une couv
             element.style.display = "block";
-        }else{
-            element.style.display = "none"
+
+        }else if(context == 2 && element.id.startsWith("id")){ //affiche si on choisi page et c'est une page
+            element.style.display = "block";
         }
+
+    })
+}
+
+// enleve le focus sur toutes les pages / couvertures de l'apercu
+function unfocus_apercu(){
+    let liste_pages = document.querySelectorAll("#apercu>main .vignette_page");
+
+    liste_pages.forEach(element => {
+        element.classList.remove("selected");
+        element.classList.add("unselected");
     })
 }
 
@@ -586,7 +596,7 @@ function ajout_page_apercue() {
 function ajout_page_miniature(){
     // Créer un élément div
     var miniature = document.createElement("div");
-    miniature.id = "miniature_"+nb_pages;
+    miniature.id = "miniature_page_"+nb_pages;
 
     // Créer un élément p
     var paragraphe = document.createElement("p");
@@ -617,8 +627,9 @@ function ajout_page_miniature(){
 
     }
 
+    let main_miniature = document.querySelector('#modal_final #minia_pages');
+
     // Ajouter la div principale à un élément existant de la page (par exemple, le body)
-    var main_miniature = document.querySelector('#modal_final main main')
     main_miniature.appendChild(miniature);
 
 
@@ -640,12 +651,20 @@ function setBackground(event) {
         element_focus.style.backgroundImage = `url(${reader.result})`;
         element_focus.value = file.name;
 
-        let id_page = element_focus.parentElement.parentElement.id.substring(5);
+        // défini les variables
+        var id_page = element_focus.parentElement.parentElement.id;
+        var num_page = element_focus.parentElement.parentElement.id.substring(5);
 
+        // récupère les éléments
         var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
-        img_apercue.style.backgroundImage = `url(${reader.result})`;
-
         var img_miniature = document.querySelector('#miniature_' + id_page +' .miniature_page .'+element_focus.classList[0])
+
+        if(id_page.startsWith("page")){
+            var img_apercue = document.querySelector('#apercue_' + num_page +' .'+element_focus.classList[0])
+        }
+
+        // ajoute l'image de fond
+        img_apercue.style.backgroundImage = `url(${reader.result})`;
         img_miniature.style.backgroundImage = `url(${reader.result})`;
 
         rm_apercue_image();
@@ -776,12 +795,18 @@ function place_img(event){
     let button = event.target;
     let choix = button.id.split("_")[1];
 
-    let id_page = element_focus.parentElement.parentElement.id.substring(5);
+    // défini les variables
+    var id_page = element_focus.parentElement.parentElement.id;
+    var num_page = element_focus.parentElement.parentElement.id.substring(5);
 
+    // récupère les éléments
     let element = document.querySelector("button.selected");
     var img_apercue = document.querySelector('#apercue_' + id_page + ' .'+element_focus.classList[0]);
     var img_miniature = document.querySelector('#miniature_' + id_page + ' .miniature_page .'+element_focus.classList[0])
     
+    if(id_page.startsWith("page")){
+        var img_apercue = document.querySelector('#apercue_' + num_page +' .'+element_focus.classList[0])
+    }
 
     //supprime la class existante
     let list_choix = ["top", "bottom", "center", "left", "right"];
@@ -804,6 +829,7 @@ function place_img(event){
  * @param {integer} num_page est le numéro de la que l'on veut supprimer 
  */
 function supprimer_page(num_page) {
+
     let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
     // On enleve la page dans le centre 
@@ -813,6 +839,7 @@ function supprimer_page(num_page) {
 
     // On replace les éléments dans le centre
     for (let i = num_page; i < nb_pages; i++) {
+
         let i_bis = +i + 1 ;
         var page = document.getElementById('page_'+(i_bis));
         page.id = 'page_'+i;
@@ -834,8 +861,11 @@ function supprimer_page(num_page) {
         page_texte.textContent = 'Page '+i;
 
         var voile = page.querySelector('.voile');
+
+
         voile.onclick = null;
         voile.onclick = function(){
+
             focus_page('page_'+i);
         };
 
@@ -848,14 +878,16 @@ function supprimer_page(num_page) {
     var apercu_icone = document.querySelector('#apercu main .bloc_page #apercue_'+num_page)
     var parent_apercu = apercu_icone.parentElement;
     parent_apercu.removeChild(apercu_icone);
+
     
-    // On replace l'élément dans l'apercu 
+    // On replace l'élément dans l'apercu  (a quoi sert ce for ?????)
     for (let i = num_page; i < nb_pages; i++) {
 
         let i_bis = +i + 1;
         const apercue_suivant = document.querySelector('#apercu main .bloc_page #apercue_'+(i_bis));
 
         apercue_suivant.id='apercue_'+i;
+
         
         apercue_suivant.onclick = null;
         apercue_suivant.onclick = function(){
@@ -878,8 +910,8 @@ function supprimer_page(num_page) {
 
 
     // On enleve la page dans la miniature
-    var list_miniatures = document.querySelector('#modal_final MAIN MAIN')
-    var miniature_ = document.getElementById('miniature_'+num_page)
+    var list_miniatures = document.querySelector('#modal_final #minia_pages')
+    var miniature_ = document.getElementById('miniature_page_'+num_page)
     list_miniatures.removeChild(miniature_)
 
     // On replace les éléments dans a miniature
@@ -957,8 +989,10 @@ function supprimer_page(num_page) {
         ajout_page()
     }else{
         if (nb_pages + 1 == num_page) {
+
             focus_page('page_'+(+num_page-1))
         }else{
+
             focus_page('page_'+(num_page))
         }
     }

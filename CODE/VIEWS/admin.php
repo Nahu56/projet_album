@@ -7,7 +7,7 @@
 
 
     /* -------------------------------------------------------------------------- */
-    /*                    ON TESTE SI UN AFFICHAGE EST ATTENDUE                   */
+    /*                    ON TESTE SI UN AFFICHAGE EST ATTENDU                    */
     /* -------------------------------------------------------------------------- */
     if (isset($_GET['affichage'])) {
         // Un affichage attendue on teste si c'est bien le en_attente
@@ -332,8 +332,7 @@
                 <option value="tout"  <?php if (isset($_GET['affichage'])) { if ($_GET['affichage']=='tout'){echo 'selected';}} ?> > TOUT </option>
             </select>
         </form>
-
-
+ 
     </header>
     <div id="commande" >
 

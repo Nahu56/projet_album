@@ -10,23 +10,22 @@ if (isset($_GET['function'])) {
     switch ($_GET['function']) {
 
         case 'part1':
+
             creation_commande();
             tab64toIMG();
             break;
+
         case 'part2':
         
             generationPDF();
-
+            
             // -> Images détruites à la page confirmation destroyIMG_SESSION();
-
             header("Location: ./VIEWS/confirmation.php");
-
             break;
 
         case 'destroyIMG':
 
             destroyIMG_SESSION();
-
             break;
         
         default:
@@ -50,7 +49,11 @@ function creation_commande(){
     
     $tableau_commande = json_decode($_POST["tableau_commande"]);
 
-    $date = date('m/d/Y', strtotime($tableau_commande[0]));
+    // $date = date('m/d/Y', strtotime($tableau_commande[0]));
+
+    $nonformated_date = DateTime::createFromFormat('d/n/Y', $tableau_commande[0]);
+    $date = $nonformated_date->format('d/m/Y');
+
 
     $_SESSION['id_commande'] = $tableau_commande[1];
 
@@ -377,18 +380,22 @@ function destroyIMG_SESSION(){
 
     foreach ($album as $num_page => $page) {
         foreach ($page as $num_element => $element) {
-            
-            //vérifie si c'est une image
-            if($element[1] == "#" && isset($element[2])){
-                $chemin = explode("#", $element)[1];
 
-                //corrige le chemin pour trouver le fichier depuis confirmation.php
-                $newchemin = str_replace("..", "../..", $chemin);
+            //vérifie si element existe
+            if(isset($element[1])){
 
-                //vérification et suppression du fichier
-                if (file_exists($newchemin)) {
+                //puis si elle contient un # (=> c'est une image), et si la route existe
+                if($element[1] == "#" && isset($element[2])){
+                    $chemin = explode("#", $element)[1];
 
-                    unlink($newchemin);
+                    //corrige le chemin pour trouver le fichier depuis confirmation.php
+                    $newchemin = str_replace("..", "../..", $chemin);
+
+                    //vérification et suppression du fichier
+                    if (file_exists($newchemin)) {
+
+                        unlink($newchemin);
+                    }
                 }
             }
         }

@@ -17,10 +17,10 @@ function recuperation_templates() {
 
                 if(template.startsWith("couv")){ // -> c'est un template de couverture
 
-                  card.style.display = "none";
+                  card.style.display = "block";
                 }else if(template.startsWith("id")){ // -> c'est un template de page
 
-                  card.style.display = "block";
+                  card.style.display = "none";
                 }
 
                 div_template.appendChild(card);
@@ -35,29 +35,50 @@ function recuperation_templates() {
 
               div_template.addEventListener('click', function() {
 
-                let num_page = sessionStorage.getItem("currentpage").split("_")[1];
-                let page = document.querySelector("#page_" + num_page + " .feuille");
-                let apercue = document.querySelector("#apercue_" + num_page);
-                let miniature = document.querySelector("#miniature_" + num_page + " .miniature_page");
+                // définition des variables
+
+                let id_page = sessionStorage.getItem("currentpage");
+
+                let num_page = id_page.split("_")[1];
+                let page = document.querySelector("#" + id_page + " .feuille");
+                var apercue = document.querySelector("#apercue_" + id_page);
+
+                if(id_page.startsWith("page")){
+                  apercue = document.querySelector("#apercue_" + num_page);
+                }
+
+                console.log(id_page)
+                let miniature = document.querySelector("#miniature_" + id_page + " .miniature_page");
+
+
+                // --------- GESTION DE LA PAGE
 
                 page.innerHTML = ""; // clear la page actuelle
-                loadElement("#page_" + num_page + " .feuille", templates[div_template.id], 1);
-                focus_couverture();
+                loadElement("#" + id_page + " .feuille", templates[div_template.id], 1);
 
+
+                // --------- GESTION DE L'APERCU
 
                 apercue.innerHTML = ""; // clear la page actuelle
 
-                var suppr_page = document.createElement('img');
-                suppr_page.src = 'ASSETS/img/suppr_page.svg';
-                suppr_page.classList.add('suppr_page');
-                suppr_page.onclick =  function(){supprimer_page(num_page)};
-                
+                if(id_page.startsWith("couv")){
 
-                apercue.appendChild(suppr_page);
-                loadElement("#apercue_" + num_page , templates[div_template.id]);
+                  loadElement("#apercue_" + id_page , templates[div_template.id]);
+                }else if(id_page.startsWith("page")){
+
+                  var suppr_page = document.createElement('img');
+                  suppr_page.src = 'ASSETS/img/suppr_page.svg';
+                  suppr_page.classList.add('suppr_page');
+                  suppr_page.onclick =  function(){supprimer_page(num_page)};
+  
+                  apercue.appendChild(suppr_page);
+                  loadElement("#apercue_" + num_page , templates[div_template.id]);
+                }
+
+                // --------- GESTION DE LA MINIATURE
 
                 miniature.innerHTML= "";
-                loadElement("#miniature_" + num_page +' .miniature_page' , templates[div_template.id]);
+                loadElement("#miniature_" + id_page +' .miniature_page' , templates[div_template.id]);
 
 
                 //attribution de l'id template a la page (en class)
