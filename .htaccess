@@ -1,10 +1,3 @@
-<Files "admin.php">
-    AuthType Basic 
-    AuthName "My Protected Folder" 
-    AuthUserFile ..\htdocs\projet_album\.htpasswd
-    Require valid-user
-</Files>
-
 RewriteEngine On
 RewriteRule ^admin$ CODE/ADMIN/admin.php [L]
 RewriteRule ^editeur$ CODE/VIEWS/editeur.php [L]
