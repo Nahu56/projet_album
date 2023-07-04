@@ -17,10 +17,10 @@ function recuperation_templates() {
 
                 if(template.startsWith("couv")){ // -> c'est un template de couverture
 
-                  card.style.display = "block";
+                  card.style.display = "none";
                 }else if(template.startsWith("id")){ // -> c'est un template de page
 
-                  card.style.display = "none";
+                  card.style.display = "block";
                 }
 
                 div_template.appendChild(card);
@@ -136,6 +136,7 @@ function loadElement(query_target, template, type = 0){
       // Création de l'objet
       if(type == 1){
         element = document.createElement("button"); // -> INPUT fonctionnel
+        element.classList.add("vide");
         element.classList.add('obj_'+count)
 
   

@@ -3,12 +3,17 @@ body {
   overflow-x: hidden;
 }
 
+/* ------------------------------- DIMENSIONS ------------------------------- */
+/* -------------------------------- EDITABLES ------------------------------- */
 /* -------------------------------------------------------------------------- */
 /*                                   EDITEUR                                  */
 /* -------------------------------------------------------------------------- */
 #editeur {
   position: relative;
   background-color: #EBF0EF;
+  /* -------------------------------------------------------------------------- */
+  /*                                   GAUCHE                                   */
+  /* -------------------------------------------------------------------------- */
   /* -------------------------------------------------------------------------- */
   /*                                   CENTRE                                   */
   /* -------------------------------------------------------------------------- */
@@ -71,17 +76,21 @@ body {
   border: 2px solid black;
   background-color: white;
 }
-#editeur section .header_section {
+#editeur section > .header_section {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 4;
   padding: 15px 0 25px 0;
   text-align: center;
   width: 100%;
   background: linear-gradient(180deg, #FFFFFF 70%, rgba(255, 255, 255, 0) 100%);
 }
-#editeur section .footer_section {
-  z-index: 2;
+#editeur section > .header_section > p {
+  color: #737373;
+}
+#editeur section > .footer_section {
+  z-index: 4;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -134,14 +143,17 @@ body {
   height: 155.54px;
   width: 110px;
   outline: 2px solid #18574A;
+  background-color: white;
+  transition: background 0.1s ease-in;
 }
 #editeur div#gauche #templates main > a:hover {
   cursor: pointer;
+  background-color: rgb(195, 242, 231);
 }
 #editeur div#gauche #templates main > a .img {
   position: absolute;
   margin: 0;
-  background-color: #dddddd;
+  background-color: rgba(0, 0, 0, 0.0705882353);
   border: none;
 }
 #editeur div#gauche #templates main > a .txt {
@@ -301,8 +313,8 @@ body {
   width: 90%;
 }
 #editeur .centre .page > .feuille {
-  width: 550px;
-  height: 777.7px;
+  height: 80vh;
+  width: 56.5770862801vh;
   background-color: white;
   border: 4px solid #18574A;
   box-shadow: 13px 13px 0px #000000;
@@ -335,8 +347,10 @@ body {
 #editeur .centre .page > .feuille button {
   position: absolute;
   cursor: pointer;
+  transition: all 0.2s ease-in;
 }
 #editeur .centre .page > .feuille button.txt {
+  font-size: 20px;
   border: 1px dashed #737373;
   background-color: transparent;
   padding: 5px 5px;
@@ -349,13 +363,21 @@ body {
   border-radius: 10px;
   transform: translate(-50%, -50%);
 }
+#editeur .centre .page > .feuille button.txt.border-none {
+  border: none;
+}
 #editeur .centre .page > .feuille button.img {
   outline: 2px solid transparent;
   outline-offset: -2px;
   background-color: #F0F0F0;
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  transition: all 0.2s ease-in;
+}
+#editeur .centre .page > .feuille button.img.vide {
+  background-image: url("../../ASSETS/img/ajout_image.png") !important;
+  background-size: 30px !important;
+  background-position: center !important;
 }
 #editeur .centre .page > .feuille button.img.img_top {
   background-position: top;
@@ -372,13 +394,13 @@ body {
 #editeur .centre .page > .feuille button.img.img_right {
   background-position: right;
 }
-#editeur .centre .page > .feuille button.img:hover {
-  background-color: rgb(195, 242, 231);
-  outline: 2px solid #18574A;
-}
 #editeur .centre .page > .feuille button.selected {
   outline: 4px solid #18574A;
   outline-offset: -4px;
+}
+#editeur .centre .page > .feuille button:hover {
+  background-color: rgb(195, 242, 231);
+  outline: 2px solid #18574A;
 }
 #editeur .centre .page img {
   position: absolute;
@@ -412,12 +434,6 @@ body {
   right: 0;
   top: 0;
 }
-#editeur div#droite #apercu header {
-  z-index: 3;
-}
-#editeur div#droite #apercu header p {
-  color: #737373;
-}
 #editeur div#droite #apercu main {
   box-sizing: border-box;
   display: flex;
@@ -433,6 +449,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+#editeur div#droite #apercu main .list_pages.bloc_couv,
+#editeur div#droite #apercu main div.bloc_couv {
+  box-shadow: -5px 0px 0px 10px #F0F0F0, 5px 0px 0px 10px #F0F0F0;
+  border-radius: 3px;
+  background-color: #F0F0F0;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page, #editeur div#droite #apercu main .list_pages.bloc_couv,
 #editeur div#droite #apercu main div .bloc_page,
@@ -451,8 +473,10 @@ body {
 #editeur div#droite #apercu main div .bloc_page > div .vignette_page,
 #editeur div#droite #apercu main div.bloc_couv > div .vignette_page {
   position: relative;
+  background-color: white;
   width: 125px;
   height: 176.75px;
+  transition: background 0.1s ease-in;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page.selected, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page.selected,
 #editeur div#droite #apercu main div .bloc_page > div .vignette_page.selected,
@@ -467,7 +491,7 @@ body {
 #editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page div, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page div,
 #editeur div#droite #apercu main div .bloc_page > div .vignette_page div,
 #editeur div#droite #apercu main div.bloc_couv > div .vignette_page div {
-  background-color: #F0F0F0;
+  background-color: rgba(0, 0, 0, 0.0705882353);
   position: absolute;
 }
 #editeur div#droite #apercu main .list_pages .bloc_page > div .vignette_page .txt, #editeur div#droite #apercu main .list_pages.bloc_couv > div .vignette_page .txt,
@@ -526,6 +550,7 @@ body {
 #editeur div#droite #apercu main div .bloc_page > div .vignette_page:hover,
 #editeur div#droite #apercu main div.bloc_couv > div .vignette_page:hover {
   cursor: pointer;
+  background-color: rgb(195, 242, 231);
 }
 #editeur div#droite #panier {
   position: absolute;

@@ -28,21 +28,21 @@
                 <header>
                     <h2>Pour commencer,</h2>
 
-                    <p>sélectionnez la reliure ainsi que le format d’album photo duquel vous souhaitez partir :</p>
+                    <p>sélectionnez les options pour votre album photo :</p>
                 </header>
 
                 <fieldset>
                     <div>
-                        <label for="reliure_bleue">
-                            <input type="radio" id="reliure_bleue" name="reliure" value="reliure_bleue" required="required" >
-                            Reliure bleue
+                        <label for="reliure_plastique">
+                            <input type="radio" id="reliure_plastique" name="reliure" value="plastique" required="required" >
+                            Reliure plastique
                         </label>
                     </div>
 
                     <div>
-                        <label for="reliure_rouge">
-                            <input type="radio" id="reliure_rouge" name="reliure" value="reliure_rouge" required="required" >
-                            Reliure rouge
+                        <label for="reliure_metallique">
+                            <input type="radio" id="reliure_metallique" name="reliure" value="metallique" required="required" >
+                            Reliure métallique
                         </label>
                     </div>
                 </fieldset>
@@ -51,20 +51,42 @@
 
                 <fieldset>
                     <div>
-                        <label for="FormatA">
+                        <label for="FormatA4">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="FormatA" name="format" value="FormatA" required="required" >
-                            FormatA
+                            <input type="radio" id="FormatA4" name="format" value="a4" required="required" >
+                            Format A4
                         </label>
                     </div>
 
                     <div>
-                        <label for="FormatB">
+                        <label for="FormatA5">
                             <img src="ASSETS\img\image.jpg" alt="">
 
-                            <input type="radio" id="FormatB" name="format" value="FormatB" required="required" >
-                            FormatB
+                            <input type="radio" id="FormatA5" name="format" value="a5" required="required" >
+                            Format A5
+                        </label>
+                    </div>
+                </fieldset>
+
+                <hr>
+
+                <fieldset>
+                    <div>
+                        <label for="couverture_carton">
+                            <img src="ASSETS\img\image.jpg" alt="">
+
+                            <input type="radio" id="couverture_carton" name="couverture" value="carton" required="required" >
+                            Couverture cartonnée
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="couverture_papier">
+                            <img src="ASSETS\img\image.jpg" alt="">
+
+                            <input type="radio" id="couverture_papier" name="couverture" value="papier" required="required" >
+                            Couverture papier
                         </label>
                     </div>
                 </fieldset>

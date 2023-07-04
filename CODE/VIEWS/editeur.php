@@ -45,6 +45,7 @@
         <section id="templates" style="display:block;">
             <header class="header_section">
                 <h3>Mise en page</h3>
+                <p class="sous-titre"></p>
             </header>
             <main id="box_templates"> </main>
         </section>
@@ -484,8 +485,9 @@
     var options = [];
 
     // Récupérer les valeurs des options de l'album et les ajouter au tableau
-    options.push('<?php echo $_POST["reliure"]; ?>');
     options.push('<?php echo $_POST["format"]; ?>');
+    options.push('<?php echo $_POST["reliure"]; ?>');
+    options.push('<?php echo $_POST["couverture"]; ?>');
     options.push('<?php echo $_POST["theme"]; ?>');
 
     // Convertir le tableau en une chaîne JSON

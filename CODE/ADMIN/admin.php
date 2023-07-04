@@ -342,7 +342,7 @@
             echo '
             <div class="pas_de_commande">
                 <img src="ASSETS/img/waiting.svg" alt="Rien pour le moment">
-                <h2>Pas de commande en attente</h2>
+                <h2>Aucune commande en attente</h2>
             </div>
             
             

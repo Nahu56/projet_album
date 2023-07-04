@@ -1,6 +1,6 @@
 // --- couleurs ---- 
 $gris: #F0F0F0;
-$gris2: #dddddd;
+$gris2_transparent: #00000012;
 $gristext: #737373;
 
 $vert: #18574A;
@@ -11,8 +11,17 @@ $vert_fond: #EBF0EF;
 body{
     margin: 0px;
     overflow-x: hidden;
-    
 }
+
+
+/* ------------------------------- DIMENSIONS ------------------------------- */
+$width_gauche: 360px;
+$width_droite: 304px;
+
+/* -------------------------------- EDITABLES ------------------------------- */
+$taille_texte: 20px;
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                                   EDITEUR                                  */
@@ -83,10 +92,11 @@ body{
         border: 2px solid black;
         background-color: white;
 
-        .header_section{
+        >.header_section{ // Mise en page de tous les entête de section
             position: absolute;
             left: 0;
             top: 0;
+            z-index: 4;
 
             padding: 15px 0 25px 0;
             text-align: center;
@@ -94,9 +104,13 @@ body{
             width: 100%;
 
             background: linear-gradient(180deg, #FFFFFF 70%, rgba(255, 255, 255, 0) 100%);
+
+            >p{
+                color: $gristext;
+            }
         }
-        .footer_section{
-            z-index: 2;
+        >.footer_section{ // Mise en page de tous les footer de section
+            z-index: 4;
             
             position: absolute;
             left: 0;
@@ -114,13 +128,17 @@ body{
     }
 
 
+    /* -------------------------------------------------------------------------- */
+    /*                                   GAUCHE                                   */
+    /* -------------------------------------------------------------------------- */
+
 
     div#gauche{
         position: fixed ;
         left:0 ;
         top: 0;
         height: calc(100vh - 4px);
-        width: 360px;
+        width: $width_gauche;
 
         z-index: 900;
 
@@ -178,19 +196,20 @@ body{
                     height: $width * $ratio ;
                     width: $width;
 
-
                     outline: 2px solid $vert;
-                    // outline-offset: -2px;
+                    background-color: white;
 
+                    transition: background 0.1s ease-in;
 
                     &:hover{
                         cursor: pointer;
+                        background-color: $vert2;
                     }
 
                     .img{
                         position: absolute;
                         margin: 0;
-                        background-color: $gris2;
+                        background-color: $gris2_transparent;
                         border: none;
                     }
                     .txt{
@@ -426,11 +445,13 @@ body{
                 width: 90%;             
             }
             >.feuille{
-                
+
+
+                //Calcul pour que la hauteur ne dépasse pas celle de l'écran
                 $ratio: 1.414;
-                $width: 550px;
-                width: $width;
-                height: $width * $ratio ;
+                $height: 80vh;
+                height: $height ;
+                width: calc($height / $ratio);
 
                 background-color:white; 
 
@@ -480,6 +501,8 @@ body{
                     cursor: pointer;
 
                     &.txt{
+                        font-size: $taille_texte;
+
                         border: 1px dashed $gristext;
                         background-color: transparent;
 
@@ -496,14 +519,26 @@ body{
                         border-radius: 10px;
 
                         transform: translate(-50%, -50%);
+
+                        &.border-none{
+                            border: none;
+                        }
                     }
                     &.img{
                         outline: 2px solid transparent;
                         outline-offset: -2px;
 
                         background-color: $gris;
+                        background-repeat: no-repeat;
                         background-size: cover;
                         background-position: center;
+
+
+                        &.vide{
+                            background-image: url("../../ASSETS/img/ajout_image.png") !important;
+                            background-size: 30px  !important;
+                            background-position: center !important;
+                        }
                     
 
                         &.img_top{
@@ -522,16 +557,19 @@ body{
                             background-position: right;
                         }
 
-                        transition: all 0.2s ease-in;
-                        &:hover{
-                            background-color: $vert2;
 
-                            outline: 2px solid $vert;
-                        }
                     }
                     &.selected{
                         outline: 4px solid $vert;
                         outline-offset: -4px;
+                    }
+
+                    transition: all 0.2s ease-in;
+
+                    &:hover{
+                        background-color: $vert2;
+
+                        outline: 2px solid $vert;
                     }
                 }
                 
@@ -573,7 +611,7 @@ body{
         justify-content: space-between;
 
         height: 100vh;
-        width: 304px;
+        width: $width_droite;
 
         /* -------------------------------------------------------------------------- */
         /*                                   APERCU                                   */
@@ -588,13 +626,6 @@ body{
 
             right: 0;
             top: 0;
-            
-            header{
-                z-index: 3;
-                p{
-                    color: $gristext;
-                }
-            }
 
             main{
                 box-sizing: border-box;
@@ -614,6 +645,11 @@ body{
                     flex-direction: column;
                     gap: 10px;
 
+                    &.bloc_couv{
+                        box-shadow: -5px 0px 0px 10px $gris, 5px 0px 0px 10px $gris;
+                        border-radius: 3px;
+                        background-color: $gris;
+                    }
 
                     .bloc_page,
                     &.bloc_couv{
@@ -625,10 +661,10 @@ body{
                             justify-content: space-between;
                             gap: 10px;
                             flex-direction: initial;
-                            
-    
+                                
                             .vignette_page{
                                 position: relative; 
+                                background-color: white;
     
                                 $width: 125px;
     
@@ -643,7 +679,7 @@ body{
                                 }
                                 
                                 div{
-                                    background-color: $gris;
+                                    background-color: $gris2_transparent;
                                     position: absolute;
                                 }
                                 .txt{
@@ -686,9 +722,12 @@ body{
                                     right: -14px;
                                     z-index: 2;
                                 }
-    
+
+                                transition: background 0.1s ease-in;
+
                                 &:hover{
                                     cursor: pointer;
+                                    background-color: $vert2;
                                 }
                             }
                         }
