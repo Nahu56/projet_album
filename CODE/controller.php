@@ -214,41 +214,46 @@ function generationPDF(){
         // //  Ajouter image de fond au pdf 
         // $pdf->Image('../assets/IMG/pluie.jpg',0 ,0 , $pdfWidth, $pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, false);
 
-        foreach ($page as $obj => $element) {
+
+        //Vérifie que la n'est pas blanche 
+        if($page[0] !== ""){
+
+            foreach ($page as $obj => $element) {
             
-            if (!str_starts_with($element, "id")) {
-                
-                if ($templates[$page[0]]['obj_'.$obj]['type']=='img') {
-                
-                    $chemin = explode("#", $element)[1];
-                    if ($chemin != null) {
-                        cropImage(
-                            $chemin,
-                            $element[0],
-                            ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth,
-                            ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight
-                        );
-                            
-                        $pdf->Image(
-                            $chemin, //chemin
-                            ($templates[$page[0]]['obj_'.$obj]['data']['x'] / 100)*$pdfWidth, // position X
-                            ($templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight, // position Y
-                            ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth, // Largeur
-                            ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight, // Hauteur
-                            '', '', '', 
-                            true, // Resize
-                            150, // résolution DPI
-                            '', false, false, 0, false, false, $fitonpage=false
-                        );
-                    }
+                if (!str_starts_with($element, "id")) {
                     
-                }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
-
-                    $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
-                    $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
-
-                }
-            }   
+                    if ($templates[$page[0]]['obj_'.$obj]['type']=='img') {
+                    
+                        $chemin = explode("#", $element)[1];
+                        if ($chemin != null) {
+                            cropImage(
+                                $chemin,
+                                $element[0],
+                                ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth,
+                                ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight
+                            );
+                                
+                            $pdf->Image(
+                                $chemin, //chemin
+                                ($templates[$page[0]]['obj_'.$obj]['data']['x'] / 100)*$pdfWidth, // position X
+                                ($templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight, // position Y
+                                ($templates[$page[0]]['obj_'.$obj]['data']['w'] / 100)*$pdfWidth, // Largeur
+                                ($templates[$page[0]]['obj_'.$obj]['data']['h'] / 100)*$pdfHeight, // Hauteur
+                                '', '', '', 
+                                true, // Resize
+                                150, // résolution DPI
+                                '', false, false, 0, false, false, $fitonpage=false
+                            );
+                        }
+                        
+                    }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
+    
+                        $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
+                        $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
+    
+                    }
+                }   
+            }
         }
     }
 
@@ -256,8 +261,11 @@ function generationPDF(){
     //Défini le nom du fichier
     $nom = $_SESSION['id_commande'] . ".pdf";
 
+    // Chemin relatif vers le répertoire de destination
+    $chemin = __DIR__ . '/../STOCKAGE/PDF_commandes/';
+
     // Générer le fichier PDF sur le serveur
-    $pdf->Output('STOCKAGE\PDF_commandes\\'.$nom, 'F');
+    $pdf->Output($chemin . $nom, 'F');
     
 
 

@@ -902,18 +902,19 @@ $taille_texte: 20px;
                     >div:last-child{ //prix et reduc
 
                         >div{
-                            display: flex;
-                            justify-content: end;
-                            gap: 10px;
+                            display: none;
+                            justify-content: space-between;
+                            gap: 5px;
+                            margin-bottom: 5px;
 
                             span{
-                                font-size: 13px;
+                                font-size: 14px;
 
                                 color: $gristext;
                                 text-decoration: line-through;
                             }
                             p{
-                                font-size: 13px;
+                                font-size: 14px;
                                 
                             }
                         }
@@ -945,230 +946,222 @@ $taille_texte: 20px;
     /* -------------------------------------------------------------------------- */
 
     #modal_final{
-            display: none;
+        display: none;
+        overflow-y: scroll;
 
-            position: absolute;
-            top: 100vh;
-            left: 0;
+        position: absolute;
+        top: 100vh;
+        left: 0;
 
-            overflow-y: scroll;
+        width: 100vw;
+        padding: 20vh 0;
 
-                
-            z-index: 910;
+        backdrop-filter: blur(10px);
+        z-index: 910;
+        cursor: pointer;
+        transition: all 0.6s ease-in-out;
+    
+        &.actif{
+            top: 0vh;
+        }
+
+        >main{
+
+            display: flex;
+            flex-direction: column;
+            cursor:auto;
+
+            width: 820px;
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 50px;
+
+            border: 2px solid $gris;
+            background-color: white;
             
-            width: 100vw;
-            
-            
-            padding: 20vh 0;
 
-            backdrop-filter: blur(10px);
+            >header{
+                div{
+                    display: flex;
+                    justify-content: space-between;
 
-            cursor: pointer;
+                    button{ // bouton de fermeture du modal
+                        display: block;
+                        border: none;
+                        background-color: transparent;
 
-            transition: all 0.6s ease-in-out;
-        
-            &.actif{
-                top: 0vh;
-            }
+                        color: $gristext;
 
-            >main{
+                        &:hover{
+                            background-color: #EBF0EF;
+                        }
 
-                display: flex;
-                flex-direction: column;
-                cursor:auto;
-
-                
-                width: 820px;
-                max-width: 90%;
-
-                margin: 0 auto;
-                padding: 50px;
-                background-color: white;
-
-                
-
-                >header{
-                    div{
-                        display: flex;
-                        justify-content: space-between;
-
-                        button{ // bouton de fermeture du modal
-                            display: block;
-                            border: none;
-                            background-color: transparent;
-
-                            color: $gristext;
-
-                            &:hover{
-                                background-color: #EBF0EF;
-                            }
-
-                            img{
-                                width: 20px;
-                            }
+                        img{
+                            width: 20px;
                         }
                     }
                 }
-                >main{
-                    display: block;
-                    padding-top: 30px;
+            }
+            >main{
+                display: block;
+                padding-top: 30px;
 
-                    h3{
-                        color: $gristext;
-                    }
+                h3{
+                    color: $gristext;
+                }
 
-                    #minia_couvertures,
-                    #minia_pages{
+                #minia_couvertures,
+                #minia_pages{
 
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    width: 89%;
+                    margin: 20px auto;
+
+                    >div{
                         display: flex;
+                        flex-direction: column;
                         align-items: center;
-                        flex-wrap: wrap;
-                        width: 89%;
-                        margin: 20px auto;
 
-                        >div{
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
+                        position: relative;
 
+                        margin-bottom: 15px;
+
+                        img{
+                            position: absolute;
+                            top: 14px;
+                            left: -9px;
+            
+                            width: 15px;
+                        }
+
+                        .miniature_page{
+                            $width : 160px;
+                            $ratio: 1.414;
+                            height: $width * $ratio ;
+                            width: $width;
+                            border: 2px solid #18574A;
                             position: relative;
 
-                            margin-bottom: 15px;
+                            p{
+                                font-size: 10px;
+                            }
 
-                            img{
+                            div{
+                                background-color: $gris;
                                 position: absolute;
-                                top: 14px;
-                                left: -9px;
-                
-                                width: 15px;
                             }
+                            .txt{
+                                height: 5%;
+                                width: 30%;
+                                transform: translate(-50%, -50%);
 
-                            .miniature_page{
-                                $width : 160px;
-                                $ratio: 1.414;
-                                height: $width * $ratio ;
-                                width: $width;
-                                border: 2px solid #18574A;
-                                position: relative;
+                                border-radius: 50px;
+                                margin: 0;
+                                background-color: $vert;
+                                height: 5px;
+                            }
+                            .img{
+                                border: none;
+                                background-size: cover;
+                                background-position: center;
 
-                                p{
-                                    font-size: 10px;
+                                &.img_top{
+                                    background-position: top;
                                 }
-
-                                div{
-                                    background-color: $gris;
-                                    position: absolute;
+                                &.img_bottom{
+                                    background-position: bottom;
                                 }
-                                .txt{
-                                    height: 5%;
-                                    width: 30%;
-                                    transform: translate(-50%, -50%);
-
-                                    border-radius: 50px;
-                                    margin: 0;
-                                    background-color: $vert;
-                                    height: 5px;
-                                }
-                                .img{
-                                    border: none;
-                                    background-size: cover;
+                                &.img_center{
                                     background-position: center;
-
-                                    &.img_top{
-                                        background-position: top;
-                                    }
-                                    &.img_bottom{
-                                        background-position: bottom;
-                                    }
-                                    &.img_center{
-                                        background-position: center;
-                                    }
-                                    &.img_left{
-                                        background-position: left;
-                                    }
-                                    &.img_right{
-                                        background-position: right;
-                                    }
                                 }
-            
-                                
-                            }
-                        }
-                    }
-                }
-                >footer{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-
-                    padding: 30px;
-                    width: auto;
-
-                    border: 1px solid black;
-                    background-color: $gris;
-
-
-                    #panier_modal{
-                        
-                        width: 70%;
-                        margin: 10px auto;
-
-                        >p{
-                            font-size: 25px;
-                            font-weight: 500;
-                        }
-                        .options{
-
-                            border: 1px solid $gristext;
-                            padding: 15px;
-
-                            font-size: 18px;
-
-                            >div{
-                                margin: 5px auto;
-                                display: flex;
-                                justify-content: space-between;
-
-                                span{
-                                    color: $gristext;
+                                &.img_left{
+                                    background-position: left;
+                                }
+                                &.img_right{
+                                    background-position: right;
                                 }
                             }
-                            &>div:last-child{
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                
-                                outline: 2px solid black;
-                                background-color: rgba(195, 242, 231, 1);
-                                padding: 10px 15px;
-                                span{color: black;}
-                            }
+        
+                            
                         }
-                        .qtt_total{
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-
-                            margin: 20px auto;
-
-                            p:first-child{
-                                font-size: 21px;
-                                font-weight: 400;
-                            }
-                            p:last-child{
-                                font-size: 25px;
-                                font-weight: 900;
-                            }
-                        }
-                    }
-
-                    .paypal{
-                        width: 85%;
-                        margin: 10px auto;
-                        background-color: $gris;
                     }
                 }
             }
-        }   
+            >footer{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                padding: 30px;
+                width: auto;
+
+                border: 1px solid black;
+                background-color: $gris;
+
+
+                #panier_modal{
+                    
+                    width: 70%;
+                    margin: 10px auto;
+
+                    >p{
+                        font-size: 25px;
+                        font-weight: 500;
+                    }
+                    .options{
+
+                        border: 1px solid $gristext;
+                        padding: 15px;
+
+                        font-size: 18px;
+
+                        >div{
+                            margin: 5px auto;
+                            display: flex;
+                            justify-content: space-between;
+
+                            span{
+                                color: $gristext;
+                            }
+                        }
+                        &>div:last-child{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            
+                            outline: 2px solid black;
+                            background-color: rgba(195, 242, 231, 1);
+                            padding: 10px 15px;
+                            span{color: black;}
+                        }
+                    }
+                    .qtt_total{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        margin: 20px auto;
+
+                        p:first-child{
+                            font-size: 21px;
+                            font-weight: 400;
+                        }
+                        p:last-child{
+                            font-size: 25px;
+                            font-weight: 900;
+                        }
+                    }
+                }
+
+                .paypal{
+                    width: 85%;
+                    margin: 10px auto;
+                    background-color: $gris;
+                }
+            }
+        }
+    }   
     
 }

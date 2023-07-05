@@ -680,17 +680,18 @@ body {
   background-color: #EBF0EF;
 }
 #editeur div#droite #panier > main > footer > div:last-child > div {
-  display: flex;
-  justify-content: end;
-  gap: 10px;
+  display: none;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 #editeur div#droite #panier > main > footer > div:last-child > div span {
-  font-size: 13px;
+  font-size: 14px;
   color: #737373;
   text-decoration: line-through;
 }
 #editeur div#droite #panier > main > footer > div:last-child > div p {
-  font-size: 13px;
+  font-size: 14px;
 }
 #editeur div#droite #panier > main > footer > div:last-child > p {
   font-size: 27px;
@@ -704,15 +705,15 @@ body {
 }
 #editeur #modal_final {
   display: none;
+  overflow-y: scroll;
   position: absolute;
   top: 100vh;
   left: 0;
-  overflow-y: scroll;
-  z-index: 910;
   width: 100vw;
   padding: 20vh 0;
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
+  z-index: 910;
   cursor: pointer;
   transition: all 0.6s ease-in-out;
 }
@@ -727,6 +728,7 @@ body {
   max-width: 90%;
   margin: 0 auto;
   padding: 50px;
+  border: 2px solid #F0F0F0;
   background-color: white;
 }
 #editeur #modal_final > main > header div {

@@ -242,11 +242,11 @@
                     </div>
 
                     <div class="total">
-                        <!-- <div>
-                            <span>63,80€</span>
-                            <p>-10%</p>
-                        </div> -->
-                        <p></p>
+                        <div>
+                            <span class="avant-reduc"></span>
+                            <p class="reduc"></p>
+                        </div>
+                        <p class="apres-reduc"></p>
                     </div>
                 </footer>
             </main>
@@ -391,8 +391,6 @@
                                 var date = new Date(dateStr);
                                 var date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
 
-                                console.log(date);
-
                                 var tableau_commande = []; 
 
                                 tableau_commande[0] = date;
@@ -409,10 +407,7 @@
 
                                 tableau_commande[10] = details.purchase_units[0].amount.value;
 
-                                let tableau_album = saveAlbum();
-                                console.log("LE TABLEAU", tableau_album)
-                                // let tableau_album = sessionStorage.getItem("album"); // -> tableau de l'album
-
+                                let tableau_album = saveAlbum(); //-> récupération de l'album
 
                                 /* -------------------------------------------------------------------------- */
                                 /*                                REQUETE AJAX                                */

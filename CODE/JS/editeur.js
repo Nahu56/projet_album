@@ -7,6 +7,11 @@ var nb_pages = 0;
 var element_focus = null;
 var qtt = 1 ; // Quantité d'albums : par défaut à zéro
 
+var prix_total = 0;
+var prix_album = 0;
+
+var nom_album = "Album photo";
+
 //vide le sessionStorage
 sessionStorage.setItem("album", "");
 
@@ -36,7 +41,7 @@ fetch("ASSETS/json/variables_prix.json")
         sessionStorage.setItem("PRIX", JSON.stringify(PRIX));
 
         //crée une variable de session pour les réductions
-        sessionStorage.setItem("reducs", json["reductions"]);
+        sessionStorage.setItem("reducs", JSON.stringify(json["reductions"]));
 
 
         ajout_page();
@@ -51,18 +56,6 @@ fetch("ASSETS/json/variables_prix.json")
 var centre = document.getElementById("centre");
 centre.addEventListener('click',afficher_edit_templates)
 
-
-//var prix_base = 4.90;
-
-var prix_page = 2 ;
-var prix_reliure = 5 ; 
-var prix_couverture = 5 ;
-
-var prix_total = 0;
-var prix_album = 0;
-// ...
-
-var nom_album = "Album photo";
 
 
 /** ----- FONCTIONS AFFICHAGE PAGES D'EDITION -----
@@ -1085,36 +1078,41 @@ function saveAlbum(){
         let buttons = page.querySelectorAll("button");
 
         let id_template = page.classList[1];
+        var tab_feuille = [""];
 
-        let tab_feuille = [id_template];
+        if(id_template !== null){ // -> si ce n'est pas une page blanche
+
+            let tab_feuille = [id_template];
   
-        buttons.forEach(obj => {
-            if(obj.classList.contains("img")){ // -> c'est une image
-
-                let code_img = obj.style.backgroundImage;
-                const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
-
-                //trouver placement de l'image
-                let placement_image = "C";
-                let list_classes = obj.classList;
-                list_classes.forEach(classe => {
-
-                    if(classe.startsWith("img_")){
+            buttons.forEach(obj => {
+                if(obj.classList.contains("img")){ // -> c'est une image
     
-                        placement_image = classe.split("_")[1].toUpperCase()[0]; 
+                    let code_img = obj.style.backgroundImage;
+                    const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
+    
+                    //trouver placement de l'image
+                    let placement_image = "C";
+                    let list_classes = obj.classList;
+                    list_classes.forEach(classe => {
+    
+                        if(classe.startsWith("img_")){
+        
+                            placement_image = classe.split("_")[1].toUpperCase()[0]; 
+    
+                        };
+                    })
+    
+                    tab_feuille.push(placement_image + "#" + img64); // -> garde l'img64
+                    // tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
+    
+                }else if(obj.classList.contains("txt")){ // -> c'est un texte
+                    
+                    //récupération du texte
+                    tab_feuille.push(obj.innerHTML);
+                }
+            })
 
-                    };
-                })
-
-                tab_feuille.push(placement_image + "#" + img64); // -> garde l'img64
-                // tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
-
-            }else if(obj.classList.contains("txt")){ // -> c'est un texte
-                
-                //récupération du texte
-                tab_feuille.push(obj.innerHTML);
-            }
-        })
+        }
 
         album.push(tab_feuille);
     })
@@ -1178,21 +1176,30 @@ function close_panier() {
 
 /** -------------- GO CHECKOUT --------------
  * Fonction appelée au clic du bouton "terminer" dans le panier
+ * 
+ * Vérifications avant validation de l'album
+ *  -> Edition des couvertures
+ *  -> Nombre de pages suppérieur ou  égal à X
+ *  -> Nombre de pages pair
  */
 function go_checkout() {
 
     let contenu_couv_1 = document.querySelector("#couv_1 .feuille").innerHTML;
     let contenu_couv_2 = document.querySelector("#couv_2 .feuille").innerHTML;
 
+    let nb_pages_mini = 4;
+
     //vérifie que la 1ere de couverture n'est pas vierge
     if(contenu_couv_1 === "" || contenu_couv_1 === '<div class="voile"></div>'){
         notifications(false,"Vous n\'avez pas édité la première de couverture !")
-
 
     //vérifie que la dernière de couverture n'est pas vierge
     }else if(contenu_couv_2 === "" || contenu_couv_2 === '<div class="voile"></div>'){
         notifications(false,"Vous n\'avez pas édité la dernière de couverture !")
         
+    //vérifie que le nombre de pages est supérieur ou égal a X
+    }else if(nb_pages < nb_pages_mini){
+        notifications(false,"L'ablum doit contenir "+ nb_pages_mini +" pages au minimum")
 
     //vérifie que le nombre de pages est paire
     }else if(nb_pages % 2 == 1){
@@ -1316,11 +1323,46 @@ function notifications(etat,texte){
  * Cette fonction met à jour les informations 
  */
 function maj_prix_total(){
-    prix_total = prix_album * qtt; 
+    let reducs = JSON.parse(sessionStorage.getItem("reducs")); //-> récupère la liste de réductions
+    var reduction = 0;
 
-    var txt_prix_total = document.querySelector('#panier main footer .total > p')
+    // ------- CALCUL DE LA REDUCTION APPLIQUEE ---------
+    
+    // Parcourir les seuils de réduction dans l'ordre décroissant
+    for (var key in reducs) {
+
+        if (qtt >= parseInt(key)) {
+
+            reduction = reducs[key];
+        }
+    }
+
+    // reduction -> variable contenant le % de réduction
+    total_avant_reduc = prix_album * qtt; // -> prix avant réduction
+    prix_total = total_avant_reduc - (total_avant_reduc * reduction / 100) ; // -> prix apres réduction
+
+
+    //Affichage du calcul de réduction si il y en une
+    if(reduction >= 10){
+        document.querySelector('#panier .total>div').style.display = "flex";
+    }else{
+        document.querySelector('#panier .total>div').style.display = "none";
+    }
+
+
+    // ----- PANIER -----
+    var txt_prix_total = document.querySelector('#panier .total .avant-reduc')
+    txt_prix_total.textContent = total_avant_reduc.toFixed(2).replace('.', ',')+'€';
+
+    var txt_prix_total = document.querySelector('#panier .total .reduc')
+    txt_prix_total.textContent = "-" + reduction + "%";
+
+    var txt_prix_total = document.querySelector('#panier .total .apres-reduc')
     txt_prix_total.textContent = prix_total.toFixed(2).replace('.', ',')+'€';
 
+
+
+    // ----- MODAL FINAL -----
     var txt_prix_total_modal = document.querySelector('#panier_modal .total')
     txt_prix_total_modal.textContent = 'Total : '+prix_total.toFixed(2).replace('.', ',')+'€';
 
