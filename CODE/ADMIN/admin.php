@@ -130,14 +130,16 @@
             }
         }
     }
-// Essaie de vori ec 
 
 
     /* -------------------------------------------------------------------------- */
     /*                         FONCTION TELECHARGER UN PDF                        */
     /* -------------------------------------------------------------------------- */
     function telechargerFichier($date, $key,$affichage) {
-        $cheminFichier = '../../STOCKAGE/PDF_commandes/'.$key.'.pdf';
+        
+        // Chemin relatif vers le répertoire de destination
+        $cheminFichier = __DIR__ . '/../../STOCKAGE/PDF_commandes/'. $key .'.pdf';
+
         if (file_exists($cheminFichier)) {
 
             // On met à jour les informations dans le json 
@@ -180,6 +182,9 @@
 
     }
 
+
+
+
     if (isset($_GET['action_telechargement'])) {
         if ($_GET['action_telechargement']== 'reload') {
             if (isset($_GET['affichage'])) {
@@ -214,6 +219,56 @@
             readfile($cheminFichier);
 
         }
+    }
+
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                           FONCTION FICHIER OUVERT                          */
+    /* -------------------------------------------------------------------------- */
+    function ouvrirFichier($date, $key){
+
+        // On met à jour les informations dans le json 
+        $json_string = file_get_contents('../../ASSETS/json/commandes.json');
+        $tableau = json_decode($json_string, true);
+        $tableau[$date][$key]['deja_telecharge'] = true;
+        $newJsonString = json_encode($tableau);
+        file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+
+
+        // Chemin relatif vers le répertoire de destination
+        $cheminFichier = __DIR__ .'/../../STOCKAGE/PDF_commandes/'. $key .'.pdf';
+        echo $cheminFichier;
+        echo file_exists($cheminFichier);
+
+        if (file_exists($cheminFichier)) {
+
+            // header("Location: $cheminFichier"); //ouvre le fichier PDF
+
+            header("Content-type: application/pdf");
+            header("Content-Disposition: inline; filename=filename.pdf");
+            @readfile($cheminFichier);
+
+        }else{
+            // // On met à jour les informations dans le json 
+            // $json_string = file_get_contents('../../ASSETS/json/commandes.json');
+            // $tableau = json_decode($json_string, true);
+            // $tableau[$date][$key]['supprime'] = true;
+            // $newJsonString = json_encode($tableau);
+            // file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+
+
+            // if (isset($affichage)) {
+            //     if ($affichage!=null) {
+            //         header("Refresh:0; url=admin?affichage=".$affichage."&notification=fichier");
+            //     }else {
+            //         header("Refresh:0; url=admin?notification=fichier");
+            //     }
+            // }else {
+            //     header("Refresh:0; url=admin?notification=fichier");
+            // }
+        }
+
     }
     
 
@@ -252,11 +307,9 @@
         }
     }
     
-
     /* -------------------------------------------------------------------------- */
     /*                          LANCER FONCTIONS DES PDF                          */
     /* -------------------------------------------------------------------------- */
-
     // On vérifie que action existe     
     if (isset($_POST['action'])) {
 
@@ -267,7 +320,12 @@
         if($_POST['action']=="supprime") {    
             supprimerFichier( $_POST['date'], $_POST['key'],$_POST['affichage']);
         }
-    
+    }else if(isset($_GET["action"])){
+
+        if($_GET['action']=="ouvert") {    
+
+            ouvrirFichier( $_GET['date'], $_GET['key']);
+        }
     }
 
 
@@ -451,7 +509,7 @@
                         }else {
                             echo '   
                             <div class="visible">
-                                <form class="btn_telechargement" method="POST">
+                                <form action="" class="btn_telechargement" method="POST">
                                     <input type="hidden" name="key" value="'.$key.'">
                                     <input type="hidden" name="date" value="'.$date.'">';
 
@@ -467,7 +525,7 @@
 
 
 
-                                <a href="STOCKAGE/PDF_commandes/'.$key.'.pdf" target="_bank">
+                                <a onclick="lancer_fichierOuvert(`'. $date .'`, `'. $key .'`)" target="_bank">
                                     <img class="ico_ouvrir" src="ASSETS/img/icones/eye-open.svg" alt="icones ouvrir"/>
                                 </a>
                             </div>
@@ -518,7 +576,11 @@
 
     <script>
 
+        function lancer_fichierOuvert(date, key){
 
+            window.location.href = "admin?action=ouvert&date=" + date + "&key=" + key;
+
+        }
 
         function scrollToAnchorWithOffset(id) {
             const anchorElement = document.getElementById(id);
@@ -564,12 +626,15 @@
 
         <?php 
 
-        if (isset($_GET['key'])) {
-            ?>
-            scrollToAnchorWithOffset('<?php echo $_GET['key']; ?>');
-            
-            <?php
+        if(!isset($_GET['action'])){
+            if (isset($_GET['key'])) {
+                ?>
+                scrollToAnchorWithOffset('<?php echo $_GET['key']; ?>');
+                
+                <?php
+            }
         }
+
 
         ?>
 
