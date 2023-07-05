@@ -257,7 +257,7 @@ function generationPDF(){
     $nom = $_SESSION['id_commande'] . ".pdf";
 
     // Générer le fichier PDF sur le serveur
-    $pdf->Output('C:\xampp\htdocs\projet_album\STOCKAGE\PDF_commandes\\'.$nom, 'F');
+    $pdf->Output('STOCKAGE\PDF_commandes\\'.$nom, 'F');
     
 
 
