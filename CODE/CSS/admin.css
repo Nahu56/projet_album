@@ -5,51 +5,6 @@ body {
   background-color: #F0F0F0;
   font-family: "Space Grotesk", sans-serif;
 }
-body #notifications {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  animation: arrive 0.5s forwards, sortie 1s 4s forwards;
-}
-body #notifications div {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  padding: 15px 35px;
-  background-color: #EBF0EF;
-  box-shadow: 5px 5px 0px #000000;
-}
-body #notifications div img {
-  height: 20px;
-  width: 20px;
-  margin: 10px;
-}
-body #notifications div span {
-  font-weight: 700;
-}
-body #notifications .erreur {
-  border: 3px solid #792222;
-}
-body #notifications .valid {
-  border: 3px solid #18574A;
-}
-@keyframes sortie {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(600px);
-    display: none;
-  }
-}
-@keyframes arrive {
-  0% {
-    transform: translateY(-300px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 body header {
   display: flex;
   justify-content: space-between;

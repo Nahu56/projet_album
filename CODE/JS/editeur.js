@@ -16,6 +16,7 @@ var nom_album = "Album photo";
 sessionStorage.setItem("album", "");
 
 
+
 /** --------------------- RECUPERE LES PRIX ---------------------
  *
  *   DOIT RECUPERER LES PRIX AVANT DE LANCER QUOI QUE CE SOIT
@@ -28,6 +29,10 @@ fetch("ASSETS/json/variables_prix.json")
     .then(function(json){
 
         let options = JSON.parse(sessionStorage.getItem("options"));
+        if(options === null){
+            window.location.href = "options";
+        }
+
 
         //Création d'un tableau contenant tous les prix
         let PRIX = {
@@ -513,7 +518,9 @@ function ajout_page_apercue() {
         // Création de l'élément <div> avec la classe "num_page" pour afficher le numéro de page
         var numPage = document.createElement("div");
         numPage.className = "num_page";
-        numPage.textContent = "page " + nb_pages;
+
+        let numero_affiche = parseInt(nb_pages) + 1;
+        numPage.textContent = "page " + numero_affiche;
 
         // Ajout des éléments <div class="hr"> et <div class="num_page"> à l'élément <header>
         header.appendChild(hr1);
@@ -575,7 +582,9 @@ function ajout_page_apercue() {
         blocPage.classList.add("apercue_"+(nb_pages))
 
         var texte = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages+" header .num_page");
-        texte.textContent = texte.textContent+"/"+nb_pages;
+
+        let numero_affiche = parseInt(nb_pages) + 1;
+        texte.textContent = texte.textContent+"/"+numero_affiche;
 
 
         var div_page = document.querySelector('#apercu main .bloc_pages_'+(nb_pages-1)+'_'+nb_pages+" > div");        
@@ -1248,74 +1257,6 @@ function open_modal_final(){
         
 
     }
-}
-
-
-
-/** ------------- FONCTION NOTIFICATIONS  -------------
- * Permet de faire apparaitre le modal récapitulatif
- */
-function notifications(etat,texte){
-
-    if (etat == false) {
-        // Sélectionner l'élément avec l'ID "notifications"
-        var notificationsElement = document.getElementById("notifications");
-
-        // Créer un nouvel élément div
-        var erreurElement = document.createElement("div");
-        erreurElement.classList.add("erreur");
-
-        // Créer un élément de paragraphe
-        var pElement = document.createElement("p");
-        pElement.textContent = "Erreur : " + texte;
-
-        // Créer un élément d'image
-        var imgElement = document.createElement("img");
-        imgElement.setAttribute("src", "ASSETS/img/Warning.png");
-        imgElement.setAttribute("alt", "warning");
-
-        // Ajouter les éléments au div erreurElement
-        erreurElement.appendChild(pElement);
-        erreurElement.appendChild(imgElement);
-
-        // Ajouter le div erreurElement à l'élément notificationsElement
-        notificationsElement.appendChild(erreurElement);
-
-        setTimeout(function() {
-            notificationsElement.removeChild(erreurElement);
-        }, 5000); 
-
-
-    }else{
-        // Sélectionner l'élément avec l'ID "notifications"
-        var notificationsElement = document.getElementById("notifications");
-
-        // Créer un nouvel élément div
-        var erreurElement = document.createElement("div");
-        erreurElement.classList.add("valid");
-
-        // Créer un élément de paragraphe
-        var pElement = document.createElement("p");
-        pElement.textContent = texte;
-
-        // Créer un élément d'image
-        var imgElement = document.createElement("img");
-        imgElement.setAttribute("src", "ASSETS/img/Partying_Face.png");
-        imgElement.setAttribute("alt", "smiley fête");
-
-        // Ajouter les éléments au div erreurElement
-        erreurElement.appendChild(pElement);
-        erreurElement.appendChild(imgElement);
-
-        // Ajouter le div erreurElement à l'élément notificationsElement
-        notificationsElement.appendChild(erreurElement);
-
-        setTimeout(function() {
-            notificationsElement.removeChild(erreurElement);
-        }, 5000); 
-
-    }
-
 }
 
 

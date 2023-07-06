@@ -243,8 +243,6 @@
 
         if (file_exists($cheminFichier)) {
 
-            // header("Location: $cheminFichier"); //ouvre le fichier PDF
-
             header("Content-type: application/pdf");
             header("Content-Disposition: inline; filename=filename.pdf");
             @readfile($cheminFichier);

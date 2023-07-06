@@ -13,6 +13,8 @@
 </head>
 <body>
 
+    <div id="notifications"></div>
+
     <a class="btn_retour" href="./">
         <img src="ASSETS\img\fleche_retour.svg" alt="" srcset="">
         Retour
@@ -34,15 +36,17 @@
                 <fieldset>
                     <div>
                         <label for="reliure_plastique">
+                            <img src="ASSETS\img\image.jpg" alt="">
                             <input type="radio" id="reliure_plastique" name="reliure" value="plastique" required="required" >
-                            Reliure plastique
+                            <p>Reliure plastique</p>
                         </label>
                     </div>
 
                     <div>
                         <label for="reliure_metallique">
+                            <img src="ASSETS\img\image.jpg" alt="">
                             <input type="radio" id="reliure_metallique" name="reliure" value="metallique" required="required" >
-                            Reliure métallique
+                            <p>Reliure metallique</p>
                         </label>
                     </div>
                 </fieldset>
@@ -53,18 +57,16 @@
                     <div>
                         <label for="FormatA4">
                             <img src="ASSETS\img\image.jpg" alt="">
-
                             <input type="radio" id="FormatA4" name="format" value="a4" required="required" >
-                            Format A4
+                            <p>Format A4</p>
                         </label>
                     </div>
 
                     <div>
                         <label for="FormatA5">
                             <img src="ASSETS\img\image.jpg" alt="">
-
                             <input type="radio" id="FormatA5" name="format" value="a5" required="required" >
-                            Format A5
+                            <p>Format A5</p>
                         </label>
                     </div>
                 </fieldset>
@@ -75,18 +77,16 @@
                     <div>
                         <label for="couverture_carton">
                             <img src="ASSETS\img\image.jpg" alt="">
-
                             <input type="radio" id="couverture_carton" name="couverture" value="carton" required="required" >
-                            Couverture cartonnée
+                            <p>Couverture cartonnée</p>
                         </label>
                     </div>
 
                     <div>
                         <label for="couverture_papier">
                             <img src="ASSETS\img\image.jpg" alt="">
-
                             <input type="radio" id="couverture_papier" name="couverture" value="papier" required="required" >
-                            Couverture papier
+                            <p>Couverture papier</p>
                         </label>
                     </div>
                 </fieldset>
@@ -114,7 +114,7 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme1" name="theme" value="theme1" required="required" >
-                            theme1
+                            <p>theme1</p>
                         </label>
                     </div>
 
@@ -123,7 +123,7 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme2" name="theme" value="theme2" required="required" >
-                            theme2
+                            <p>theme2</p>
                         </label>
                     </div>
 
@@ -132,7 +132,7 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme3" name="theme" value="theme3" required="required" >
-                            theme3
+                            <p>theme3</p>
                         </label>
                     </div>
 
@@ -141,7 +141,7 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme4" name="theme" value="theme4" required="required" >
-                            theme4
+                            <p>theme4</p>
                         </label>
                     </div>
 
@@ -154,7 +154,7 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme5" name="theme" value="theme5" required="required" >
-                            theme5
+                            <p>theme5</p>
                         </label>
                     </div>
 
@@ -163,16 +163,51 @@
                             <img src="ASSETS\img\image.jpg" alt="">
 
                             <input type="radio" id="theme6" name="theme" value="theme6" required="required" >
-                            theme6
+                            <p>theme6</p>
                         </label>
                     </div>
                 </fieldset>
                 
             </section>
 
-            <button type="submit" class="main_btn">Passer à l'éditeur</button>
+            <!-- <button type="submit" class="main_btn">Passer à l'éditeur</button> -->
+            <button onclick="checkOptions()" class="main_btn">Passer à l'éditeur</button>
 
         </form>
     </main>
 </body>
 </html>
+
+<script src="CODE/JS/general.js"></script>
+
+
+<script>
+    document.querySelectorAll("fieldset").forEach(fieldset => {
+
+        fieldset.addEventListener("change", function(){
+
+            fieldset.querySelectorAll("input").forEach(input => {
+                input.parentNode.parentNode.classList.remove("selected");
+
+                if(input.checked){
+                    input.parentNode.parentNode.classList.add("selected");
+                }
+            });
+        })
+    });
+
+
+    function checkOptions(){
+        var form = document.querySelector("form");
+
+        if (form.checkValidity()) {
+            // Tous les champs requis ont été remplis, vous pouvez exécuter d'autres actions ici
+
+            // Par exemple, soumettre le formulaire
+            form.submit();
+        } else {
+            notifications(false, "Veuillez sélectionner toutes les options.");
+        }
+    }
+
+</script>

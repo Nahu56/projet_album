@@ -43,25 +43,42 @@ body main section fieldset {
   border: none;
 }
 body main section fieldset div {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   outline: 2px solid black;
   border-radius: 1px;
   min-width: 250px;
   width: 300px;
 }
+body main section fieldset div:hover {
+  background-color: #EBF0EF;
+}
+body main section fieldset div.selected {
+  background-color: #18574A;
+  outline: 3px solid #18574A;
+  outline-offset: -1px;
+  color: #EBF0EF;
+}
+body main section fieldset div.selected:hover {
+  background-color: #12443a;
+}
 body main section fieldset div label {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  padding: 0 30px;
   cursor: pointer;
-  text-align: center;
+}
+body main section fieldset div label p {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 body main section fieldset div label img {
   width: 100%;
-  height: 300px;
+  height: 250px;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -73,16 +90,5 @@ body main section fieldset div label input {
 }
 body main section fieldset div label:has(> img) {
   padding: 0;
-  padding-bottom: 15px;
-  gap: 15px;
   height: auto;
-}
-body main section fieldset div:hover {
-  background-color: #EBF0EF;
-}
-body main section fieldset div:has(input[type=radio]:checked) {
-  background-color: #18574A;
-  outline: 3px solid #18574A;
-  outline-offset: -1px;
-  color: #EBF0EF;
 }/*# sourceMappingURL=accueil.css.map */

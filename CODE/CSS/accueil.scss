@@ -4,6 +4,7 @@ $gris: #F0F0F0;
 $gris2: #dddddd;
 $gristext: #737373;
 
+$vert_foncé: #12443a;
 $vert: #18574A;
 $vert_fond: #EBF0EF;
 
@@ -63,27 +64,50 @@ body{
                 border: none;
             
                 div{
+                    display: flex;
+                    flex-direction: column;
                     flex: 1;
             
                     outline: 2px solid black;
                     border-radius: 1px;
                     min-width: 250px;
                     width: 300px;
+
+                    &:hover{
+                        background-color: $vert_fond;
+                    }
+
+                    //propriétés différentes si l'input est check
+                    &.selected {
+                        background-color: $vert;
+                        outline: 3px solid $vert;
+                        outline-offset: -1px;
+                        color: $vert_fond;
+
+                        &:hover{
+                            background-color: $vert_foncé;
+                        }
+                    }
             
                     label{
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
-            
-                        height: 50px;
-                        padding: 0 30px;
+
                         cursor: pointer;
-                        text-align: center;
-            
+
+                        p{
+                            height: 50px;
+
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
                         img{
                             width: 100%;
-                            height: 300px;
+                            height: 250px;
             
                             object-fit: cover;
                         }
@@ -96,23 +120,9 @@ body{
                         //propriétés différentes s'il comporte une image
                         &:has(>img) {
                             padding: 0;
-                            padding-bottom: 15px;
-                            gap: 15px;
             
                             height: auto;
                         }
-                    }
-            
-                    &:hover{
-                        background-color: $vert_fond;
-                    }
-            
-                    //propriétés différentes si l'input est check
-                    &:has(input[type="radio"]:checked) {
-                        background-color: $vert;
-                        outline: 3px solid $vert;
-                        outline-offset: -1px;
-                        color: $vert_fond;
                     }
                 }
             }

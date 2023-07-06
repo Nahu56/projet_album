@@ -161,6 +161,8 @@
                     <div>
                         <div class="vignette_page " id="apercue_couv_1" style="" onclick="focus_page('couv_1', 'couv')">
                         </div>
+                        <div class="vignette_page " style="">
+                        </div>
                     </div>
                 </div>
 
@@ -467,6 +469,8 @@
 
 </body>
 </html>
+<script src="CODE/JS/general.js"></script>
+
 <script src="CODE/JS/editeur.js"></script>
 <script src="CODE/JS/editeur_gestion-template.js"></script>
 
