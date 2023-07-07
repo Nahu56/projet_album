@@ -124,6 +124,7 @@
     <!---------- COUVERTURES ---------->
 
     <div id="centre_couv" class="centre">
+
         <div id="couv_2" class="page">
             <p style="text-align: center;">Dernière couverture</p>
             <div class="feuille"></div>
@@ -133,7 +134,6 @@
             <p style="text-align: center;">Première couverture</p>
             <div class="feuille"></div>
         </div>
-
 
     </div>
 
@@ -161,13 +161,21 @@
                     <div>
                         <div class="vignette_page " id="apercue_couv_1" style="" onclick="focus_page('couv_1', 'couv')">
                         </div>
-                        <div class="vignette_page " style="">
-                        </div>
                     </div>
                 </div>
 
                 <div class="list_pages">
                     
+                    <div class="bloc_page bloc_pages_1 apercue_1">
+                        <header class="ligne_page">
+                            <div class="hr"></div>
+                            <div class="num_page">page 1</div>
+                            <div class="hr"></div>
+                        </header>
+                        <div>
+
+                        </div>
+                    </div>
                     <!-- apercu de l'album -->
 
                 </div>
@@ -259,6 +267,11 @@
         </section>
     </div>
 
+
+    <!--------------------------------------------------------------------------- */
+    /*                                 MODAL FINAL                                */
+    /* ---------------------------------------------------------------------------->
+
     <div id="modal_final" class="">
         <main>
             <header>
@@ -273,23 +286,30 @@
             </header>
 
             <main>
-                <h3>Couverture de l'album</h3>
+                <h3>Couvertures de l'album</h3>
                 <div id="minia_couvertures">
 
-                    <div id="miniature_couv_2">
-                        <p>Dernière</p>
-                        <div class="miniature_page"></div>
+                    <div class="double_page">
+                        <div id="miniature_couv_2">
+                            <p>Dernière</p>
+                            <div class="miniature_page"></div>
+                        </div>
+                        <div id="miniature_couv_1">
+                            <p>Première</p>
+                            <div class="miniature_page"></div>
+                            <img src="ASSETS/img/icones/liaison_page.svg" alt="icone liaison entre les pages">
+                        </div>
                     </div>
-                    <div id="miniature_couv_1">
-                        <p>Première</p>
-                        <div class="miniature_page"></div>
-                        <img src="ASSETS/img/icones/liaison_page.svg" alt="icone liaison entre les pages">
-                    </div>
+
                 </div>
 
                 <h3>Pages de l'album</h3>
 
                 <div id="minia_pages">
+
+                    <div class="double_page">
+                        <div><div class="miniature_page page_disabled"></div></div>
+                    </div>
 
                 </div>
             </main>

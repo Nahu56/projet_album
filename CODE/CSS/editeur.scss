@@ -167,13 +167,12 @@ $taille_texte: 20px;
                         border: none;
                     }
                 }
-
-
                 
+                //permet de remplir l'espace restant à la fin
                 &:after {
                     content: "";
                     flex: auto;
-                  }
+                }
             }
             
         }
@@ -365,7 +364,6 @@ $taille_texte: 20px;
         align-items: center;
 
         overflow: hidden; 
-
 
         .page{
 
@@ -592,6 +590,13 @@ $taille_texte: 20px;
                         box-shadow: -5px 0px 0px 10px $gris, 5px 0px 0px 10px $gris;
                         border-radius: 3px;
                         background-color: $gris;
+
+                        >div{
+                            justify-content: center !important;
+                        }
+                    }
+                    .bloc_page.bloc_pages_1>div{
+                        flex-direction: row-reverse;
                     }
 
                     .bloc_page,
@@ -613,6 +618,15 @@ $taille_texte: 20px;
     
                                 width: $width;
                                 height: calc($width * 1.414);
+
+                                &.disabled{
+                                    outline: none !important;
+                                    cursor:auto !important;
+                                    
+                                    &:hover{
+                                        background-color: transparent !important;
+                                    } 
+                                }
     
                                 &.selected{
                                     outline: 4px solid $vert;
@@ -959,75 +973,89 @@ $taille_texte: 20px;
                     display: flex;
                     align-items: center;
                     flex-wrap: wrap;
+                    justify-content: center;
+
                     width: 89%;
                     margin: 20px auto;
+                    gap: 10px;
 
-                    >div{
+                    .double_page{
+
                         display: flex;
-                        flex-direction: column;
-                        align-items: center;
 
-                        position: relative;
-
-                        margin-bottom: 15px;
-
-                        img{
-                            position: absolute;
-                            top: 14px;
-                            left: -9px;
-            
-                            width: 15px;
-                        }
-
-                        .miniature_page{
-                            $width : 160px;
-                            $ratio: 1.414;
-                            height: $width * $ratio ;
-                            width: $width;
-                            border: 2px solid #18574A;
+                        >div{
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+    
                             position: relative;
-
-                            p{
-                                font-size: 10px;
-                            }
-
-                            div{
-                                background-color: $gris;
+    
+                            margin-bottom: 15px;
+    
+                            img{
                                 position: absolute;
+                                top: 14px;
+                                left: -9px;
+                
+                                width: 15px;
                             }
-                            .txt{
-                                height: 5%;
-                                width: 30%;
-                                transform: translate(-50%, -50%);
+    
+                            .miniature_page{
+                                $width : 160px;
+                                $ratio: 1.414;
+                                height: $width * $ratio ;
+                                width: $width;
+                                border: 2px solid #18574A;
+                                position: relative;
 
-                                border-radius: 50px;
-                                margin: 0;
-                                background-color: $vert;
-                                height: 5px;
-                            }
-                            .img{
-                                border: none;
-                                background-size: cover;
-                                background-position: center;
+                                &.page_disabled{
+                                    border: none;
+                                    background-color: $gris;
+                                    margin-top: 23px;
 
-                                &.img_top{
-                                    background-position: top;
+                                    border: 1px dashed $vert
                                 }
-                                &.img_bottom{
-                                    background-position: bottom;
+    
+                                p{
+                                    font-size: 10px;
                                 }
-                                &.img_center{
+    
+                                div{
+                                    background-color: $gris;
+                                    position: absolute;
+                                }
+                                .txt{
+                                    height: 5%;
+                                    width: 30%;
+                                    transform: translate(-50%, -50%);
+    
+                                    border-radius: 50px;
+                                    margin: 0;
+                                    background-color: $vert;
+                                    height: 5px;
+                                }
+                                .img{
+                                    border: none;
+                                    background-size: cover;
                                     background-position: center;
-                                }
-                                &.img_left{
-                                    background-position: left;
-                                }
-                                &.img_right{
-                                    background-position: right;
+    
+                                    &.img_top{
+                                        background-position: top;
+                                    }
+                                    &.img_bottom{
+                                        background-position: bottom;
+                                    }
+                                    &.img_center{
+                                        background-position: center;
+                                    }
+                                    &.img_left{
+                                        background-position: left;
+                                    }
+                                    &.img_right{
+                                        background-position: right;
+                                    }
                                 }
                             }
-        
-                            
                         }
                     }
                 }
