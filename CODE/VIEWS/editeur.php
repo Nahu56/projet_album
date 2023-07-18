@@ -114,6 +114,11 @@
         </section>
 
     </div>
+
+    <a id="retour_options" href="options">
+        <img src="ASSETS/img/icones/arrow_left.svg" alt="">
+        Retour
+    </a>
     
 
 

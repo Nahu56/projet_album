@@ -884,10 +884,12 @@ function supprimer_page(num_page) {
         }else{
             page.style.marginRight = '100px';
 
-            var icone = document.createElement("img");
-            icone.src = "ASSETS/img/icones/liaison_page.svg";
-            icone.alt = "icone liaison entre les pages";
-            page.appendChild(icone);
+            if(i > 1){
+                var icone = document.createElement("img");
+                icone.src = "ASSETS/img/icones/liaison_page.svg";
+                icone.alt = "icone liaison entre les pages";
+                page.appendChild(icone);
+            }
         }
 
         var page_texte = page.querySelector('p');

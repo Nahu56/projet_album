@@ -351,6 +351,38 @@ $taille_texte: 20px;
         }
     }
 
+    #retour_options{
+        position: absolute;
+        top: 10px;
+        left: calc($width_gauche + 80px);
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        text-decoration: none;
+        color: #18574A;
+        padding: 5px 20px;
+        background: transparent;
+        border-radius: 5px;
+
+        img{
+            width: 25px;
+            transform: translateX(0px);
+
+            transition: all 0.2s ease;
+        }
+
+        transition: all 0.2s ease;
+
+        &:hover{
+            background-color: white;
+
+            img{
+                transform: translateX(-5px);
+            }
+        }
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                   CENTRE                                   */

@@ -47,8 +47,6 @@ function recuperation_templates() {
                   apercue = document.querySelector("#apercue_" + num_page);
                 }
 
-                let miniature = document.querySelector("#miniature_" + id_page + " .miniature_page");
-
 
                 // --------- GESTION DE LA PAGE
 
@@ -90,11 +88,6 @@ function recuperation_templates() {
                   apercue.appendChild(suppr_page);
                   loadElement("#apercue_" + num_page , templates[div_template.id]);
                 }
-
-                // --------- GESTION DE LA MINIATURE
-
-                miniature.innerHTML= "";
-                loadElement("#miniature_" + id_page +' .miniature_page' , templates[div_template.id]);
 
 
                 //attribution de l'id template a la page (en class)
