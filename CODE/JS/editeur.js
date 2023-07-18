@@ -1203,36 +1203,34 @@ function close_panier() {
  */
 function go_checkout() {
 
-    open_modal_final(); //TODO
-    charge_miniatures();
 
-    // let contenu_couv_1 = document.querySelector("#couv_1 .feuille").innerHTML;
-    // let contenu_couv_2 = document.querySelector("#couv_2 .feuille").innerHTML;
+    let contenu_couv_1 = document.querySelector("#couv_1 .feuille").innerHTML;
+    let contenu_couv_2 = document.querySelector("#couv_2 .feuille").innerHTML;
 
-    // let nb_pages_mini = 4; //TODO
+    let nb_pages_mini = 4; //TODO
 
-    // //vérifie que la 1ere de couverture n'est pas vierge
-    // if(contenu_couv_1 === "" || contenu_couv_1 === '<div class="voile"></div>'){
-    //     notifications(false,"Vous n\'avez pas édité la première de couverture !")
+    //vérifie que la 1ere de couverture n'est pas vierge
+    if(contenu_couv_1 === "" || contenu_couv_1 === '<div class="voile"></div>'){
+        notifications(false,"Vous n\'avez pas édité la première de couverture !")
 
-    // //vérifie que la dernière de couverture n'est pas vierge
-    // }else if(contenu_couv_2 === "" || contenu_couv_2 === '<div class="voile"></div>'){
-    //     notifications(false,"Vous n\'avez pas édité la dernière de couverture !")
+    //vérifie que la dernière de couverture n'est pas vierge
+    }else if(contenu_couv_2 === "" || contenu_couv_2 === '<div class="voile"></div>'){
+        notifications(false,"Vous n\'avez pas édité la dernière de couverture !")
         
-    // //vérifie que le nombre de pages est supérieur ou égal a X
-    // }else if(nb_pages < nb_pages_mini){
-    //     notifications(false,"L'ablum doit contenir "+ nb_pages_mini +" pages au minimum")
+    //vérifie que le nombre de pages est supérieur ou égal a X
+    }else if(nb_pages < nb_pages_mini){
+        notifications(false,"L'ablum doit contenir "+ nb_pages_mini +" pages au minimum")
 
-    // //vérifie que le nombre de pages est impaire
-    // }else if(nb_pages % 2 == 1){
-    //     notifications(false,'Il vous manque une page')
+    //vérifie que le nombre de pages est impaire
+    }else if(nb_pages % 2 == 1){
+        notifications(false,'Il vous manque une page')
 
 
-    // //Tout est ok, on ouvre le modal
-    // }else{
-    //     open_modal_final();
-    //     charge_miniatures();
-    // }
+    //Tout est ok, on ouvre le modal
+    }else{
+        open_modal_final();
+        charge_miniatures();
+    }
 }
 
 
