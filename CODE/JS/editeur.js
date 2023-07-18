@@ -488,7 +488,6 @@ function ajout_page() {
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
     ajout_page_apercue();
-    ajout_page_miniature();
     focus_page("page_"+(nb_pages));
 
 
@@ -548,7 +547,6 @@ function ajout_page_apercue() {
         suppr_page.classList.add('suppr_page')  
 
         suppr_page.onclick = function(e) {
-            console.log(i)
 
             if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
               supprimer_page(i);
@@ -634,107 +632,6 @@ function ajout_page_apercue() {
     }
 
     
-
-}
-
-function ajout_page_miniature(){
-
-    let minia_pages = document.querySelector("#minia_pages");
-
-    // Créer un élément div
-    var miniature = document.createElement("div");
-    miniature.id = "miniature_page_"+nb_pages;
-
-    // Créer un élément p
-    var paragraphe = document.createElement("p");
-    paragraphe.textContent = "Page "+nb_pages;
-
-    // Créer un élément div avec la classe "miniature_page"
-    var page = document.createElement("div");
-    page.className = "miniature_page";
-
-    // Ajouter le paragraphe à la div principale
-    miniature.appendChild(paragraphe);
-
-    // Ajouter la div enfant à la div principale
-    miniature.appendChild(page);
-
-    var double_page = "";
-
-    //si nb_pages est impair
-    if (nb_pages % 2 !== 0) {
-        double_page = minia_pages.querySelector("#minia_pages>div:last-child");
-
-        if(nb_pages != 1){
-
-            var icone = document.createElement("img");
-            icone.src = "ASSETS/img/icones/liaison_page.svg";
-            icone.alt = "icone liaison entre les pages";
-            miniature.appendChild(icone);
-
-
-            if(double_page.querySelector(".page_disabled")){
-
-                let troisieme_couv = double_page.querySelector(".page_disabled").parentElement;
-                troisieme_couv.remove();
-            }
-        }
-
-        double_page.appendChild(miniature);
-    }else{
-        //creation de la double page
-        double_page = document.createElement("div");
-        double_page.classList.add("double_page");
-
-        //creation d'une page disabled a la fin
-        let page_disabled = document.createElement("div");
-        page_disabled.classList.add("miniature_page");
-        page_disabled.classList.add("page_disabled");
-
-        let div_simple = document.createElement("div");
-        div_simple.appendChild(page_disabled);
-
-        //ajout des pages à double_page
-        double_page.appendChild(miniature);
-        double_page.appendChild(div_simple);
-    }
-
-    minia_pages.appendChild(double_page);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // if (nb_pages % 2 == 1){
-    //     page.style.borderLeft = 'none'
-
-    //     var icone = document.createElement("img");
-    //     icone.src = "ASSETS/img/icones/liaison_page.svg";
-    //     icone.alt = "icone liaison entre les pages";
-    //     miniature.appendChild(icone);
-
-    // }
-    // if (nb_pages % 4 == 2) {
-    //     miniature.style.marginRight = '60px';
-
-
-    // }
-
-    // let main_miniature = document.querySelector('#modal_final #minia_pages');
-
-    // Ajouter la div principale à un élément existant de la page (par exemple, le body)
-    // main_miniature.appendChild(miniature);
-
 
 }
 
@@ -931,7 +828,6 @@ function place_img(event){
     // récupère les éléments
     let element = document.querySelector("button.selected");
     var img_apercue = document.querySelector('#apercue_' + id_page + ' .'+element_focus.classList[0]);
-    var img_miniature = document.querySelector('#miniature_' + id_page + ' .miniature_page .'+element_focus.classList[0])
     
     if(id_page.startsWith("page")){
         var img_apercue = document.querySelector('#apercue_' + num_page +' .'+element_focus.classList[0])
@@ -942,13 +838,11 @@ function place_img(event){
     list_choix.forEach(option => {
         element.classList.remove("img_" + option);
         img_apercue.classList.remove("img_" + option);
-        img_miniature.classList.remove("img_" + option);
 
     })
 
     element.classList.add("img_" + choix);
     img_apercue.classList.add("img_" + choix);
-    img_miniature.classList.add("img_" + choix);
 
 
 }
@@ -1015,9 +909,6 @@ function supprimer_page(num_page) {
 
     // --------- APERCU ---------- 
     supprimer_page_apercu(num_page);
-
-    // -------- MINIATURE -------- 
-    supprimer_page_miniature(num_page);
 
 
     // Supprime la page du décompte !
@@ -1092,11 +983,13 @@ function supprimer_page_apercu(num_page){
             // et donc focus page appélé sur une page inexistante
             e.stopPropagation();
 
-          };
+        };
         
-        if (apercue_suivant.parentElement.parentElement.classList.contains(apercue_suivant.id)) { }else{
+
+        if (!apercue_suivant.parentElement.classList.contains(apercue_suivant.id)) {
             var new_parent = document.querySelector('#apercu main .'+apercue_suivant.id)
-            new_parent.querySelector('.vignette_page').parentElement.appendChild(apercue_suivant);
+
+            new_parent.lastElementChild.appendChild(apercue_suivant);
         }
 
     }
@@ -1116,88 +1009,73 @@ function supprimer_page_apercu(num_page){
         txt_dernier_element.textContent = "page " + num_page_moins_un;
     }
 }
-function supprimer_page_miniature(num_page){
-    // On enleve la page dans la miniature
-
-    document.getElementById('miniature_page_'+num_page).remove();
 
 
+/* -------------------------------------------------------------------------- */
+/*                                  MINIATURE                                 */
+/* -------------------------------------------------------------------------- */
+
+/** Génère les miniatures après go_checkout
+ *  Crée une copie de l'apercu, dans la liste des miniatures
+ */
+
+function charge_miniatures(){
+    let blocs_pages = document.querySelectorAll("#apercu main .list_pages .bloc_page"); //liste des blocs pages de l'apercu
+    let minia_pages = document.querySelector("#minia_pages"); //section miniatures
+    minia_pages.innerHTML = "";
 
 
-    for (let i = num_page; i < nb_pages; i++) {
-        let i_bis = +i + 1; //page d'après
+    //boucle sur les doubles pages de l'apercu
+    blocs_pages.forEach(bloc_page => {    
+        let double_page = document.createElement("div");
+        double_page.classList.add("double_page"); //Création de la double page
 
-        const apercue_suivant = document.querySelector('#minia_pages .double_page #miniature_page_'+(i_bis));
+        //boucle sur les vignettes dans cette double page (une ou deux)
+        let vignettes = bloc_page.querySelectorAll("div .vignette_page");        
+        vignettes.forEach(vignette => {
+            let num_page_vignette = vignette.id.split("_")[1]; //récupère le numéro de page de la vignette
 
+            let bloc_miniature = document.createElement("div"); //crée le bloc de la miniature
+            bloc_miniature.id = "miniature_page_" + num_page_vignette;
 
-        if (apercue_suivant.parentElement.parentElement.classList.contains(apercue_suivant.id)) { }else{
+            let numero_page = document.createElement("p"); //ajoute le numéro de page
+            numero_page.textContent = "page " + num_page_vignette;
+            let miniature = document.createElement("div"); //crée la div miniature
+            miniature.classList.add("miniature_page");
 
-            console.log(apercue_suivant)
-
-            var new_parent = document.querySelector('#minia_pages .'+apercue_suivant.id)
-            new_parent.querySelector('.vignette_page').parentElement.appendChild(apercue_suivant);
-        }
-    }
-
-    // // Réorganisation des éléments
-    // for (let i = num_page; i < nb_pages; i++) {
-    //     let i_bis = +i + 1 ;
-    //     var miniature = document.getElementById('miniature_page_'+(i_bis));
-
-    //     miniature.id = 'miniature_'+i;
-
-    //     console.log(miniature)
+            vignette.querySelectorAll("div").forEach(element => {
+                miniature.appendChild(element.cloneNode("true"));
+            });
 
 
-    //     // si c'est une page pair (->il faut la changer de double page)
-    //     if (i % 2 === 0) {
+            bloc_miniature.appendChild(numero_page);
+            bloc_miniature.appendChild(miniature);
 
-    //         let previous_parent = miniature.parentElement.previousSibling;
-    //         console.log(previous_parent)
-
-
-    //     }else{ //sinon, pas besoin
-
-    //         //supprimer l'icone de liaison
-    //         //changer le nom de la page
-    //     }
+            double_page.appendChild(bloc_miniature);
+        })
 
 
-    //     // if (apercue_suivant.parentElement.parentElement.classList.contains(apercue_suivant.id)) { }else{
-    //     //     var new_parent = document.querySelector('#apercu main .'+apercue_suivant.id)
-    //     //     new_parent.querySelector('.vignette_page').parentElement.appendChild(apercue_suivant);
-    //     // }
+        minia_pages.appendChild(double_page)
+    });
 
+    
+    //creation de la page disabled => bloc_page_disabled
+    let bloc_page_disabled = document.createElement("div");
+    let page_disabled = document.createElement("div");
+    page_disabled.classList.add("miniature_page");
+    page_disabled.classList.add("page_disabled");
+    bloc_page_disabled.appendChild(page_disabled);
 
-
-
-
-
-    //     // if (i % 2 !== 0) {
-    //     //     var icone = miniature.querySelector('img');
-    //     //     miniature.removeChild(icone)
-
-    //     //     let miniature_page = miniature.querySelector('.miniature_page');
-    //     //     miniature_page.style.borderLeft = '2px solid #18574A'
-    //     // }else{
-
-    //     //     var icone = document.createElement("img");
-    //     //     icone.src = "ASSETS/img/icones/liaison_page.svg";
-    //     //     icone.alt = "icone liaison entre les pages";
-    //     //     miniature.appendChild(icone);
-
-    //     //     let miniature_page = miniature.querySelector('.miniature_page');
-    //     //     miniature_page.style.borderLeft = 'none'
-    //     // }
-
-    //     // var miniature_texte = miniature.querySelector('p');
-    //     // miniature_texte.textContent = 'Page '+i;
-    // }
-}
-
-
-
-
+    let bloc_page_dis_2 = bloc_page_disabled.cloneNode(true); //clonage du bloc
+    
+    //ajout en deuxieme de couverture
+    let deuxieme_couv = minia_pages.querySelector(".double_page:first-child");
+    deuxieme_couv.prepend(bloc_page_disabled);
+    
+    //ajout en troisieme de couverture
+    let troisieme_couv = minia_pages.querySelector(".double_page:last-child");
+    troisieme_couv.appendChild(bloc_page_dis_2);
+};
 
 
 
@@ -1208,6 +1086,7 @@ function supprimer_page_miniature(num_page){
  * Scan toutes les pages, et récupère toutes les informations sur chacune d'elle
  */
 function saveAlbum(){
+    console.log("sauvegarde du tableau")
     let feuilles = document.querySelectorAll(".feuille");
     var album = [];
   
@@ -1323,6 +1202,7 @@ function close_panier() {
 function go_checkout() {
 
     open_modal_final(); //TODO
+    charge_miniatures();
 
     // let contenu_couv_1 = document.querySelector("#couv_1 .feuille").innerHTML;
     // let contenu_couv_2 = document.querySelector("#couv_2 .feuille").innerHTML;
@@ -1349,6 +1229,7 @@ function go_checkout() {
     // //Tout est ok, on ouvre le modal
     // }else{
     //     open_modal_final();
+    //     charge_miniatures();
     // }
 }
 
