@@ -43,7 +43,7 @@ function recuperation_templates() {
                 let verif_chang_template = document.querySelector("#verif_chang_template");
 
                 //vérifie si la page n'est pas vide
-                if(page.innerHTML !== ""){
+                if(page.classList.contains("editee")){
 
                   verif_chang_template.style.display = "flex";
 
@@ -227,23 +227,26 @@ function loadElement(query_target, template, type = 0){
 
 
 
-/** ----------------- ADD IMG BACKGROUND -----------------
- * Permet de mettre les images upload au background de l'input
- * @param {object} element //objet HTML de type input de fichier
- */
-function addImageBg(element) {
-    // On crée une instance de FileReader pour lire les données du fichier
-    var reader = new FileReader();
+// /** ----------------- ADD IMG BACKGROUND -----------------
+//  * Permet de mettre les images upload au background de l'input
+//  * @param {object} element //objet HTML de type input de fichier
+//  */
+// function addImageBg(element) {
+//     // On crée une instance de FileReader pour lire les données du fichier
+//     var reader = new FileReader();
   
-    // Quand la lecture est terminée, on exécute cette fonction
-    reader.onload = function (e) {
+//     // Quand la lecture est terminée, on exécute cette fonction
+//     reader.onload = function (e) {
   
-      //reader.result -> permet de tranformer l'image en base64
-      // On définit la propriété background-image de l'élément avec l'URL du fichier
-      element.style.backgroundImage = 'url(' + reader.result + ')';
-    };
+//       //reader.result -> permet de tranformer l'image en base64
+//       // On définit la propriété background-image de l'élément avec l'URL du fichier
+//       element.style.backgroundImage = 'url(' + reader.result + ')';
+//     };
 
-    // On lit les données du premier fichier de l'élément
-    reader.readAsDataURL(element.files[0]);
-  }
+//     console.log(element.parentNode)
+//     element.parentNode.classList.add("editee");
+
+//     // On lit les données du premier fichier de l'élément
+//     reader.readAsDataURL(element.files[0]);
+//   }
   

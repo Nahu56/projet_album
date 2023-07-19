@@ -65,8 +65,11 @@ centre.addEventListener('click',afficher_edit_templates)
 function retour_verification(){
     document.querySelector("#retour_options .secondaire").style.display = "block";
 
+    document.querySelector("#retour_options .primaire p").innerHTML = "Retour aux options";
+
     document.querySelector("#retour_options").addEventListener("mouseleave", function(){
         document.querySelector("#retour_options .secondaire").style.display = "none";
+        document.querySelector("#retour_options .primaire p").innerHTML = "Retour";
 
     })
 }
@@ -137,7 +140,7 @@ function afficher_edit_image(element_focus_param) {
         element_focus = element_focus_param; // On met à jour l'élément séléctionné
 
         // On test si il y a une image dans l'élément séléctionné et si c'est le cas on affiche l'apercue
-        if (element_focus.style.backgroundImage =="none" || element_focus.style.backgroundImage=="") {}else{
+        if (element_focus.style.backgroundImage =="none" || element_focus.style.backgroundImage=="" || element_focus.style.backgroundImage == "unset") {}else{
             apercue_image() 
         }
         element_focus.classList.add("selected"); // On affiche la bordure sur l'élément séléctionné
@@ -669,7 +672,6 @@ function setBackground(event) {
 
         // récupère les éléments
         var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
-        var img_miniature = document.querySelector('#miniature_' + id_page +' .miniature_page .'+element_focus.classList[0])
 
         if(id_page.startsWith("page")){
             var img_apercue = document.querySelector('#apercue_' + num_page +' .'+element_focus.classList[0])
@@ -677,12 +679,12 @@ function setBackground(event) {
 
         // ajoute l'image de fond
         img_apercue.style.backgroundImage = `url(${reader.result})`;
-        img_miniature.style.backgroundImage = `url(${reader.result})`;
+
+        element_focus.parentNode.classList.add("editee");
+
 
         rm_apercue_image();
         apercue_image();
-        
-        
     });
 
     reader.readAsDataURL(file);
@@ -702,12 +704,8 @@ function textarea_edit() {
         element_focus.classList.add("border-none");
 
     }
-    // element_focus.classList.add("border-none");
-    
-    // setTimeout(() => {
-    //     element_focus.classList.remove("border-none");
-    // }, 5000);
 
+    element_focus.parentNode.classList.add("editee");
 
     element_focus.textContent = textarea_edit_texte.value;
 
@@ -778,7 +776,6 @@ function apercue_image(){
 
         // récupère les éléments
         var img_apercue = document.querySelector('#apercue_' + id_page +' .'+element_focus.classList[0])
-        var img_miniature = document.querySelector('#miniature_' + id_page +' .miniature_page .'+element_focus.classList[0])
 
         if(id_page.startsWith("page")){
             var img_apercue = document.querySelector('#apercue_' + num_page +' .'+element_focus.classList[0])
@@ -786,7 +783,6 @@ function apercue_image(){
 
         // ajoute l'image de fond
         img_apercue.style.backgroundImage = "none";
-        img_miniature.style.backgroundImage = "none";
 
         notifications(true,'Image supprimée');
 
@@ -809,6 +805,7 @@ function apercue_image(){
 function rm_apercue_image() {
     
     var image_actuel = document.querySelector(".image_actuel");
+
     if (image_actuel.childElementCount != 0) {
         var div = document.querySelector(".image_actuel div");
 
@@ -1032,6 +1029,33 @@ function supprimer_page_apercu(num_page){
  */
 
 function charge_miniatures(){
+
+    /* ----------------------- MINIATURES DES COUVERTURES ----------------------- */
+
+    // ---- premiere de couverture ---- 
+    let vignette_premiere = document.querySelector("#apercue_couv_1"); //récupère la vignette
+    let minia_premiere = document.querySelector("#miniature_couv_1 .miniature_page"); //récupère la miniature
+
+    //clone les éléments de la vignette vers la minia
+    vignette_premiere.querySelectorAll("div").forEach(obj => {
+        minia_premiere.appendChild(obj.cloneNode("true"));
+    })
+
+
+    // ---- dernière de couverture ---- 
+    let vignette_derniere = document.querySelector("#apercue_couv_2");
+    let minia_derniere = document.querySelector("#miniature_couv_2 .miniature_page");
+
+    vignette_derniere.querySelectorAll("div").forEach(obj => {
+        minia_derniere.appendChild(obj.cloneNode("true"));
+    })
+
+
+
+
+
+    /* -------------------------- MINIATURES DES PAGES -------------------------- */
+
     let blocs_pages = document.querySelectorAll("#apercu main .list_pages .bloc_page"); //liste des blocs pages de l'apercu
     let minia_pages = document.querySelector("#minia_pages"); //section miniatures
     minia_pages.innerHTML = "";
@@ -1098,7 +1122,6 @@ function charge_miniatures(){
  * Scan toutes les pages, et récupère toutes les informations sur chacune d'elle
  */
 function saveAlbum(){
-    console.log("sauvegarde du tableau")
     let feuilles = document.querySelectorAll(".feuille");
     var album = [];
   

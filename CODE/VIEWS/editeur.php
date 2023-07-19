@@ -23,6 +23,17 @@
         });
 
 
+        // window.addEventListener("beforeunload", function(event) {
+        //     // Annule l'événement de fermeture/réactualisation pour afficher notre propre message
+        //     event.preventDefault();
+
+        //     // Affiche une boîte de dialogue de confirmation personnalisée
+        //     const message = "Êtes-vous sûr de vouloir quitter cette page ?";
+        //     event.returnValue = message; // Nécessaire pour la compatibilité avec certains navigateurs
+        //     return message;
+        // });
+
+
     </script>
     
 
