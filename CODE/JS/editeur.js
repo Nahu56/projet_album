@@ -16,6 +16,14 @@ var nom_album = "Album photo";
 sessionStorage.setItem("album", "");
 
 
+/* -------------------------------------------------------------------------- */
+/*                             CHARGEMENT TERMINE                             */
+/* -------------------------------------------------------------------------- */
+window.addEventListener('load', function () {
+    // charge_theme();
+  })
+
+
 
 /** --------------------- RECUPERE LES PRIX ---------------------
  *
@@ -62,6 +70,7 @@ var centre = document.getElementById("centre");
 centre.addEventListener('click',afficher_edit_templates)
 
 
+//bouton de retour aux options
 function retour_verification(){
     document.querySelector("#retour_options .secondaire").style.display = "block";
 
@@ -73,6 +82,47 @@ function retour_verification(){
 
     })
 }
+
+//feature vue degagee
+function vue_degagee(){
+
+    let display = document.querySelector("#gauche").style.display;
+
+    if(display !== "none"){
+
+        document.querySelector("#gauche").style.display = "none";
+        document.querySelector("#droite").style.display = "none";
+        document.querySelector("#retour_options").style.display = "none";
+
+        document.querySelector("#vue_degagee p").innerHTML = "Afficher l'éditeur";
+
+
+
+    }else{
+        document.querySelector("#gauche").style.display = "block";
+        document.querySelector("#droite").style.display = "flex";
+        document.querySelector("#retour_options").style.display = "block";
+
+        document.querySelector("#vue_degagee p").innerHTML = "Vue dégagée";
+    }
+}
+
+
+/** CHARGE LES OPTIONS DU THEME
+ * -> charge la typo afin de l'appliquer sur toutes les pages
+ * -> charge la couleur de fond
+ */
+function charge_theme(){
+    let options = JSON.parse(sessionStorage.getItem("options"));
+
+    let typo = options[3].split("#")[0];
+    let couleur = options[3].split("#")[1];
+
+    // ----- TYPO -----
+    //ajoute une balise style dans le body, avec la font appliquée aux btn des feuilles
+    document.querySelector("body").innerHTML += "<style>.vignette_page,.feuille,.miniature_page{background-color: #"+ couleur +" !important ;} .feuille button{font-family : '"+ typo +"' ;}</style>";
+}
+
 
 
 
@@ -798,7 +848,7 @@ function apercue_image(){
     image_actuel.style.display = 'flex';
 }
 
-/** ------------- PRP APERCUE IMAGE -------------
+/** ------------- SUPPR APERCUE IMAGE -------------
  * Cette fonction permet de supprimer la partie apercue le d'image 
  * Elle sera utilisé surtout dans les cas ou on lance les fct afficher_edit_templates() ou afficher_edit_texte()
  */

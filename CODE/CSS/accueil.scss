@@ -4,7 +4,7 @@ $gris: #F0F0F0;
 $gris2: #dddddd;
 $gristext: #737373;
 
-$vert_foncé: #12443a;
+$vert_fonce: #12443a;
 $vert: #18574A;
 $vert_fond: #EBF0EF;
 
@@ -79,15 +79,18 @@ body{
                         background-color: $vert_fond;
                     }
 
+
+
                     //propriétés différentes si l'input est check
                     &.selected {
                         background-color: $vert;
                         outline: 3px solid $vert;
                         outline-offset: -1px;
                         color: $vert_fond;
+                        opacity: 0.9;
 
                         &:hover{
-                            background-color: $vert_foncé;
+                            opacity: 1;
                         }
                     }
             
@@ -132,3 +135,6 @@ body{
         }
     }
 }
+
+
+.feuille{background: Y ;}.feuille button{font-family : X ;}

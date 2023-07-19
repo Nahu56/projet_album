@@ -354,6 +354,31 @@ body {
 #editeur #retour_options:hover img {
   transform: translateX(-5px);
 }
+#editeur #vue_degagee {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 22px;
+  transform: translate(-50%, 0%);
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+#editeur #vue_degagee img {
+  width: 22px;
+}
+#editeur #vue_degagee p {
+  color: #18574A;
+  font-size: 16px;
+}
+#editeur #vue_degagee:hover {
+  background-color: white;
+}
 #editeur .centre {
   height: 100vh;
   padding: 0 35%;
@@ -432,10 +457,11 @@ body {
 #editeur .centre .page > .feuille button.img {
   outline: 2px solid transparent;
   outline-offset: -2px;
-  background-color: #F0F0F0;
+  background-color: rgba(0, 0, 0, 0.0705882353);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  border: none;
 }
 #editeur .centre .page > .feuille button.img.vide {
   background-image: url("../../ASSETS/img/ajout_image.png") !important;

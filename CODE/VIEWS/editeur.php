@@ -146,7 +146,11 @@
             <p>Vous allez perdre l'édition de votre album</p>
             <a href="options">Revenir quand même</a>
         </div>
+    </button>
 
+    <button id="vue_degagee" value="false" onclick="vue_degagee()">
+        <img src="ASSETS/img/icones/eye.png" alt="">
+        <p>Vue dégagée<p>
     </button>
     
 
@@ -548,4 +552,6 @@
 
     // Enregistrer la chaîne JSON dans le sessionStorage
     sessionStorage.setItem('options', optionsJSON);
+
+    charge_theme();
 </script>

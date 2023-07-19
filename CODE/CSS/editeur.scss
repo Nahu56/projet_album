@@ -496,6 +496,39 @@ $taille_texte: 20px;
         }
     }
 
+    #vue_degagee{
+        position: absolute;
+        top: 10px;
+        left: 50%;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 8px 22px;
+        transform: translate(-50%, 0%);
+
+        border: none;
+        border-radius: 100px;
+        background: transparent;
+
+        cursor: pointer;
+
+        img{
+            width: 22px;
+        }
+        p{
+            color: $vert;
+            font-size: 16px;
+        }
+
+        transition: all ease 0.2s;
+        &:hover{
+            background-color: white;
+        }
+
+    }
+
     /* -------------------------------------------------------------------------- */
     /*                                   CENTRE                                   */
     /* -------------------------------------------------------------------------- */
@@ -530,8 +563,6 @@ $taille_texte: 20px;
                 width: 90%;             
             }
             >.feuille{
-
-
                 //Calcul pour que la hauteur ne dépasse pas celle de l'écran
                 $ratio: 1.414;
                 $height: 80vh;
@@ -613,16 +644,18 @@ $taille_texte: 20px;
                         outline: 2px solid transparent;
                         outline-offset: -2px;
 
-                        background-color: $gris;
+                        background-color: $gris2_transparent;
                         background-repeat: no-repeat;
                         background-size: cover;
                         background-position: center;
 
+                        border: none;
 
                         &.vide{
                             background-image: url("../../ASSETS/img/ajout_image.png") !important;
                             background-size: 30px  !important;
                             background-position: center !important;
+
                         }
                     
 

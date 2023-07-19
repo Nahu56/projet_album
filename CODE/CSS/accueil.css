@@ -59,9 +59,10 @@ body main section fieldset div.selected {
   outline: 3px solid #18574A;
   outline-offset: -1px;
   color: #EBF0EF;
+  opacity: 0.9;
 }
 body main section fieldset div.selected:hover {
-  background-color: #12443a;
+  opacity: 1;
 }
 body main section fieldset div label {
   display: flex;
@@ -91,4 +92,12 @@ body main section fieldset div label input {
 body main section fieldset div label:has(> img) {
   padding: 0;
   height: auto;
+}
+
+.feuille {
+  background: Y;
+}
+
+.feuille button {
+  font-family: X;
 }/*# sourceMappingURL=accueil.css.map */

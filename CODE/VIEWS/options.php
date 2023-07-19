@@ -76,7 +76,6 @@
                 <fieldset>
                     <div>
                         <label for="couverture_carton">
-                            <img src="ASSETS\img\image.jpg" alt="">
                             <input type="radio" id="couverture_carton" name="couverture" value="carton" required="required" >
                             <p>Couverture cartonnée</p>
                         </label>
@@ -84,7 +83,6 @@
 
                     <div>
                         <label for="couverture_papier">
-                            <img src="ASSETS\img\image.jpg" alt="">
                             <input type="radio" id="couverture_papier" name="couverture" value="papier" required="required" >
                             <p>Couverture papier</p>
                         </label>
@@ -110,15 +108,15 @@
                     <!--                              THEMES SECONDAIRES                             -->
                     <!-- --------------------------------------------------------------------------  -->
                     <div>
-                        <label for="theme1">
-                            <img src="ASSETS\img\image.jpg" alt="">
+                        <label for="classique">
+                            <img src="ASSETS\img\themes\classique.png" alt="">
 
-                            <input type="radio" id="theme1" name="theme" value="theme1" required="required" >
-                            <p>theme1</p>
+                            <input type="radio" id="classique" name="theme" value="classique" required="required" >
+                            <p>Classique</p>
                         </label>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="theme2">
                             <img src="ASSETS\img\image.jpg" alt="">
 
@@ -143,27 +141,27 @@
                             <input type="radio" id="theme4" name="theme" value="theme4" required="required" >
                             <p>theme4</p>
                         </label>
-                    </div>
+                    </div> -->
 
                     <!-- --------------------------------------------------------------------------  -->
                     <!--                              THEMES PRINCIPAUX                              -->
                     <!-- --------------------------------------------------------------------------  -->
 
                     <div>
-                        <label for="theme5">
-                            <img src="ASSETS\img\image.jpg" alt="">
+                        <label for="Lumanosimo">
+                            <img src="ASSETS\img\themes\lumanosimo.png" alt="">
 
-                            <input type="radio" id="theme5" name="theme" value="theme5" required="required" >
-                            <p>theme5</p>
+                            <input type="radio" id="Lumanosimo" name="theme" value="Lumanosimo#FFF9D4" required="required" >
+                            <p>Lumanosimo</p>
                         </label>
                     </div>
 
                     <div>
-                        <label for="theme6">
-                            <img src="ASSETS\img\image.jpg" alt="">
+                        <label for="Playfair Display">
+                            <img src="ASSETS\img\themes\playfair.png" alt="">
 
-                            <input type="radio" id="theme6" name="theme" value="theme6" required="required" >
-                            <p>theme6</p>
+                            <input type="radio" id="Playfair Display" name="theme" value="Playfair Display#D5E1EC" required="required" >
+                            <p>Playfair Display</p>
                         </label>
                     </div>
                 </fieldset>
@@ -182,6 +180,9 @@
 
 
 <script>
+    sessionStorage.setItem("options", "");
+
+    //ajoute la class selected
     document.querySelectorAll("fieldset").forEach(fieldset => {
 
         fieldset.addEventListener("change", function(){
@@ -196,7 +197,7 @@
         })
     });
 
-
+    //vérifie le formulaire
     function checkOptions(){
         var form = document.querySelector("form");
 
