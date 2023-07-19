@@ -19,6 +19,7 @@ $dark_gris: #282828;
 $vert: #18574A;
 $vert_fond: #EBF0EF;
 
+$rouge : #792222;
 
 /* -------------------------------------------------------------------------- */
 /*                                    TEXTE                                   */
@@ -185,7 +186,7 @@ p{
         align-items: center;
         font-size: 18px;
         padding:  15px 35px  ;
-        background-color: #EBF0EF;
+        background-color: $vert_fond;
         box-shadow: 5px 5px 0px #000000;
 
         transition: 1s;
@@ -203,10 +204,10 @@ p{
         }
     }
     .erreur{
-        border: 3px solid #792222;
+        border: 3px solid $rouge;
     }
     .valid{
-        border: 3px solid #18574A;
+        border: 3px solid $vert;
     }
 }
 @keyframes sortie {

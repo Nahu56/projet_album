@@ -62,6 +62,16 @@ var centre = document.getElementById("centre");
 centre.addEventListener('click',afficher_edit_templates)
 
 
+function retour_verification(){
+    document.querySelector("#retour_options .secondaire").style.display = "block";
+
+    document.querySelector("#retour_options").addEventListener("mouseleave", function(){
+        document.querySelector("#retour_options .secondaire").style.display = "none";
+
+    })
+}
+
+
 
 /** ----- FONCTIONS AFFICHAGE PAGES D'EDITION -----
  * Fonction qui permet d'afficher ou de cacher la partie edit
@@ -282,7 +292,7 @@ function focus_page(id, context = "pages"){
     centre.scrollTo({
         top: 0,
         left: page.offsetLeft - window.innerWidth * 0.35,
-        behavior: 'smooth'
+        behavior: "smooth"
     });
 
 

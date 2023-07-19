@@ -16,11 +16,12 @@
     <script>
         // TODO : A decocher plus tard
 
-        // window.addEventListener("beforeunload", function(event) {
-        //     event.preventDefault(); // Annule la fermeture de la page
-        //     event.returnValue = ""; // Requiert une chaîne vide pour les navigateurs plus anciens
-        //     alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
-        // });
+        window.addEventListener("beforeunload", function(event) {
+            event.preventDefault(); // Annule la fermeture de la page
+            event.returnValue = ""; // Requiert une chaîne vide pour les navigateurs plus anciens
+            alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
+        });
+
 
     </script>
     
@@ -48,6 +49,16 @@
                 <p class="sous-titre"></p>
             </header>
             <main id="box_templates"> </main>
+
+            <div id="verif_chang_template">
+                <h4>Vous allez changer la mise en page</h4>
+                <p>La page actuelle sera perdue</p>
+
+                <div>
+                    <button class="continue">Continuer</button>
+                    <button class="cancel">Annuler</button>
+                </div>
+            </div>
         </section>
 
         <!-- Edition d'image -->
@@ -115,10 +126,17 @@
 
     </div>
 
-    <a id="retour_options" href="options">
-        <img src="ASSETS/img/icones/arrow_left.svg" alt="">
-        Retour
-    </a>
+    <button id="retour_options" onmouseover="retour_verification()">
+        <div class="primaire">
+            <img src="ASSETS/img/icones/arrow_left.svg" alt="">
+            <p>Retour</p>
+        </div>
+        <div class="secondaire">
+            <p>Vous allez perdre l'édition de votre album</p>
+            <a href="options">Revenir quand même</a>
+        </div>
+
+    </button>
     
 
 

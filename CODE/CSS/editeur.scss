@@ -7,6 +7,8 @@ $vert: #18574A;
 $vert2: rgb(195, 242, 231);
 $vert_fond: #EBF0EF;
 
+$rouge : #792222;
+
 
 body{
     margin: 0px;
@@ -119,6 +121,8 @@ $taille_texte: 20px;
         }
         // Partie affichage des templates 
         #templates{
+            overflow-x: hidden;
+
 
             main{
                 overflow: visible;
@@ -177,6 +181,74 @@ $taille_texte: 20px;
                 }
             }
             
+
+            #verif_chang_template{
+                display: none;
+
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                z-index: 100;
+                overflow-x: hidden;
+
+                width: 100%;
+                height: calc(100% - 80px);
+                
+                opacity: 0.95;
+                background-color: white;
+                backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                h4{
+                    color: black;
+                    font-size: 20px;
+                }
+                p{
+                    color: $rouge;
+                    font-size: 16px;
+                }
+
+                div{
+                    display: flex;
+                    margin-top: 20px;
+                    gap: 10px;
+
+                    button{
+                        border: none;
+                        font-size: 16px;
+                        padding: 10px 30px;
+                        border-radius: 5px;
+                        
+                        cursor: pointer;
+
+                        transition: all 0.2s ease;
+    
+                        &.continue{
+                            background-color: white;
+                            color: $vert;
+    
+                            text-decoration: underline;
+
+                            &:hover{
+                                background-color: $vert_fond;
+                            }
+                        }
+                        &.cancel{
+                            background-color: $rouge;
+                            color: white;
+                            
+                            opacity: 0.9;
+
+                            &:hover{
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -358,22 +430,60 @@ $taille_texte: 20px;
         top: 10px;
         left: calc($width_gauche + 80px);
 
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
         text-decoration: none;
-        color: #18574A;
         padding: 5px 20px;
         background: transparent;
+        border: 2px solid $vert_fond;
         border-radius: 5px;
 
-        img{
-            width: 25px;
-            transform: translateX(0px);
+        z-index: 200;
 
-            transition: all 0.2s ease;
+        .primaire{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+
+            p{
+                font-size: 16px;
+                color: $vert;
+            }
+
+            img{
+                width: 25px;
+                transform: translateX(0px);
+    
+                transition: all 0.2s ease;
+            }
         }
+
+        .secondaire{
+            display: none;
+            padding: 10px 0;
+        
+            p{
+                color: $rouge;
+                font-size: 14px;
+            }
+
+            a{
+                display: block;
+                padding: 10px;
+                margin-top: 10px;
+
+                border-radius: 3px;
+                color: white;
+                text-decoration: none;
+                
+                background-color: $vert;
+                opacity: 0.9;
+
+                &:hover{
+                    opacity: 1;
+                }
+            }
+        }
+
 
         transition: all 0.2s ease;
 
