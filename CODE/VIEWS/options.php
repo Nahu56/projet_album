@@ -157,10 +157,10 @@
                     </div>
 
                     <div>
-                        <label for="Playfair Display">
-                            <img src="ASSETS\img\themes\playfair.png" alt="">
+                        <label for="PlayfairDisplay">
+                            <img src="ASSETS\img\themes\playfairdisplay.png" alt="">
 
-                            <input type="radio" id="Playfair Display" name="theme" value="Playfair Display#D5E1EC" required="required" >
+                            <input type="radio" id="PlayfairDisplay" name="theme" value="PlayfairDisplay#D5E1EC" required="required" >
                             <p>Playfair Display</p>
                         </label>
                     </div>

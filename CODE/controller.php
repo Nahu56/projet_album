@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    $_SESSION["theme"] = "classique";
+
 /* -------------------------------------------------------------------------- */
 /*                                   ROUTEUR                                  */
 /* -------------------------------------------------------------------------- */
@@ -48,14 +50,15 @@ function creation_commande(){
     /* -------------------------- CREATION COMMANDE ------------------------- */
     
     $tableau_commande = json_decode($_POST["tableau_commande"]);
+    $_SESSION['id_commande'] = $tableau_commande[1];
 
-    // $date = date('m/d/Y', strtotime($tableau_commande[0]));
-
+    //gestion de la date
     $nonformated_date = DateTime::createFromFormat('d/n/Y', $tableau_commande[0]);
     $date = $nonformated_date->format('d/m/Y');
 
-
-    $_SESSION['id_commande'] = $tableau_commande[1];
+    //récupération du thème
+    $_SESSION["typo"] = $tableau_commande[11];
+    $_SESSION["couleur"] = $tableau_commande[12];
 
 
     // Lire le contenu du fichier JSON
@@ -77,6 +80,7 @@ function creation_commande(){
         $commandes[$date][$tableau_commande[1]]['reliure'] = $tableau_commande[7];
         $commandes[$date][$tableau_commande[1]]['format'] = $tableau_commande[8];
         $commandes[$date][$tableau_commande[1]]['pages'] = (int)$tableau_commande[9];
+        
         $commandes[$date][$tableau_commande[1]]['total'] = (float)$tableau_commande[10];
 
         $commandes[$date][$tableau_commande[1]]['deja_telecharge'] = false;
@@ -189,10 +193,20 @@ function generationPDF(){
     $pdf->SetPrintFooter(false);
     $pdf->SetAutoPageBreak(false, 0);
 
-    $pdf->SetFontSize(60);
 
-    // $font = 'saycomic';
-    // $pdf->SetFont($font, '', 200);
+    // -------- AJOUT DE LA FONT --------
+    
+    // $pdf->SetFontSize(60);
+
+
+    $font = 'timesbi';
+    $pdf->SetFont($font, '', 200); 
+
+    
+    // $pdf->AddFont("Lumanosimo", "", "..\ASSETS\fonts\Lumanosimo.ttf", "");
+    // $fontname = $pdf->addTTFfont('path/myfont.ttf', '', '', 32);
+
+
 
 
     // Boucle pour créer chaque page 
@@ -206,16 +220,23 @@ function generationPDF(){
         $pdfWidth = $pdf->getPageWidth();
         $pdfHeight = $pdf->getPageHeight();
 
-        // //  Ajouter couleur de fond au pdf 
-        // $pdf->SetFillColor(255, 0, 0); // La couleur (ici rouge) 
-        // $pdf->SetXY(0,0); // Positionnement de la Cell 
-        // $pdf->Cell($pdfWidth, $pdfHeight, '', 0, 0, 'C', true);
+        //  Ajouter couleur de fond au pdf
+        if($_SESSION["couleur"] == ""){
+            $couleur = "FFFFFF";
+        }else{
+            $couleur = $_SESSION["couleur"];
+        }
+        
+        // Extraire les valeurs RVB de la chaîne hexadécimale
+        $red = hexdec(substr($couleur, 0, 2));
+        $green = hexdec(substr($couleur, 2, 2));
+        $blue = hexdec(substr($couleur, 4, 2));
 
-        // //  Ajouter image de fond au pdf 
-        // $pdf->Image('../assets/IMG/pluie.jpg',0 ,0 , $pdfWidth, $pdfHeight, '', '', '', true, 150, '', false, false, 0, false, false, false);
+        //ajoute la couleur de fond aux pages
+        $pdf->Rect(0,0,$pdfWidth,$pdfHeight,'F','',$fill_color = array($red, $green, $blue)); 
 
 
-        //Vérifie que la n'est pas blanche 
+        //Vérifie que la feuille n'est pas blanche 
         if($page[0] !== ""){
 
             foreach ($page as $obj => $element) {
@@ -248,8 +269,11 @@ function generationPDF(){
                         
                     }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
     
-                        $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
-                        $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
+                        // $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
+                        // $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
+
+                        $html='<span style="font-family:'. $font . ' ;font-weight:bold">my text in bold</span>: my normal text';
+                        $pdf->writeHTMLCell($w=0,$h=0,$x=200,$y=201,$html,$border=0,$ln=0,$fill=false,$reseth=true,$align='L',$autopadding=false);
     
                     }
                 }   

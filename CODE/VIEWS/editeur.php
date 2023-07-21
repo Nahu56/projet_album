@@ -242,7 +242,7 @@
         <!-- /* ----------------------------- panier ---------------------------- */ -->
         <section id="panier" class="roll">
 
-            <header >
+            <header onclick="gestion_panier()">
                 <div>
                     <h3>Panier</h3>
                 </div>
@@ -393,8 +393,10 @@
                 <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID ?>&currency=EUR&locale=fr_FR"></script>
                 <script>
 
+
                     var reliure_album = "Gold";
                     var format_album = "A4";
+                    
 
                     // 2. Afficher le bouton PayPal
                     paypal.Buttons({
@@ -414,7 +416,7 @@
                                 {
                                     name : nom_album,
                                     quantity : qtt,
-                                    description : "Album photo made in Print Shop CREA ",
+                                    description : "Album photo made by Print Shop CREA ",
                                     // unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
                                     unit_amount : { value : 1 , currency_code : "EUR" } // TODO à supprimer et garder le commentaire au dessus
                                 }
@@ -467,6 +469,14 @@
 
                                 tableau_commande[10] = details.purchase_units[0].amount.value;
 
+                                tableau_commande[11] = theme.split("#")[0]; //typo
+                                if(theme.split("#")[1] == undefined){
+                                    tableau_commande[12] = "";
+                                }else{
+                                    tableau_commande[12] = theme.split("#")[1]; //couleur
+                                }
+
+
                                 let tableau_album = saveAlbum(); //-> récupération de l'album
 
                                 /* -------------------------------------------------------------------------- */
@@ -499,15 +509,13 @@
                                     console.log("Réussite " + xhr.response);
                                     
                                     //et on renvoie vers la suite
+
                                     window.location = 'CODE/controller.php?function=part2';
                                 }
                                 };
 
                                 // Envoi des données avec la méthode send()
                                 xhr.send(formData);
-
-
-
 
                             });
                         },

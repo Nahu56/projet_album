@@ -1187,7 +1187,7 @@ $taille_texte: 20px;
 
                                 &.page_disabled{
                                     border: none;
-                                    background-color: $gris;
+                                    background-color: $gris !important;
                                     margin-top: 23px;
 
                                     border: 1px dashed $vert

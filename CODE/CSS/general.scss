@@ -21,6 +21,30 @@ $vert_fond: #EBF0EF;
 
 $rouge : #792222;
 
+
+/* -------------------------------------------------------------------------- */
+/*                                    FONTS                                   */
+/* -------------------------------------------------------------------------- */
+
+// ----- Classique ----- 
+
+@font-face {
+    font-family: "Space Grotesk";
+    src: url("../../ASSETS/fonts/SpaceGrotesk.ttf");
+}
+
+// ----- Fonts d'édition -----
+
+@font-face {
+    font-family: "Lumanosimo";
+    src: url("../../ASSETS/fonts/Lumanosimo.ttf");
+}
+
+@font-face {
+    font-family: "PlayfairDisplay";
+    src: url("../../ASSETS/fonts/PlayfairDisplay.ttf");
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                    TEXTE                                   */
 /* -------------------------------------------------------------------------- */

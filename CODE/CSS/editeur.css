@@ -901,7 +901,7 @@ body {
 #editeur #modal_final > main > main #minia_couvertures .double_page > div .miniature_page.page_disabled,
 #editeur #modal_final > main > main #minia_pages .double_page > div .miniature_page.page_disabled {
   border: none;
-  background-color: #F0F0F0;
+  background-color: #F0F0F0 !important;
   margin-top: 23px;
   border: 1px dashed #18574A;
 }

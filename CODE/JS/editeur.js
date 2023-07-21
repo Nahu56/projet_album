@@ -6,6 +6,7 @@ var focus = "page_0";
 var nb_pages = 0;
 var element_focus = null;
 var qtt = 1 ; // Quantité d'albums : par défaut à zéro
+var theme = "classique";
 
 var prix_total = 0;
 var prix_album = 0;
@@ -14,15 +15,6 @@ var nom_album = "Album photo";
 
 //vide le sessionStorage
 sessionStorage.setItem("album", "");
-
-
-/* -------------------------------------------------------------------------- */
-/*                             CHARGEMENT TERMINE                             */
-/* -------------------------------------------------------------------------- */
-window.addEventListener('load', function () {
-    // charge_theme();
-  })
-
 
 
 /** --------------------- RECUPERE LES PRIX ---------------------
@@ -114,13 +106,20 @@ function vue_degagee(){
  */
 function charge_theme(){
     let options = JSON.parse(sessionStorage.getItem("options"));
+    theme = options[3];
 
-    let typo = options[3].split("#")[0];
-    let couleur = options[3].split("#")[1];
+    if(theme !== "classique"){ //si c'est le theme classique, prendre en compte différement (blanc)
 
-    // ----- TYPO -----
-    //ajoute une balise style dans le body, avec la font appliquée aux btn des feuilles
-    document.querySelector("body").innerHTML += "<style>.vignette_page,.feuille,.miniature_page{background-color: #"+ couleur +" !important ;} .feuille button{font-family : '"+ typo +"' ;}</style>";
+        let typo = theme.split("#")[0];
+        let couleur = theme.split("#")[1];
+    
+        // ----- TYPO -----
+        //ajoute une balise style dans le body, avec la font appliquée aux btn des feuilles
+        document.querySelector("body").insertAdjacentHTML('beforebegin', 
+            "<style>.vignette_page, .feuille, .miniature_page{background-color: #"+ couleur +" !important ;} .feuille button{font-family : '"+ typo +"' ;}</style>"
+        );
+    }
+
 }
 
 
@@ -1177,6 +1176,8 @@ function saveAlbum(){
   
     //boucle sur toutes les feuilles == pages
     feuilles.forEach(page => {
+
+
         let buttons = page.querySelectorAll("button");
 
         let id_template = page.classList[1];
@@ -1184,26 +1185,28 @@ function saveAlbum(){
 
         if(id_template !== null){ // -> si ce n'est pas une page blanche
 
-            let tab_feuille = [id_template];
+            tab_feuille = [id_template];
   
             buttons.forEach(obj => {
+
+
                 if(obj.classList.contains("img")){ // -> c'est une image
     
                     let code_img = obj.style.backgroundImage;
                     const img64 = code_img.substring(5, code_img.length - 2); // -> garde uniquement le code en base 64 de l'image
-    
+
                     //trouver placement de l'image
                     let placement_image = "C";
                     let list_classes = obj.classList;
                     list_classes.forEach(classe => {
-    
+
                         if(classe.startsWith("img_")){
-        
-                            placement_image = classe.split("_")[1].toUpperCase()[0]; 
-    
+
+                            placement_image = classe.split("_")[1].toUpperCase()[0];
+
                         };
                     })
-    
+
                     tab_feuille.push(placement_image + "#" + img64); // -> garde l'img64
                     // tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
     
@@ -1217,6 +1220,7 @@ function saveAlbum(){
         }
 
         album.push(tab_feuille);
+
     })
   
     return album;
@@ -1227,27 +1231,27 @@ function saveAlbum(){
  /** ------------------ VARIABLES PANIER ------------------
  * Ici vous trouverez les variables qui permettent l'ouverture et la fermeture du panier 
  */
+
+/* -------------------------------------------------------------------------- */
+/*                                   PANIER                                   */
+/* -------------------------------------------------------------------------- */
+
+
 var panier_ouvert = false; // Pour savoir si le panier est ouvert ou fermer
 
-var panier = document.querySelector('#panier'); // On récupère l'élément panier 
-panier.addEventListener('click',(event)=>{
-    event.stopPropagation();
-})
-
-var btn_panier = document.querySelector('#panier header'); // On récupère le btn pour ouvrir le panier 
-btn_panier.addEventListener('click',(event)=>{
-    event.stopPropagation();
+function gestion_panier(){
+    let panier = document.querySelector("#panier");
 
     // On vérifie si le panier est ouvert
-    if (panier_ouvert) { 
-        close_panier();
-    }else{
+    if (panier.classList.contains("roll")) { 
         open_panier();
+    }else{
+        close_panier();
     }
-});
+}
 
-var body = document.querySelector('body'); // On récupère l'élément body pour le que panier ce ferme quand on clique en dehors de celui ci 
-body.addEventListener('click',close_panier);
+
+
 
 /** -------------------- WRAP PANIER --------------------
  * Permet de dérouler / enrouler le panier
@@ -1262,6 +1266,7 @@ function open_panier() {
     panier.classList.add("shadow");
 
     panier_ouvert = true;
+
 }
 function close_panier() {
     let panier = document.querySelector("#panier");
@@ -1275,6 +1280,9 @@ function close_panier() {
     panier_ouvert = false;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  CHECKOUT                                  */
+/* -------------------------------------------------------------------------- */
 
 /** -------------- GO CHECKOUT --------------
  * Fonction appelée au clic du bouton "terminer" dans le panier
@@ -1313,6 +1321,8 @@ function go_checkout() {
     }else{
         open_modal_final();
         charge_miniatures();
+
+        saveAlbum(); // TODO a supprimer, doit être appelé après la validation paypal
     }
 }
 
@@ -1323,7 +1333,7 @@ function go_checkout() {
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
 
-    body.removeEventListener('click', close_panier);
+    // body.removeEventListener('click', close_panier);
 
     modal.addEventListener("click", function(event){
         if (event.target !== this) {
