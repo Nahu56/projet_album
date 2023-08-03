@@ -8,6 +8,7 @@ $vert2: rgb(195, 242, 231);
 $vert_fond: #EBF0EF;
 
 $rouge : #792222;
+$rouge_fond : #f0e5e5;
 
 
 body{
@@ -87,7 +88,7 @@ $taille_texte: 20px;
         height: calc(100vh - 4px);
         width: $width_gauche;
 
-        z-index: 900;
+        z-index: 700;
 
 
         // CSS commun aux 3 parties
@@ -718,7 +719,7 @@ $taille_texte: 20px;
     /* -------------------------------------------------------------------------- */
     div#droite{
 
-        z-index: 900;
+        z-index: 700;
 
         position: fixed;
         right:0 ;
@@ -1072,6 +1073,170 @@ $taille_texte: 20px;
         }
 
         
+    }
+
+    #actions_droite{
+        position: absolute;
+        bottom: 10px;
+        right: calc($width_droite + 20px);
+
+        #btn_continue_later{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            background-color: $vert_fond;
+            border: 1px solid $vert;
+            border-radius: 100px;
+            
+            padding: 10px 30px;
+            cursor: pointer;
+
+            img{
+                width: 18px;
+            }
+
+            transition: all ease 0.2s;
+            &:hover{
+                background-color: white;
+            }
+        }
+    }
+
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                            MODAL CONTINUE LATER                            */
+    /* -------------------------------------------------------------------------- */
+
+    #modal_continue_later{
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+
+        width: 100vw;
+        height: 100vh;
+
+        backdrop-filter: blur(10px);
+        z-index: 800;
+
+
+
+        main{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            max-width: 60%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 25px;
+            
+            background-color: white;
+            border: 2px solid $gris;
+            border-radius: 10px;
+            padding: 60px 40px 40px 40px;
+
+            text-align: center;
+
+            .annuler{
+                position: absolute;
+                top: 20px;
+                right: 20px;
+
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background-color: white;
+                border: none;
+
+                padding: 5px 10px;
+                border-radius: 100px;
+
+                cursor: pointer;
+
+                img{
+                    width: 30px;
+                }
+
+                transition: all ease 0.2s;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+
+            h3{
+                font-size: 25px;
+            }
+
+            p{
+                font-size: 15px;
+                
+                &.second_text{
+                    font-size: 12px;
+                    color: $gristext;
+                    font-style: italic;
+                }
+            }
+
+            form{
+
+                >div{
+                    display: flex;
+                    flex-direction: column;
+    
+                    margin-bottom: 20px;
+                    
+                    input{
+                        background-color: $vert_fond;
+                        padding: 10px 20px;
+        
+                        border: dashed 1px $vert;
+                        border-radius: 100px;
+                        margin-bottom: 5px;
+    
+                        font-size: 20px;
+    
+                        &::placeholder{
+                            color: $gristext;
+                        }
+                    }
+                    p{
+                        width: 80%;
+                        margin: 0 auto;
+                    }
+
+                }
+    
+    
+                input[type=submit]{
+                    background-color: $gris2_transparent;
+                    color: $gristext;
+                    padding: 15px 30px;
+    
+                    border: none;
+                    width: fit-content;
+                    margin: 0 auto;
+    
+                    cursor: pointer;
+    
+                    &.valid{
+                        color: white;
+                        background-color: $vert;
+                        opacity: 0.9;
+    
+                        &:hover{
+                            opacity: 1;
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
 

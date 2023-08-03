@@ -28,9 +28,33 @@ fetch("ASSETS/json/variables_prix.json")
     .then(response => response.json())
     .then(function(json){
 
-        let options = JSON.parse(sessionStorage.getItem("options"));
-        if(options === null){
-            window.location.href = "options";
+        var options = [];
+
+        // A un ID => récupère un album
+        if(sessionStorage.getItem("id")){
+            let ID = sessionStorage.getItem("id");
+
+            //vérifie si l'ID est vide
+            if(options === null || ID == null || ID === ""){
+                console.log("RETOUT OPTIONS")
+                // window.location.href = "options";            
+            }else{
+                options = JSON.parse(sessionStorage.getItem("options"));
+
+            }
+        
+
+        // A des options => crée un album
+        }else if(sessionStorage.getItem("options")){
+
+            options = JSON.parse(sessionStorage.getItem("options"));
+        
+        //ni l'un ni l'autre => retour aux options
+        }else{
+
+            console.log("RETOUT OPTIONS")
+            // window.location.href = "options";
+
         }
 
 
@@ -49,12 +73,15 @@ fetch("ASSETS/json/variables_prix.json")
         sessionStorage.setItem("reducs", JSON.stringify(json["reductions"]));
 
 
-        ajout_page();
+        if( ! sessionStorage.getItem("id")){
+            ajout_page();
+            focus_page("page_1", "pages");
+        }
+
         affichage_options_album();
         maj_prix_album();
         maj_prix_total();
 
-        focus_page("page_1", "pages");
 
     })
 
@@ -106,6 +133,7 @@ function vue_degagee(){
  */
 function charge_theme(){
     let options = JSON.parse(sessionStorage.getItem("options"));
+
     theme = options[3];
 
     if(theme !== "classique"){ //si c'est le theme classique, prendre en compte différement (blanc)
@@ -114,9 +142,30 @@ function charge_theme(){
         let couleur = theme.split("#")[1];
     
         // ----- TYPO -----
+        //retrouve la typo correspondante (pour la vue)
+        
+        switch (theme.split("#")[0]) {
+            case "classique":
+                typo = "";
+
+                break
+            case "dejavusansmono":
+                typo = '"Noto Sans Vithkuqi", sans-serif';
+
+                break;
+            case "times": 
+                typo = '"Times New Roman"';
+        
+                break;
+            default:
+                break;
+        }
+        
+        
+        
         //ajoute une balise style dans le body, avec la font appliquée aux btn des feuilles
         document.querySelector("body").insertAdjacentHTML('beforebegin', 
-            "<style>.vignette_page, .feuille, .miniature_page{background-color: #"+ couleur +" !important ;} .feuille button{font-family : '"+ typo +"' ;}</style>"
+            "<style>.vignette_page, .feuille, .miniature_page{background-color: #"+ couleur +" !important ;} .feuille button{font-family : "+ typo +" ;}</style>"
         );
     }
 
@@ -550,8 +599,8 @@ function ajout_page() {
     var centre = document.getElementById("centre");
     centre.appendChild(divPage);
     ajout_page_apercue();
-    focus_page("page_"+(nb_pages));
 
+    focus_page("page_"+(nb_pages));
 
 }
 
@@ -766,7 +815,6 @@ function textarea_edit() {
  * Cette fonction affiche les infos de l'image 
  */
 function apercue_image(){
-    
 
     // Création du premier div à l'intérieur de divImageActuel
     var div1 = document.createElement("div");
@@ -806,7 +854,7 @@ function apercue_image(){
 
     // Création de l'élément img pour le bouton de suppression
     var btnSupprimeImage = document.createElement("img");
-    btnSupprimeImage.src = "ASSETS/img/btn_supprime_image.svg";
+    btnSupprimeImage.src = "ASSETS/img/croix.svg";
     btnSupprimeImage.alt = "bouton pour supprimé l'image";
 
     btnSupprimeImage.addEventListener('click',()=>{
@@ -1173,15 +1221,14 @@ function charge_miniatures(){
 function saveAlbum(){
     let feuilles = document.querySelectorAll(".feuille");
     var album = [];
+    var tab_feuille = [""];
+    var derniere_page = [""];
   
     //boucle sur toutes les feuilles == pages
     feuilles.forEach(page => {
 
-
         let buttons = page.querySelectorAll("button");
-
         let id_template = page.classList[1];
-        var tab_feuille = [""];
 
         if(id_template !== null){ // -> si ce n'est pas une page blanche
 
@@ -1208,7 +1255,6 @@ function saveAlbum(){
                     })
 
                     tab_feuille.push(placement_image + "#" + img64); // -> garde l'img64
-                    // tab_feuille.push(placement_image + "#"); //ne garde pas l'img64 car il n'est pas possible de tout stocker
     
                 }else if(obj.classList.contains("txt")){ // -> c'est un texte
                     
@@ -1219,9 +1265,18 @@ function saveAlbum(){
 
         }
 
-        album.push(tab_feuille);
+
+        if(page.parentNode.id == "couv_2"){ // permet de passer la dernière de couverture en dernier
+
+            derniere_page = tab_feuille;
+
+        }else{
+            album.push(tab_feuille);
+        }
 
     })
+
+    album.push(derniere_page); // -> ajoute la derniere de couverture a la fin
   
     return album;
   
@@ -1279,6 +1334,46 @@ function close_panier() {
 
     panier_ouvert = false;
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                               CONTINUE LATER                               */
+/* -------------------------------------------------------------------------- */
+//ouvre le modal, et vérifie si le formulaire (email) est valide, en direct
+function continue_later(){
+    let modal = document.querySelector("#modal_continue_later");
+    modal.style.display = "block";
+
+    let form = modal.querySelector("form");
+
+    form.querySelector("div input").addEventListener("input", function(){
+
+        if(form.checkValidity()){
+            form.querySelector("input[type=submit]").classList.add("valid");
+
+        }else{
+            form.querySelector("input[type=submit]").classList.remove("valid");
+
+        }
+    })
+
+    
+    // --- OPTIONS ---
+    let options = sessionStorage.getItem("options");
+    console.log(options)
+    document.querySelector("#liste_options_album").value = options;
+    console.log(document.querySelector("#liste_options_album"))
+
+    // --- CONTENU ---
+    let album = saveAlbum();
+    document.querySelector("#contenu_album").value = JSON.stringify(album);
+}
+function close_continue_modal(){
+    let modal = document.querySelector("#modal_continue_later");
+
+    modal.style.display = "none";
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  CHECKOUT                                  */

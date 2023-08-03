@@ -16,28 +16,13 @@
     <script>
         // TODO : A decocher plus tard
 
-        window.addEventListener("beforeunload", function(event) {
-            event.preventDefault(); // Annule la fermeture de la page
-            event.returnValue = ""; // Requiert une chaîne vide pour les navigateurs plus anciens
-            alert("Êtes-vous sûr de vouloir quitter cette page ?"); // Affiche l'alerte
-        });
-
 
         // window.addEventListener("beforeunload", function(event) {
         //     // Annule l'événement de fermeture/réactualisation pour afficher notre propre message
         //     event.preventDefault();
-
-        //     // Affiche une boîte de dialogue de confirmation personnalisée
-        //     const message = "Êtes-vous sûr de vouloir quitter cette page ?";
-        //     event.returnValue = message; // Nécessaire pour la compatibilité avec certains navigateurs
-        //     return message;
         // });
 
-
     </script>
-    
-
-
     
 
 </head>
@@ -306,6 +291,53 @@
     </div>
 
 
+    <div id="actions_droite">
+        <button id="btn_continue_later" onclick="continue_later()">
+            <img src="ASSETS\img\icones\save.png" alt="">
+            Continuer plus tard
+        </button>
+    
+        <!-- <button id="btn_aide" onclick="modal_aide()">
+            -> AIDE
+        </button> -->
+
+    </div>
+
+
+    <!-- /* --------------------------------------------------------------------- */
+    /*                          MODAL CONTINUER PLUS TARD                         */
+    /* ---------------------------------------------------------------------- */ -->
+
+    <div id="modal_continue_later">
+        
+        <main>
+            <button class="annuler" onclick="close_continue_modal()">
+                Annuler
+                <img src="ASSETS/img/croix.svg" alt="">
+            </button>
+
+            <h3>Vous nous quittez déjà ?</h3>
+            <p>Continuez votre album photo plus tard !</p>
+
+            <form action="continue_later" method="POST">
+                <div>
+                    <input type="email" name="email" placeholder="monadresse@mail.com" required>
+                    <p class="second_text">Vous recevrez un lien par mail pour le continuer quand vous aurez le temps</p>
+                </div>
+
+                <!-- OPTIONS -->
+                <input type="hidden" id="liste_options_album" name="options">  
+                
+                <!-- CONTENU -->
+                <input type="hidden" id="contenu_album" name="contenu_album">
+        
+                <input type="submit" class="" value="Continuer plus tard">
+
+            </form>
+        </main>
+    </div>
+
+
     <!--------------------------------------------------------------------------- */
     /*                                 MODAL FINAL                                */
     /* ---------------------------------------------------------------------------->
@@ -535,31 +567,89 @@
 
 </body>
 </html>
+
+
+
+<!-- /* --------------------------------------------------------------------- */
+/*                              RECUPERE UN ALBUM                             */
+/* ---------------------------------------------------------------------- */ -->
+
+<?php 
+
+//Vérifie si il y à un ID
+if(isset($_GET["id"])){
+    ?> 
+
+    <!-- charge le fichier load_album.js s'il y à un identifiant -->
+    <script src='CODE/JS/load_album.js'></script>
+
+    <!-- puis appelle la fonction -->
+    <script>
+        sessionStorage.setItem("id", "");
+
+        load_album('<?php echo $_GET["id"] ?>')
+        
+        sessionStorage.setItem('id', '<?php echo $_GET["id"] ?>');
+    </script>";
+
+
+    <?php
+}
+?>
+
+<!-- /* --------------------- CHARGE LES FICHIERS JS --------------------- */ -->
+
 <script src="CODE/JS/general.js"></script>
 
 <script src="CODE/JS/editeur.js"></script>
 <script src="CODE/JS/editeur_gestion-template.js"></script>
 
 
-<script>
-    /* -------------------------------------------------------------------------- */
-    /*                          RECUPERATION DES OPTIONS                          */
-    /* -------------------------------------------------------------------------- */
 
-    // Créer un tableau vide
-    var options = [];
+<!-- /* --------------------------------------------------------------------- */
+/*                               CREE UN ALBUM                                */
+/* ---------------------------------------------------------------------- */ -->
 
-    // Récupérer les valeurs des options de l'album et les ajouter au tableau
-    options.push('<?php echo $_POST["format"]; ?>');
-    options.push('<?php echo $_POST["reliure"]; ?>');
-    options.push('<?php echo $_POST["couverture"]; ?>');
-    options.push('<?php echo $_POST["theme"]; ?>');
+<?php 
 
-    // Convertir le tableau en une chaîne JSON
-    var optionsJSON = JSON.stringify(options);
+if(!isset($_GET["id"])){
 
-    // Enregistrer la chaîne JSON dans le sessionStorage
-    sessionStorage.setItem('options', optionsJSON);
+    //vérifie si toutes les options sont là
+    if( isset($_POST["format"]) && isset($_POST["reliure"]) && isset($_POST["couverture"]) && isset($_POST["theme"])){
+        ?>
 
-    charge_theme();
-</script>
+        <script>
+        
+            // Créer un tableau vide
+            var options = [];
+    
+            // Récupérer les valeurs des options de l'album et les ajouter au tableau
+            options.push('<?php echo $_POST["format"]; ?>');
+            options.push('<?php echo $_POST["reliure"]; ?>');
+            options.push('<?php echo $_POST["couverture"]; ?>');
+            options.push('<?php echo $_POST["theme"]; ?>');
+
+            // Convertir le tableau en une chaîne JSON
+            var optionsJSON = JSON.stringify(options);
+
+            // Enregistrer la chaîne JSON dans le sessionStorage
+            sessionStorage.setItem('options', optionsJSON);
+
+            charge_theme();
+        </script>
+
+        <?php
+    }else{
+        ?>
+
+        <script>
+            console.log("RETOUR OPTIONS")
+            // window.location.href = "options";
+        </script>
+        
+        <?php
+    }
+}
+
+
+?>

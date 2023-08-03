@@ -199,8 +199,8 @@ function generationPDF(){
     // $pdf->SetFontSize(60);
 
 
-    $font = 'timesbi';
-    $pdf->SetFont($font, '', 200); 
+    // $font = 'timesbi';
+    // $pdf->SetFont($font, '', 200); 
 
     
     // $pdf->AddFont("Lumanosimo", "", "..\ASSETS\fonts\Lumanosimo.ttf", "");
@@ -219,6 +219,20 @@ function generationPDF(){
 
         $pdfWidth = $pdf->getPageWidth();
         $pdfHeight = $pdf->getPageHeight();
+
+
+
+        // $pdf->AddFont('freemonob', '', 'freemonob.php');
+        // $pdf->SetFont('freemonob', '', 60); 
+
+
+        $font = $_SESSION["typo"];
+        $pdf->AddFont($font, '', $font . '.php');
+        $pdf->SetFont($font, '', 60); 
+
+
+        
+
 
         //  Ajouter couleur de fond au pdf
         if($_SESSION["couleur"] == ""){
@@ -269,11 +283,11 @@ function generationPDF(){
                         
                     }elseif ($templates[$page[0]]['obj_'.$obj]['type']=='txt') {
     
-                        // $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
-                        // $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
+                        $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
+                        $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
 
-                        $html='<span style="font-family:'. $font . ' ;font-weight:bold">my text in bold</span>: my normal text';
-                        $pdf->writeHTMLCell($w=0,$h=0,$x=200,$y=201,$html,$border=0,$ln=0,$fill=false,$reseth=true,$align='L',$autopadding=false);
+                        // $html='<span style="font-family:'. $font . ' ;font-weight:bold">' . $element . '</span>';
+                        // $pdf->writeHTMLCell($w=0,$h=0,$x=200,$y=201,$html,$border=0,$ln=0,$fill=false,$reseth=true,$align='L',$autopadding=false);
     
                     }
                 }   

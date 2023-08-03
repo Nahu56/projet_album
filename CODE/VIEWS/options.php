@@ -33,6 +33,11 @@
                     <p>sélectionnez les options pour votre album photo :</p>
                 </header>
 
+                <div class="secondHeader">
+                    <h3>Reliure</h3>
+                    <div class="hr"></div>
+                </div>
+
                 <fieldset>
                     <div>
                         <label for="reliure_plastique">
@@ -51,7 +56,11 @@
                     </div>
                 </fieldset>
 
-                <hr>
+
+                <div class="secondHeader">
+                    <h3>Format</h3>
+                    <div class="hr"></div>
+                </div>
 
                 <fieldset>
                     <div>
@@ -71,8 +80,12 @@
                     </div>
                 </fieldset>
 
-                <hr>
 
+                <div class="secondHeader">
+                    <h3>Couverture</h3>
+                    <div class="hr"></div>
+                </div>
+                
                 <fieldset>
                     <div>
                         <label for="couverture_carton">
@@ -96,10 +109,10 @@
             <!-- --------------------------------------------------------------------------  -->
             <section id="section2">
                 <header>
-                    <p>Maintenant,</p>
-                    <h2>choisissez le thème</h2>
+                    <p>Pour finir,</p>
+                    <h2>donnez vie à votre album !</h2>
 
-                    <p>Voici une liste de thèmes qui donneront vie à votre album photo !</p>
+                    <p>Le choix du thème implique la couleur de fond des pages, ainsi que le typographie d'écriture de l'album</p>
                 </header>
 
                 <fieldset>
@@ -148,20 +161,20 @@
                     <!-- --------------------------------------------------------------------------  -->
 
                     <div>
-                        <label for="Lumanosimo">
-                            <img src="ASSETS\img\themes\lumanosimo.png" alt="">
+                        <label for="dejavusansmono">
+                            <img src="ASSETS\img\themes\simple.png" alt="">
 
-                            <input type="radio" id="Lumanosimo" name="theme" value="Lumanosimo#FFF9D4" required="required" >
-                            <p>Lumanosimo</p>
+                            <input type="radio" id="dejavusansmono" name="theme" value="dejavusansmono#FFF9D4" required="required" >
+                            <p>Dejavu Sans Mono</p>
                         </label>
                     </div>
 
                     <div>
-                        <label for="PlayfairDisplay">
-                            <img src="ASSETS\img\themes\playfairdisplay.png" alt="">
+                        <label for="times">
+                            <img src="ASSETS\img\themes\charme.png" alt="">
 
-                            <input type="radio" id="PlayfairDisplay" name="theme" value="PlayfairDisplay#D5E1EC" required="required" >
-                            <p>Playfair Display</p>
+                            <input type="radio" id="times" name="theme" value="times#D5E1EC" required="required" >
+                            <p>Times New Roman</p>
                         </label>
                     </div>
                 </fieldset>

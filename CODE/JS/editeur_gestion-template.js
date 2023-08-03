@@ -76,9 +76,11 @@ function recuperation_templates() {
 
 /** CHARGE LE TEMPLATE DEMANDE
  * 
- * @param {*} div_template 
+ * @param {array} templates //liste des templates (json)
+ * @param {element} div_template //element html où placer le template 
  */
 function charge_template(templates, div_template){
+  
   let id_page = sessionStorage.getItem("currentpage");
 
   let num_page = id_page.split("_")[1];
@@ -147,14 +149,15 @@ function charge_template(templates, div_template){
  * @param {string} query_target //querySelector pour trouver la div où ajouter les objets
  * @param {Array} template_obj_list //Object template, contenant tous les éléments du template
  * @param {bool} type //défini ce qui est inséré dans la div
- *      0 => ce sont des div, avec class IMG et TXT
- *      1 => ce sont des btns, avec class IMG et TXT
+ *      0 => ce sont des div, avec class IMG et TXT (apercu)
+ *      1 => ce sont des btns, avec class IMG et TXT (editable)
  */
 function loadElement(query_target, template, type = 0){
+    console.log(getStackTrace());
 
     let template_obj_list = Object.values(template); // object -> tableau (crée une liste des éléments)
     let div_template = document.querySelector(query_target); // cherche la div où seront ajoutés les objets
-  
+
     let count = 0;
 
     // boucle sur les objets du template
@@ -181,7 +184,7 @@ function loadElement(query_target, template, type = 0){
   
         }else if(obj.type == "txt"){
 
-          element.onclick = function(event){ // -> Met l'image upload au background de l'input
+          element.onclick = function(event){ // -> Ajout le texte sur la page
             event.stopPropagation();
             maj_textarea(this);
             afficher_edit_texte(this);

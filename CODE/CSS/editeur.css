@@ -22,6 +22,9 @@ body {
   /*                                   DROITE                                   */
   /* -------------------------------------------------------------------------- */
   /* -------------------------------------------------------------------------- */
+  /*                            MODAL CONTINUE LATER                            */
+  /* -------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------- */
   /*                                 MODAL FINAL                                */
   /* -------------------------------------------------------------------------- */
 }
@@ -60,7 +63,7 @@ body {
   top: 0;
   height: calc(100vh - 4px);
   width: 360px;
-  z-index: 900;
+  z-index: 700;
 }
 #editeur div#gauche #edit_image,
 #editeur div#gauche #edit_texte,
@@ -498,7 +501,7 @@ body {
   width: 25px;
 }
 #editeur div#droite {
-  z-index: 900;
+  z-index: 700;
   position: fixed;
   right: 0;
   top: 0;
@@ -810,6 +813,128 @@ body {
 #editeur div#droite #panier > footer {
   display: flex;
   padding: 0 20px 20px 20px;
+}
+#editeur #actions_droite {
+  position: absolute;
+  bottom: 10px;
+  right: 324px;
+}
+#editeur #actions_droite #btn_continue_later {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #EBF0EF;
+  border: 1px solid #18574A;
+  border-radius: 100px;
+  padding: 10px 30px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+#editeur #actions_droite #btn_continue_later img {
+  width: 18px;
+}
+#editeur #actions_droite #btn_continue_later:hover {
+  background-color: white;
+}
+#editeur #modal_continue_later {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  z-index: 800;
+}
+#editeur #modal_continue_later main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  background-color: white;
+  border: 2px solid #F0F0F0;
+  border-radius: 10px;
+  padding: 60px 40px 40px 40px;
+  text-align: center;
+}
+#editeur #modal_continue_later main .annuler {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+#editeur #modal_continue_later main .annuler img {
+  width: 30px;
+}
+#editeur #modal_continue_later main .annuler:hover {
+  text-decoration: underline;
+}
+#editeur #modal_continue_later main h3 {
+  font-size: 25px;
+}
+#editeur #modal_continue_later main p {
+  font-size: 15px;
+}
+#editeur #modal_continue_later main p.second_text {
+  font-size: 12px;
+  color: #737373;
+  font-style: italic;
+}
+#editeur #modal_continue_later main form > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+#editeur #modal_continue_later main form > div input {
+  background-color: #EBF0EF;
+  padding: 10px 20px;
+  border: dashed 1px #18574A;
+  border-radius: 100px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+#editeur #modal_continue_later main form > div input::-moz-placeholder {
+  color: #737373;
+}
+#editeur #modal_continue_later main form > div input::placeholder {
+  color: #737373;
+}
+#editeur #modal_continue_later main form > div p {
+  width: 80%;
+  margin: 0 auto;
+}
+#editeur #modal_continue_later main form input[type=submit] {
+  background-color: rgba(0, 0, 0, 0.0705882353);
+  color: #737373;
+  padding: 15px 30px;
+  border: none;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+}
+#editeur #modal_continue_later main form input[type=submit].valid {
+  color: white;
+  background-color: #18574A;
+  opacity: 0.9;
+}
+#editeur #modal_continue_later main form input[type=submit].valid:hover {
+  opacity: 1;
 }
 #editeur #modal_final {
   display: none;

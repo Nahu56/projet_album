@@ -35,6 +35,20 @@ body main section > hr {
   width: 60%;
   margin: 0 auto;
 }
+body main section .secondHeader {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+body main section .secondHeader h3 {
+  color: #18574A;
+}
+body main section .secondHeader div.hr {
+  border-top: 1px solid #18574A;
+  flex: 1;
+  height: 0;
+}
 body main section fieldset {
   display: flex;
   justify-content: space-between;
