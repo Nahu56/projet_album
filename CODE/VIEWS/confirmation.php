@@ -11,6 +11,8 @@
         require '../components/header.php' ;
 
         destroyIMG_SESSION();
+        destroy_album_continue_later();
+
     ?>
 
 </head>

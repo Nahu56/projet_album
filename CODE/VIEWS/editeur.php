@@ -542,7 +542,12 @@
                                     
                                     //et on renvoie vers la suite
 
-                                    window.location = 'CODE/controller.php?function=part2';
+                                    if(sessionStorage.getItem("id")){
+                                        window.location = 'CODE/controller.php?function=part2&id=' + sessionStorage.getItem("id");
+
+                                    }else{
+                                        window.location = 'CODE/controller.php?function=part2';
+                                    }
                                 }
                                 };
 
@@ -579,7 +584,6 @@
 //Vérifie si il y à un ID
 if(isset($_GET["id"])){
     ?> 
-
     <!-- charge le fichier load_album.js s'il y à un identifiant -->
     <script src='CODE/JS/load_album.js'></script>
 
@@ -619,6 +623,8 @@ if(!isset($_GET["id"])){
         ?>
 
         <script>
+
+            sessionStorage.setItem("id", "");
         
             // Créer un tableau vide
             var options = [];
@@ -644,7 +650,7 @@ if(!isset($_GET["id"])){
 
         <script>
             console.log("RETOUR OPTIONS")
-            // window.location.href = "options";
+            // window.location.href = "options"; TODO
         </script>
         
         <?php

@@ -20,6 +20,7 @@ if (isset($_GET['function'])) {
         case 'part2':
         
             generationPDF();
+            $_SESSION["id"] = $_GET["id"];
             
             // -> Images détruites à la page confirmation destroyIMG_SESSION();
             header("Location: ./VIEWS/confirmation.php");
@@ -28,6 +29,8 @@ if (isset($_GET['function'])) {
         case 'destroyIMG':
 
             destroyIMG_SESSION();
+
+            destroy_album_continue_later();
             break;
         
         default:
@@ -194,20 +197,6 @@ function generationPDF(){
     $pdf->SetAutoPageBreak(false, 0);
 
 
-    // -------- AJOUT DE LA FONT --------
-    
-    // $pdf->SetFontSize(60);
-
-
-    // $font = 'timesbi';
-    // $pdf->SetFont($font, '', 200); 
-
-    
-    // $pdf->AddFont("Lumanosimo", "", "..\ASSETS\fonts\Lumanosimo.ttf", "");
-    // $fontname = $pdf->addTTFfont('path/myfont.ttf', '', '', 32);
-
-
-
 
     // Boucle pour créer chaque page 
     foreach ($tableau as $key => $page) {
@@ -221,10 +210,7 @@ function generationPDF(){
         $pdfHeight = $pdf->getPageHeight();
 
 
-
-        // $pdf->AddFont('freemonob', '', 'freemonob.php');
-        // $pdf->SetFont('freemonob', '', 60); 
-
+        // -------- AJOUT DE LA FONT --------
 
         $font = $_SESSION["typo"];
         $pdf->AddFont($font, '', $font . '.php');
@@ -449,4 +435,33 @@ function destroyIMG_SESSION(){
 
     //destruction de la session
     session_destroy();
+}
+
+/* -------------------- SUPPRESSION ALBUM CONTINUE LATER -------------------- */
+function destroy_album_continue_later(){
+
+    if(isset($_SESSION["id"])){
+        $url = '../../ASSETS/json/albums_clients.json';
+
+        // Lire le contenu du fichier JSON
+        $json = file_get_contents($url);
+
+        // Convertir le JSON en un tableau associatif en PHP
+        $albums_clients = json_decode($json, true);
+
+        $idToDelete = $_SESSION["id"];
+
+        if (array_key_exists($idToDelete, $albums_clients)) {
+            unset($albums_clients[$idToDelete]);
+    
+            // Convertir le tableau associatif en JSON
+            $albums_clients_aj = json_encode($albums_clients, JSON_PRETTY_PRINT);
+
+            // Réécrire le fichier JSON avec les données mises à jour
+            file_put_contents($url, $albums_clients_aj);
+    
+        } else {
+            echo "L'élément avec l'ID $idToDelete n'existe pas dans le fichier JSON.";
+        }
+    }
 }

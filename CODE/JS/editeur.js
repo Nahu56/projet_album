@@ -36,8 +36,8 @@ fetch("ASSETS/json/variables_prix.json")
 
             //vérifie si l'ID est vide
             if(options === null || ID == null || ID === ""){
-                console.log("RETOUT OPTIONS")
-                // window.location.href = "options";            
+                console.log("RETOUR OPTIONS")
+                // window.location.href = "options"; TODO            
             }else{
                 options = JSON.parse(sessionStorage.getItem("options"));
 
@@ -52,8 +52,8 @@ fetch("ASSETS/json/variables_prix.json")
         //ni l'un ni l'autre => retour aux options
         }else{
 
-            console.log("RETOUT OPTIONS")
-            // window.location.href = "options";
+            console.log("RETOUR OPTIONS")
+            // window.location.href = "options"; TODO
 
         }
 

@@ -11,8 +11,8 @@ function load_album(id){
 
 
             }else{ // -> vérifie si l'ID est connu ou non
-                console.log("RETOUT OPTIONS")
-                // window.location.href = "options";
+                console.log("RETOUR OPTIONS")
+                // window.location.href = "options"; TODO
             }
         })
 }
@@ -166,8 +166,4 @@ function re_load_album(contenu){
                 };
             }
     });
-}
-
-function ajout_texte(){
-
 }

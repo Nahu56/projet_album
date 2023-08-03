@@ -153,7 +153,6 @@ function charge_template(templates, div_template){
  *      1 => ce sont des btns, avec class IMG et TXT (editable)
  */
 function loadElement(query_target, template, type = 0){
-    console.log(getStackTrace());
 
     let template_obj_list = Object.values(template); // object -> tableau (crée une liste des éléments)
     let div_template = document.querySelector(query_target); // cherche la div où seront ajoutés les objets
