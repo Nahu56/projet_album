@@ -61,11 +61,11 @@ $headers .= "From: noreply.printshopcrea@gmail.com\r\n";
 $success = true;
 
 if(mail($to, $subject, $message, $headers)){
-    $message = "Vous avez reçu un mail !";
+    $texte = "Vous avez reçu un mail !";
     $success = true;
 
 }else{
-    $Message = "Erreur lors de l'envoi";
+    $texte = "Erreur lors de l'envoi";
     $success = false;
 
 }
@@ -94,7 +94,7 @@ if(mail($to, $subject, $message, $headers)){
                 <img width="400px" src="https://printshopcrea.com/wp-content/uploads/2023/08/logo_png.png" alt="logo">
             </a>
 
-            <h1><?php echo $message ?></h1>
+            <h1><?php echo $texte ?></h1>
 
             <?php 
                 if($success){
