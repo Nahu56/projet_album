@@ -213,8 +213,10 @@ function generationPDF(){
         // -------- AJOUT DE LA FONT --------
 
         $font = $_SESSION["typo"];
-        $pdf->AddFont($font, '', $font . '.php');
-        $pdf->SetFont($font, '', 60); 
+        if($font !== "classique"){
+            $pdf->AddFont($font, '', $font . '.php');
+            $pdf->SetFont($font, '', 60);
+        }
 
 
         
@@ -271,9 +273,6 @@ function generationPDF(){
     
                         $pdf->SetXY(0, ( $templates[$page[0]]['obj_'.$obj]['data']['y'] / 100)*$pdfHeight);
                         $pdf->Cell($pdfWidth, 0 , $element, 0, 1, 'C', 0, '', 0);
-
-                        // $html='<span style="font-family:'. $font . ' ;font-weight:bold">' . $element . '</span>';
-                        // $pdf->writeHTMLCell($w=0,$h=0,$x=200,$y=201,$html,$border=0,$ln=0,$fill=false,$reseth=true,$align='L',$autopadding=false);
     
                     }
                 }   

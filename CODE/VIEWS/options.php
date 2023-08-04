@@ -7,7 +7,7 @@
     <title>Document</title>
 
     <!-- Appel header -->
-    <?php require '../components/header.php' ?>
+    <?php include('../components/header.php') ?>
 
     <link rel="stylesheet" href="CODE/CSS/accueil.css">
 </head>

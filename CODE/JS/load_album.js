@@ -1,18 +1,19 @@
 function load_album(id){
-    console.log("CHARGE ALBUM")
-
+    
     fetch("ASSETS/json/albums_clients.json")
         .then(response => response.json())
         .then(function(json){
 
             if(json[id]){
                 re_load_options(json[id]["options"]);
+                lancement();
+
                 re_load_album(json[id]["contenu_album"]);
 
 
             }else{ // -> vérifie si l'ID est connu ou non
-                console.log("RETOUR OPTIONS")
-                // window.location.href = "options"; TODO
+
+                window.location.href = "options";
             }
         })
 }
@@ -25,6 +26,8 @@ function re_load_options(options){
 
     sessionStorage.setItem("options", JSON.stringify(options));
     charge_theme();
+
+    return;
 }
 
 
@@ -79,9 +82,6 @@ function re_load_album(contenu){
                     let feuille = document.querySelector(page);
                     feuille.classList.add("editee");
                     feuille.classList.add(contenu[i][0]);
-
-                    console.log(templates)
-                    console.log(contenu, i)
 
                     loadElement(page, templates[contenu[i][0]], 1);
                     loadElement(vignette, templates[contenu[i][0]], 0);

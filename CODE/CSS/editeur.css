@@ -3,6 +3,10 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
+body.no-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
 
 /* ------------------------------- DIMENSIONS ------------------------------- */
 /* -------------------------------- EDITABLES ------------------------------- */

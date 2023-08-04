@@ -10,23 +10,39 @@
     
     <!-- Appel header -->
     <?php 
+    include('../controller.php');
     require '../components/header.php' ;
     ?>
 
     <script>
-        // TODO : A decocher plus tard
 
+        // Variable pour suivre si l'utilisateur a cliqué sur un lien
+        let userClickedLink = false;
 
-        // window.addEventListener("beforeunload", function(event) {
-        //     // Annule l'événement de fermeture/réactualisation pour afficher notre propre message
-        //     event.preventDefault();
-        // });
+        // Gestionnaire d'événement pour les liens
+        document.addEventListener("click", function(event) {
+            const target = event.target;
+
+            if (target.tagName === "A" || target.id == "validation_continuer_plus_tard") {
+                userClickedLink = true;
+            }
+        });
+
+        // Gestionnaire d'événement beforeunload
+        window.addEventListener("beforeunload", function(event) {
+            if (!userClickedLink) {
+                event.preventDefault();
+
+                //Appel le modal continue later
+                continue_later();
+            }
+        });
 
     </script>
     
 
 </head>
-<body id="editeur">
+<body id="editeur" class="no-scroll">
 
     <div id="notifications">
         
@@ -331,7 +347,7 @@
                 <!-- CONTENU -->
                 <input type="hidden" id="contenu_album" name="contenu_album">
         
-                <input type="submit" class="" value="Continuer plus tard">
+                <input type="submit" class="" id="validation_continuer_plus_tard" value="Continuer plus tard">
 
             </form>
         </main>
@@ -449,8 +465,7 @@
                                     name : nom_album,
                                     quantity : qtt,
                                     description : "Album photo made by Print Shop CREA ",
-                                    // unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
-                                    unit_amount : { value : 1 , currency_code : "EUR" } // TODO à supprimer et garder le commentaire au dessus
+                                    unit_amount : { value : prix_album.toFixed(2) , currency_code : "EUR" }
                                 }
                             ];
 
@@ -478,7 +493,8 @@
                         onApprove : function (data, actions) {
                             return actions.order.capture().then(function(details) {
 
-                                // Afficher les details de la transaction dans la console
+                                //ne pas afficher le trigger
+                                userClickedLink = true;
 
                                 // Récupérer la date 
                                 const dateStr = details.update_time;
@@ -649,8 +665,8 @@ if(!isset($_GET["id"])){
         ?>
 
         <script>
-            console.log("RETOUR OPTIONS")
-            // window.location.href = "options"; TODO
+
+            window.location.href = "options"; TODO
         </script>
         
         <?php

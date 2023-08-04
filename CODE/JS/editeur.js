@@ -17,73 +17,92 @@ var nom_album = "Album photo";
 sessionStorage.setItem("album", "");
 
 
-/** --------------------- RECUPERE LES PRIX ---------------------
- *
- *   DOIT RECUPERER LES PRIX AVANT DE LANCER QUOI QUE CE SOIT
- *  
- *  -> lance les fonctions liées au prix
- *  -> focus la première page pour édition
+
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+
+        lancement();
+
+        // if(!sessionStorage.getItem("id") && sessionStorage.getItem("id") !== "" && sessionStorage.getItem("id") !== null){
+        //     lancement();
+        // }
+    }
+}
+
+
+/**
+ * --------------- FONCTION DE LANCEMENT ------------------
+ * -> récupère les prix
+ * -> initialise les variables de session prix et reduc
+ * -> ajoute une page si besoin
  */
-fetch("ASSETS/json/variables_prix.json")
-    .then(response => response.json())
-    .then(function(json){
+function lancement(){
+    /** --------------------- RECUPERE LES PRIX ---------------------
+     *
+     *   DOIT RECUPERER LES PRIX AVANT DE LANCER QUOI QUE CE SOIT
+     *  
+     *  -> lance les fonctions liées au prix
+     *  -> focus la première page pour édition
+     */
+    fetch("ASSETS/json/variables_prix.json")
+        .then(response => response.json())
+        .then(function(json){
 
-        var options = [];
+            var options = [];
 
-        // A un ID => récupère un album
-        if(sessionStorage.getItem("id")){
-            let ID = sessionStorage.getItem("id");
+            // A un ID => récupère un album
+            if(sessionStorage.getItem("id")){
+                let ID = sessionStorage.getItem("id");
 
-            //vérifie si l'ID est vide
-            if(options === null || ID == null || ID === ""){
-                console.log("RETOUR OPTIONS")
-                // window.location.href = "options"; TODO            
-            }else{
+                //vérifie si l'ID est vide
+                if(options === null || ID == null || ID === ""){
+
+                    window.location.href = "options";            
+                }else{
+                    options = JSON.parse(sessionStorage.getItem("options"));
+
+                }
+            
+
+            // A des options => crée un album
+            }else if(sessionStorage.getItem("options")){
+
                 options = JSON.parse(sessionStorage.getItem("options"));
+            
+            //ni l'un ni l'autre => retour aux options
+            }else{
+
+                window.location.href = "options";
 
             }
-        
 
-        // A des options => crée un album
-        }else if(sessionStorage.getItem("options")){
+            var PRIX = {
+                "base": json["base"]["1"],
+                "page": json["page"][ options[0] ],
+                "reliure": json["reliure"][ options[1] ],
+                "couverture": json["couverture"][ options[2] ]
+            }
 
-            options = JSON.parse(sessionStorage.getItem("options"));
-        
-        //ni l'un ni l'autre => retour aux options
-        }else{
+            //crée une variable de session avec les prix
+            sessionStorage.setItem("PRIX", JSON.stringify(PRIX));
 
-            console.log("RETOUR OPTIONS")
-            // window.location.href = "options"; TODO
-
-        }
-
-
-        //Création d'un tableau contenant tous les prix
-        let PRIX = {
-            "base": json["base"]["1"],
-            "page": json["page"][ options[0] ],
-            "reliure": json["reliure"][ options[1] ],
-            "couverture": json["couverture"][ options[2] ]
-        }
-
-        //crée une variable de session avec les prix
-        sessionStorage.setItem("PRIX", JSON.stringify(PRIX));
-
-        //crée une variable de session pour les réductions
-        sessionStorage.setItem("reducs", JSON.stringify(json["reductions"]));
+            //crée une variable de session pour les réductions
+            sessionStorage.setItem("reducs", JSON.stringify(json["reductions"]));
 
 
-        if( ! sessionStorage.getItem("id")){
-            ajout_page();
-            focus_page("page_1", "pages");
-        }
+            if( ! sessionStorage.getItem("id")){
+                ajout_page();
+                focus_page("page_1", "pages");
+            }
 
-        affichage_options_album();
-        maj_prix_album();
-        maj_prix_total();
+            affichage_options_album();
+            maj_prix_album();
+            maj_prix_total();
 
 
     })
+}
+
 
 var centre = document.getElementById("centre");
 centre.addEventListener('click',afficher_edit_templates)
@@ -541,6 +560,7 @@ function unfocus_apercu(){
  * fonction qui permet d'ajouter une div dans #centre et de la focus 
  */
 function ajout_page() {
+
     let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
     nb_pages += 1;
@@ -1360,9 +1380,7 @@ function continue_later(){
     
     // --- OPTIONS ---
     let options = sessionStorage.getItem("options");
-    console.log(options)
     document.querySelector("#liste_options_album").value = options;
-    console.log(document.querySelector("#liste_options_album"))
 
     // --- CONTENU ---
     let album = saveAlbum();
@@ -1414,10 +1432,10 @@ function go_checkout() {
 
     //Tout est ok, on ouvre le modal
     }else{
+
         open_modal_final();
         charge_miniatures();
 
-        saveAlbum(); // TODO a supprimer, doit être appelé après la validation paypal
     }
 }
 
@@ -1427,8 +1445,6 @@ function go_checkout() {
  */
 function open_modal_final(){
     let modal = document.querySelector("#modal_final");
-
-    // body.removeEventListener('click', close_panier);
 
     modal.addEventListener("click", function(event){
         if (event.target !== this) {
@@ -1444,12 +1460,18 @@ function open_modal_final(){
     })
 
     if(modal.classList.contains('actif')){
+
+        document.querySelector("body").classList.add("no-scroll");
+
         modal.classList.remove('actif');
         setTimeout(function() {
             modal.style.display = "none";
         }, 600); // Délai de 600 millisecondes (0,6 seconde)
         body.addEventListener('click', close_panier);
     } else {
+
+        document.querySelector("body").classList.remove("no-scroll");
+
         modal.style.display = "block";
         setTimeout(function() {
             modal.classList.add('actif');

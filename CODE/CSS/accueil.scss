@@ -74,7 +74,8 @@ body{
 
 
 
-            fieldset{
+            fieldset,
+            div.list_infos{
                 display: flex;
                 justify-content: space-between;
                 flex-wrap: wrap-reverse;
@@ -109,13 +110,22 @@ body{
                         &:hover{
                             opacity: 1;
                         }
+
+                        label,
+                        .info{
+                            color: white;
+                        }
                     }
             
-                    label{
+                    label,
+                    .info{
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
+
+                        text-decoration: none;
+                        color: black;
 
                         cursor: pointer;
 
@@ -149,6 +159,25 @@ body{
                 }
             }
 
+        }
+
+        .card{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+
+            background-color: $vert_fond;
+            padding: 40px;
+            border-radius: 10px;
+
+            h1{
+                color: $vert;
+            }
+            a{
+                text-decoration: none;
+            }
         }
     }
 }

@@ -16,6 +16,12 @@ body{
     overflow-x: hidden;
 
     scroll-behavior: smooth;
+
+    &.no-scroll{
+        height: 100vh;
+
+        overflow: hidden;
+    }
 }
 
 
