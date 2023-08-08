@@ -26,7 +26,7 @@ body.no-scroll {
   /*                                   DROITE                                   */
   /* -------------------------------------------------------------------------- */
   /* -------------------------------------------------------------------------- */
-  /*                            MODAL CONTINUE LATER                            */
+  /*                         MODAL CONTINUE LATER & TUTO                        */
   /* -------------------------------------------------------------------------- */
   /* -------------------------------------------------------------------------- */
   /*                                 MODAL FINAL                                */
@@ -819,11 +819,13 @@ body.no-scroll {
   padding: 0 20px 20px 20px;
 }
 #editeur #actions_droite {
+  display: flex;
+  gap: 10px;
   position: absolute;
   bottom: 10px;
   right: 324px;
 }
-#editeur #actions_droite #btn_continue_later {
+#editeur #actions_droite button {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -834,12 +836,13 @@ body.no-scroll {
   cursor: pointer;
   transition: all ease 0.2s;
 }
-#editeur #actions_droite #btn_continue_later img {
+#editeur #actions_droite button img {
   width: 18px;
 }
-#editeur #actions_droite #btn_continue_later:hover {
+#editeur #actions_droite button:hover {
   background-color: white;
 }
+#editeur #modal_tuto,
 #editeur #modal_continue_later {
   display: none;
   position: absolute;
@@ -850,24 +853,213 @@ body.no-scroll {
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   z-index: 800;
+  transition: all 0.3s ease;
+  opacity: 0;
 }
+#editeur #modal_tuto main,
 #editeur #modal_continue_later main {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #F0F0F0;
+  border-radius: 10px;
+  padding: 40px 40px 40px 40px;
+}
+#editeur #modal_tuto main p,
+#editeur #modal_continue_later main p {
+  font-size: 15px;
+}
+#editeur #modal_tuto main p.second_text,
+#editeur #modal_continue_later main p.second_text {
+  font-size: 12px;
+  color: #737373;
+  font-style: italic;
+}
+#editeur #modal_tuto main.card_tuto,
+#editeur #modal_continue_later main.card_tuto {
+  width: 1000px;
+  max-width: 80%;
+  height: 70vh;
+}
+#editeur #modal_tuto main.card_tuto h3,
+#editeur #modal_continue_later main.card_tuto h3 {
+  font-size: 40px;
+}
+#editeur #modal_tuto main.card_tuto h4,
+#editeur #modal_continue_later main.card_tuto h4 {
+  font-size: 30px;
+  color: #737373;
+  text-align: center;
+  padding-bottom: 15px;
+}
+#editeur #modal_tuto main.card_tuto .etapes,
+#editeur #modal_continue_later main.card_tuto .etapes {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: 0 auto;
+}
+#editeur #modal_tuto main.card_tuto .etapes .card > img,
+#editeur #modal_continue_later main.card_tuto .etapes .card > img {
+  width: 100%;
+}
+#editeur #modal_tuto main.card_tuto .etapes .card > div,
+#editeur #modal_continue_later main.card_tuto .etapes .card > div {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding-left: 25px;
+}
+#editeur #modal_tuto main.card_tuto .etapes .card > div > div,
+#editeur #modal_continue_later main.card_tuto .etapes .card > div > div {
+  position: relative;
+  background-color: #EBF0EF;
+  flex: 1;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+#editeur #modal_tuto main.card_tuto .etapes .card > div > div > #polygon,
+#editeur #modal_continue_later main.card_tuto .etapes .card > div > div > #polygon {
+  position: absolute;
+  top: 0;
+  right: -25px;
+  width: 35px;
+  height: 25px;
+  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 0);
+          clip-path: polygon(0 0, 0% 100%, 100% 0);
+  background-color: #EBF0EF;
+  border-radius: 8px;
+}
+#editeur #modal_tuto main.card_tuto .etapes .card > div img,
+#editeur #modal_continue_later main.card_tuto .etapes .card > div img {
+  height: 80px;
+}
+#editeur #modal_tuto main.card_tuto button.left,
+#editeur #modal_tuto main.card_tuto button.right,
+#editeur #modal_continue_later main.card_tuto button.left,
+#editeur #modal_continue_later main.card_tuto button.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  padding: 10px;
+  background-color: #F0F0F0;
+  border: none;
+  border-radius: 100px;
+  opacity: 0.6;
+  cursor: pointer;
+}
+#editeur #modal_tuto main.card_tuto button.left img,
+#editeur #modal_tuto main.card_tuto button.right img,
+#editeur #modal_continue_later main.card_tuto button.left img,
+#editeur #modal_continue_later main.card_tuto button.right img {
+  width: 12px;
+}
+#editeur #modal_tuto main.card_tuto button.left.left,
+#editeur #modal_tuto main.card_tuto button.right.left,
+#editeur #modal_continue_later main.card_tuto button.left.left,
+#editeur #modal_continue_later main.card_tuto button.right.left {
+  left: 50px;
+}
+#editeur #modal_tuto main.card_tuto button.left.right,
+#editeur #modal_tuto main.card_tuto button.right.right,
+#editeur #modal_continue_later main.card_tuto button.left.right,
+#editeur #modal_continue_later main.card_tuto button.right.right {
+  right: 10px;
+}
+#editeur #modal_tuto main.card_tuto button.left:hover,
+#editeur #modal_tuto main.card_tuto button.right:hover,
+#editeur #modal_continue_later main.card_tuto button.left:hover,
+#editeur #modal_continue_later main.card_tuto button.right:hover {
+  opacity: 1;
+}
+#editeur #modal_tuto main.card_tuto .navigation,
+#editeur #modal_continue_later main.card_tuto .navigation {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+#editeur #modal_tuto main.card_tuto .navigation > div,
+#editeur #modal_continue_later main.card_tuto .navigation > div {
+  background-color: #F0F0F0;
+  height: 15px;
+  width: 15px;
+  border-radius: 100px;
+}
+#editeur #modal_tuto main.card_tuto .navigation > div.actif,
+#editeur #modal_continue_later main.card_tuto .navigation > div.actif {
+  background-color: #18574A;
+}
+#editeur #modal_tuto main.card_continue_later,
+#editeur #modal_continue_later main.card_continue_later {
   width: 500px;
   max-width: 60%;
+  padding-top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 25px;
-  background-color: white;
-  border: 2px solid #F0F0F0;
-  border-radius: 10px;
-  padding: 60px 40px 40px 40px;
   text-align: center;
 }
+#editeur #modal_tuto main.card_continue_later h3,
+#editeur #modal_continue_later main.card_continue_later h3 {
+  font-size: 25px;
+}
+#editeur #modal_tuto main.card_continue_later form > div,
+#editeur #modal_continue_later main.card_continue_later form > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+#editeur #modal_tuto main.card_continue_later form > div input,
+#editeur #modal_continue_later main.card_continue_later form > div input {
+  background-color: #EBF0EF;
+  padding: 10px 20px;
+  border: dashed 1px #18574A;
+  border-radius: 100px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+#editeur #modal_tuto main.card_continue_later form > div input::-moz-placeholder, #editeur #modal_continue_later main.card_continue_later form > div input::-moz-placeholder {
+  color: #737373;
+}
+#editeur #modal_tuto main.card_continue_later form > div input::placeholder,
+#editeur #modal_continue_later main.card_continue_later form > div input::placeholder {
+  color: #737373;
+}
+#editeur #modal_tuto main.card_continue_later form > div p,
+#editeur #modal_continue_later main.card_continue_later form > div p {
+  width: 80%;
+  margin: 0 auto;
+}
+#editeur #modal_tuto main.card_continue_later form input[type=submit],
+#editeur #modal_continue_later main.card_continue_later form input[type=submit] {
+  background-color: rgba(0, 0, 0, 0.0705882353);
+  color: #737373;
+  padding: 15px 30px;
+  border: none;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+}
+#editeur #modal_tuto main.card_continue_later form input[type=submit].valid,
+#editeur #modal_continue_later main.card_continue_later form input[type=submit].valid {
+  color: white;
+  background-color: #18574A;
+  opacity: 0.9;
+}
+#editeur #modal_tuto main.card_continue_later form input[type=submit].valid:hover,
+#editeur #modal_continue_later main.card_continue_later form input[type=submit].valid:hover {
+  opacity: 1;
+}
+#editeur #modal_tuto main .annuler,
 #editeur #modal_continue_later main .annuler {
   position: absolute;
   top: 20px;
@@ -882,63 +1074,13 @@ body.no-scroll {
   cursor: pointer;
   transition: all ease 0.2s;
 }
+#editeur #modal_tuto main .annuler img,
 #editeur #modal_continue_later main .annuler img {
   width: 30px;
 }
+#editeur #modal_tuto main .annuler:hover,
 #editeur #modal_continue_later main .annuler:hover {
   text-decoration: underline;
-}
-#editeur #modal_continue_later main h3 {
-  font-size: 25px;
-}
-#editeur #modal_continue_later main p {
-  font-size: 15px;
-}
-#editeur #modal_continue_later main p.second_text {
-  font-size: 12px;
-  color: #737373;
-  font-style: italic;
-}
-#editeur #modal_continue_later main form > div {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-#editeur #modal_continue_later main form > div input {
-  background-color: #EBF0EF;
-  padding: 10px 20px;
-  border: dashed 1px #18574A;
-  border-radius: 100px;
-  margin-bottom: 5px;
-  font-size: 20px;
-}
-#editeur #modal_continue_later main form > div input::-moz-placeholder {
-  color: #737373;
-}
-#editeur #modal_continue_later main form > div input::placeholder {
-  color: #737373;
-}
-#editeur #modal_continue_later main form > div p {
-  width: 80%;
-  margin: 0 auto;
-}
-#editeur #modal_continue_later main form input[type=submit] {
-  background-color: rgba(0, 0, 0, 0.0705882353);
-  color: #737373;
-  padding: 15px 30px;
-  border: none;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0 auto;
-  cursor: pointer;
-}
-#editeur #modal_continue_later main form input[type=submit].valid {
-  color: white;
-  background-color: #18574A;
-  opacity: 0.9;
-}
-#editeur #modal_continue_later main form input[type=submit].valid:hover {
-  opacity: 1;
 }
 #editeur #modal_final {
   display: none;

@@ -308,16 +308,135 @@
 
 
     <div id="actions_droite">
+        <button id="btn_tutoriel" style="border: none" onclick="modal_tuto()">
+            <img src="ASSETS\img\icones\help.png" alt="">
+            Aide
+        </button>
+
         <button id="btn_continue_later" onclick="continue_later()">
             <img src="ASSETS\img\icones\save.png" alt="">
             Continuer plus tard
         </button>
-    
-        <!-- <button id="btn_aide" onclick="modal_aide()">
-            -> AIDE
-        </button> -->
-
     </div>
+
+
+    <!-- /* --------------------------------------------------------------------- */
+    /*                                MODAL TUTORIEL                              */
+    /* ---------------------------------------------------------------------- */ -->
+
+    <div id="modal_tuto">
+        
+        <main class="card_tuto">
+            <button class="annuler" onclick="close_tuto()">
+                Annuler
+                <img src="ASSETS/img/croix.svg" alt="">
+            </button>
+
+            <h4>Comment ça marche ?</h4>
+
+            <!-- /* ------------------ CARTES ETAPES ------------------ */ -->
+            <div class="etapes">
+                <div id="etape_1" class="card">
+                    <img src="ASSETS/img/tuto/img1.png" width="300px" alt="">
+                    
+                    <div>
+                        <h3>La page</h3>
+                        <div>
+                            <p>
+                                Au centre, retrouvez la page que vous êtes en train d’éditer. Cliquez sur les zones pour ajouter des images !
+                            </p>
+
+                            <div id="polygon"></div>
+                        </div>
+                        <img src="ASSETS/img/tuto/personnage.png" alt="">
+                    </div>
+                </div>
+
+                <div id="etape_2" class="card">
+                    <img src="ASSETS/img/tuto/img2.png" width="300px" alt="">
+                    
+                    <div>
+                        <h3>L'aperçu</h3>
+                        <div>
+                            <p>
+                                A droite, l’aperçu de votre album en direct : vous pouvez l’utiliser pour naviguer et ajouter des pages
+                            </p>
+
+                            <div id="polygon"></div>
+                        </div>
+                        <img src="ASSETS/img/tuto/personnage.png" alt="">
+                    </div>
+                </div>
+
+                <div id="etape_3" class="card">
+                    <img src="ASSETS/img/tuto/img3.png" width="300px" alt="">
+                    
+                    <div>
+                        <h3>Mise en page</h3>
+                        <div>
+                            <p>
+                                A gauche, vous y trouverez tous les différents modèles de page !
+                            </p>
+
+                            <div id="polygon"></div>
+                        </div>
+                        <img src="ASSETS/img/tuto/personnage.png" alt="">
+                    </div>
+                </div>
+
+                <div id="etape_4" class="card">
+                    <img src="ASSETS/img/tuto/img4.png" width="300px" alt="">
+                    
+                    <div>
+                        <h3>Edition</h3>
+                        <div>
+                            <p>
+                                Au clic sur une zone image, l’édition d’image s’ouvre ! Ici, vous pouvez ajouter, déplacer et supprimer votre photo
+                            </p>
+
+                            <div id="polygon"></div>
+                        </div>
+                        <img src="ASSETS/img/tuto/personnage.png" alt="">
+                    </div>
+                </div>
+
+                <div id="etape_5" class="card">
+                    <img src="ASSETS/img/tuto/img5.png" width="300px" alt="">
+                    
+                    <div>
+                        <h3>Panier</h3>
+                        <div>
+                            <p>
+                                En bas, cliquez sur “panier” pour retrouver le récapitulatif de votre album en direct, et le valider !
+                            </p>
+
+                            <div id="polygon"></div>
+                        </div>
+                        <img src="ASSETS/img/tuto/personnage.png" alt="">
+                    </div>
+                </div>
+                
+            </div>
+
+            <button class="left" onclick="step_tuto('-')">
+                <img src="ASSETS/img/icones/arrow_2_left.png" alt="">
+            </button>
+
+            <button class="right" onclick="step_tuto('+')">
+                <img src="ASSETS/img/icones/arrow_2_right.png" alt="">
+            </button>
+
+            <div class="navigation">
+                <div class="bulle_1" onclick="step_tuto(1)"></div>
+                <div class="bulle_2" onclick="step_tuto(2)"></div>
+                <div class="bulle_3" onclick="step_tuto(3)"></div>
+                <div class="bulle_4" onclick="step_tuto(4)"></div>
+                <div class="bulle_5" onclick="step_tuto(5)"></div>
+            </div>
+
+        </main>
+    </div>
+
 
 
     <!-- /* --------------------------------------------------------------------- */
@@ -326,7 +445,7 @@
 
     <div id="modal_continue_later">
         
-        <main>
+        <main class="card_continue_later">
             <button class="annuler" onclick="close_continue_modal()">
                 Annuler
                 <img src="ASSETS/img/croix.svg" alt="">

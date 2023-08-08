@@ -23,9 +23,6 @@ document.onreadystatechange = function () {
 
         lancement();
 
-        // if(!sessionStorage.getItem("id") && sessionStorage.getItem("id") !== "" && sessionStorage.getItem("id") !== null){
-        //     lancement();
-        // }
     }
 }
 
@@ -93,6 +90,8 @@ function lancement(){
             if( ! sessionStorage.getItem("id")){
                 ajout_page();
                 focus_page("page_1", "pages");
+                
+                modal_tuto();
             }
 
             affichage_options_album();
@@ -1356,6 +1355,60 @@ function close_panier() {
 }
 
 
+/* -------------------------------- TUTORIEL -------------------------------- */
+
+function modal_tuto(){
+    let modal = document.querySelector("#modal_tuto");
+    modal.style.display = "block";
+    
+    setTimeout(() => {    
+        modal.style.opacity = "1";
+    }, 100);
+
+    step_tuto(1);
+}
+function close_tuto(){
+    let modal = document.querySelector("#modal_tuto");
+    modal.style.opacity = "0";
+    
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 100);
+}
+
+var page_tuto = 1;
+
+function step_tuto(page = 1){
+
+    if(page == "-"){ //gauche
+        page_tuto -= 1;
+
+    }else if(page == "+"){ //droite
+        page_tuto += 1; 
+    }else{
+        page_tuto = page;
+
+    }
+
+    if(page_tuto == 6){
+        page_tuto = 1;
+    }else if(page_tuto == 0){
+        page_tuto = 5;
+    }
+
+    document.querySelectorAll("#modal_tuto .etapes .card").forEach(card => {
+        card.style.display = "none";
+    });
+    document.querySelectorAll("#modal_tuto .navigation div").forEach(bulle => {
+        bulle.classList.remove("actif");
+    });
+    
+    
+    document.querySelector("#etape_" + page_tuto).style.display = "block";
+    document.querySelector("#modal_tuto .navigation .bulle_" + page_tuto).classList.add("actif");
+}
+
+
 /* -------------------------------------------------------------------------- */
 /*                               CONTINUE LATER                               */
 /* -------------------------------------------------------------------------- */
@@ -1363,6 +1416,9 @@ function close_panier() {
 function continue_later(){
     let modal = document.querySelector("#modal_continue_later");
     modal.style.display = "block";
+    setTimeout(() => {    
+        modal.style.opacity = "1";
+    }, 100);
 
     let form = modal.querySelector("form");
 
@@ -1389,7 +1445,11 @@ function continue_later(){
 function close_continue_modal(){
     let modal = document.querySelector("#modal_continue_later");
 
-    modal.style.display = "none";
+    modal.style.opacity = "0";
+    
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 100);
 }
 
 
