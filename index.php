@@ -23,9 +23,10 @@
 <body>
     <h1>Bonjour,</h1>
 
-    <p>Bienvenue dans X, l'éditeur d'albums photo de <b>Print Shop Créa </b>😎</p>
+    <p>Bienvenue dans l'éditeur d'albums photo de <b>Print Shop Créa </b>😎</p>
 
     <div class="img_start">
+        <img src="ASSETS/img/albums.jpg" alt="">
         <a href="./options" class="main_btn">Commencer</a>
     </div>
 </body>

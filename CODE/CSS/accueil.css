@@ -8,16 +8,26 @@ body {
 body .img_start {
   position: relative;
   width: 100%;
-  height: 30vh;
+  height: 40vh;
   margin-top: 50px;
   outline: 1px solid black;
-  background-color: #F0F0F0;
+}
+body .img_start img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 body .img_start a {
   position: absolute;
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
+}
+body .img_start:hover img {
+  opacity: 0.8;
 }
 body main form {
   display: flex;

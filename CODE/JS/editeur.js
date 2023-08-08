@@ -985,90 +985,96 @@ function supprimer_page(num_page) {
     // 7) -> notification
 
 
+    // vérifie si l'user s'apprête à supprimer la seule page
+    if(num_page == 1 && nb_pages == 1){
+        notifications(false,'Impossible de supprimer toutes les pages');
 
-    let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
-
-    // On enleve la page dans le centre 
-    var centre = document.getElementById('centre')
-    var element = document.getElementById('page_'+num_page)
-    centre.removeChild(element)
-
-    // On replace les éléments dans le centre
-    for (let i = num_page; i < nb_pages; i++) {
-
-        let i_bis = +i + 1 ;
-        var page = document.getElementById('page_'+(i_bis));
-        page.id = 'page_'+i;
-
-        if (i % 2 === 0) {
-            page.style.marginRight = '0px';
-            var icone = page.querySelector('img');
-            page.removeChild(icone)
-        }else{
-            page.style.marginRight = '100px';
-
-            if(i > 1){
-                var icone = document.createElement("img");
-                icone.src = "ASSETS/img/icones/liaison_page.svg";
-                icone.alt = "icone liaison entre les pages";
-                page.appendChild(icone);
-            }
-        }
-
-        var page_texte = page.querySelector('p');
-        page_texte.textContent = 'Page '+i;
-
-        var voile = page.querySelector('.voile');
-
-
-        voile.onclick = null;
-        voile.onclick = function(){
-
-            let num_page = i - 1;
-            focus_page('page_'+num_page);
-        };
-
-    }
-
-
-
-    // --------- APERCU ---------- 
-    supprimer_page_apercu(num_page);
-
-
-    // Supprime la page du décompte !
-    nb_pages -= 1 ;
-
-
-    // On met à jour la ligne dans le panier 
-    var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span ');
-    prix_pages_prx.textContent= (nb_pages*PRIX["page"]).toFixed(2).replace('.', ',')+'€' ;
-    var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p ');
-    prix_pages_txt.textContent= 'Pages x'+nb_pages;
-
-    // On met a jour dans le panier modal 
-    var prix_pages_prx_modal = document.querySelector('#panier_modal .prix_pages span');
-    prix_pages_prx_modal.textContent= (nb_pages*PRIX["page"]).toFixed(2).replace('.', ',')+'€' ;
-    var prix_pages_txt_modal = document.querySelector('#panier_modal .prix_pages p');
-    prix_pages_txt_modal.textContent= 'Pages x'+nb_pages;
-
-
-    // On met a jour le prix de l'album
-    maj_prix_album();
-    maj_prix_total()
-
-
-    notifications(true,'Page supprimée');
-    // En fonction du nombre de page on change l'action (derniere page -> on reviens a celle d'avant, page milieu -> on reste sur la page, page 0 -> on ajoute une nouvelle page )
-    if (nb_pages == 0) {
-        ajout_page()
     }else{
-        if (nb_pages + 1 == num_page) {
 
-            focus_page('page_'+(+num_page-1))
+        let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
+
+        // On enleve la page dans le centre 
+        var centre = document.getElementById('centre')
+        var element = document.getElementById('page_'+num_page)
+        centre.removeChild(element)
+    
+        // On replace les éléments dans le centre
+        for (let i = num_page; i < nb_pages; i++) {
+    
+            let i_bis = +i + 1 ;
+            var page = document.getElementById('page_'+(i_bis));
+            page.id = 'page_'+i;
+    
+            if (i % 2 === 0) {
+                page.style.marginRight = '0px';
+                var icone = page.querySelector('img');
+                page.removeChild(icone)
+            }else{
+                page.style.marginRight = '100px';
+    
+                if(i > 1){
+                    var icone = document.createElement("img");
+                    icone.src = "ASSETS/img/icones/liaison_page.svg";
+                    icone.alt = "icone liaison entre les pages";
+                    page.appendChild(icone);
+                }
+            }
+    
+            var page_texte = page.querySelector('p');
+            page_texte.textContent = 'Page '+i;
+    
+            var voile = page.querySelector('.voile');
+    
+    
+            voile.onclick = null;
+            voile.onclick = function(){
+    
+                let num_page = i - 1;
+                focus_page('page_'+num_page);
+            };
+    
+        }
+    
+    
+    
+        // --------- APERCU ---------- 
+        supprimer_page_apercu(num_page);
+    
+    
+        // Supprime la page du décompte !
+        nb_pages -= 1 ;
+    
+    
+        // On met à jour la ligne dans le panier 
+        var prix_pages_prx = document.querySelector('#panier main main #options_album .prix_pages span ');
+        prix_pages_prx.textContent= (nb_pages*PRIX["page"]).toFixed(2).replace('.', ',')+'€' ;
+        var prix_pages_txt = document.querySelector('#panier main main #options_album .prix_pages p ');
+        prix_pages_txt.textContent= 'Pages x'+nb_pages;
+    
+        // On met a jour dans le panier modal 
+        var prix_pages_prx_modal = document.querySelector('#panier_modal .prix_pages span');
+        prix_pages_prx_modal.textContent= (nb_pages*PRIX["page"]).toFixed(2).replace('.', ',')+'€' ;
+        var prix_pages_txt_modal = document.querySelector('#panier_modal .prix_pages p');
+        prix_pages_txt_modal.textContent= 'Pages x'+nb_pages;
+    
+    
+        // On met a jour le prix de l'album
+        maj_prix_album();
+        maj_prix_total()
+    
+    
+        notifications(true,'Page supprimée');
+        // En fonction du nombre de page on change l'action (derniere page -> on reviens a celle d'avant, page milieu -> on reste sur la page, page 0 -> on ajoute une nouvelle page )
+        if (nb_pages == 0) {
+            ajout_page()
         }else{
-
-            focus_page('page_'+(num_page))
+            if (nb_pages + 1 == num_page) {
+    
+                focus_page('page_'+(+num_page-1))
+            }else{
+    
+                focus_page('page_'+(num_page))
+            }
         }
     }
 }

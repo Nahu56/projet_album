@@ -21,17 +21,29 @@ body{
         position: relative;
 
         width: 100%;
-        height: 30vh;
+        height: 40vh;
         
         margin-top: 50px;
         outline: 1px solid black;
-        background-color: $gris;
+
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
 
         a{
             position: absolute;
             bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        &:hover img{
+            opacity: 0.8;
         }
     }
 

@@ -328,7 +328,7 @@
         
         <main class="card_tuto">
             <button class="annuler" onclick="close_tuto()">
-                Annuler
+                Fermer
                 <img src="ASSETS/img/croix.svg" alt="">
             </button>
 
@@ -375,7 +375,7 @@
                         <h3>Mise en page</h3>
                         <div>
                             <p>
-                                A gauche, vous y trouverez tous les différents modèles de page !
+                                A gauche, vous y trouverez tous les différents modèles de pages !
                             </p>
 
                             <div id="polygon"></div>
