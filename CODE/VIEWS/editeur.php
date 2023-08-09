@@ -785,7 +785,8 @@ if(!isset($_GET["id"])){
 
         <script>
 
-            window.location.href = "options"; TODO
+            //window.location.href = "options";
+console.log("RETOUR OPTIONS");
         </script>
         
         <?php

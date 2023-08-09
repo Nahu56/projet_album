@@ -98,13 +98,13 @@ body.no-scroll {
   justify-content: space-between;
   flex-direction: row;
   width: 100%;
-  gap: 15px;
+  row-gap: 20px;
   padding: 100px 0;
 }
 #editeur div#gauche #templates main > a {
   position: relative;
-  height: 155.54px;
-  width: 110px;
+  height: 141.4px;
+  width: 100px;
   outline: 2px solid #18574A;
   background-color: white;
   transition: background 0.1s ease-in;

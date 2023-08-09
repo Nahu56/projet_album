@@ -54,7 +54,8 @@ function lancement(){
                 //vérifie si l'ID est vide
                 if(options === null || ID == null || ID === ""){
 
-                    window.location.href = "options";            
+                    //window.location.href = "options";
+console.log("RETOUR OPTIONS");            
                 }else{
                     options = JSON.parse(sessionStorage.getItem("options"));
 
@@ -69,7 +70,8 @@ function lancement(){
             //ni l'un ni l'autre => retour aux options
             }else{
 
-                window.location.href = "options";
+                //window.location.href = "options";
+console.log("RETOUR OPTIONS");
 
             }
 
@@ -130,15 +132,16 @@ function vue_degagee(){
         document.querySelector("#gauche").style.display = "none";
         document.querySelector("#droite").style.display = "none";
         document.querySelector("#retour_options").style.display = "none";
+        document.querySelector("#actions_droite").style.display = "none";
 
         document.querySelector("#vue_degagee p").innerHTML = "Afficher l'éditeur";
-
 
 
     }else{
         document.querySelector("#gauche").style.display = "block";
         document.querySelector("#droite").style.display = "flex";
         document.querySelector("#retour_options").style.display = "block";
+        document.querySelector("#actions_droite").style.display = "flex";
 
         document.querySelector("#vue_degagee p").innerHTML = "Vue dégagée";
     }
