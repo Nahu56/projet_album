@@ -173,7 +173,7 @@
                         <label for="times">
                             <img src="ASSETS\img\themes\charme.png" alt="">
 
-                            <input type="radio" id="times" name="theme" value="times#D5E1EC" required="required" >
+                            <input type="radio" id="times" name="theme" value="times#e9f5ff" required="required" >
                             <p>Times New Roman</p>
                         </label>
                     </div>

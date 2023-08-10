@@ -134,7 +134,24 @@ function vue_degagee(){
         document.querySelector("#retour_options").style.display = "none";
         document.querySelector("#actions_droite").style.display = "none";
 
+        //Changer texte du bouton
         document.querySelector("#vue_degagee p").innerHTML = "Afficher l'éditeur";
+
+        afficher_edit_templates();
+
+        document.querySelectorAll(".feuille button").forEach(button => {
+            
+            //Texte
+            if(button.classList.contains("txt")){
+                button.style.border = "none";
+    
+            // Image
+            }else if(button.classList.contains("img")){
+                button.style.backgroundColor = "transparent";
+                button.classList.remove("vide");
+            }
+        })
+
 
 
     }else{
@@ -143,7 +160,24 @@ function vue_degagee(){
         document.querySelector("#retour_options").style.display = "block";
         document.querySelector("#actions_droite").style.display = "flex";
 
+        //Changer texte du bouton
         document.querySelector("#vue_degagee p").innerHTML = "Vue dégagée";
+
+        document.querySelectorAll(".feuille button").forEach(button => {
+            
+            // Texte
+            if(button.classList.contains("txt")){
+                button.style.removeProperty("border");
+
+            // Image
+            }else if(button.classList.contains("img")){
+                button.style.backgroundColor = "#00000012";
+
+                if(! button.style.backgroundImage){
+                    button.classList.add("vide");
+                }
+            }
+        })
     }
 }
 
@@ -1477,10 +1511,10 @@ function close_continue_modal(){
 function go_checkout() {
 
 
-    let contenu_couv_1 = document.querySelector("#couv_1 .feuille").innerHTML;
-    let contenu_couv_2 = document.querySelector("#couv_2 .feuille").innerHTML;
+    let contenu_couv_1 = document.querySelector("#couv_1 .feuille").classList.contains("editee");
+    let contenu_couv_2 = document.querySelector("#couv_2 .feuille").classList.contains("editee");
 
-    let nb_pages_mini = 4; //TODO
+    let nb_pages_mini = 8; //TODO
 
     //vérifie que la 1ere de couverture n'est pas vierge
     if(contenu_couv_1 === "" || contenu_couv_1 === '<div class="voile"></div>'){
@@ -1494,9 +1528,9 @@ function go_checkout() {
     }else if(nb_pages < nb_pages_mini){
         notifications(false,"L'ablum doit contenir "+ nb_pages_mini +" pages au minimum")
 
-    //vérifie que le nombre de pages est impaire
-    }else if(nb_pages % 2 == 1){
-        notifications(false,'Il vous manque une page')
+    //vérifie que le nombre de pages est un multiple de 4
+    }else if(nb_pages % 4 !== 0){
+        notifications(false,'Le nombre de page doit être un multiple de 4')
 
 
     //Tout est ok, on ouvre le modal
@@ -1536,7 +1570,7 @@ function open_modal_final(){
         setTimeout(function() {
             modal.style.display = "none";
         }, 600); // Délai de 600 millisecondes (0,6 seconde)
-        body.addEventListener('click', close_panier);
+
     } else {
 
         document.querySelector("body").classList.remove("no-scroll");
