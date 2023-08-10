@@ -28,7 +28,8 @@
             }
         });
 
-        // Gestionnaire d'événement beforeunload
+        // Permet de vérifier si l'utilisateur sort du site en cliquant sur un lien, ou en fermant la page
+        // Evite d'actionner le modal "continuer plus tard" a la redirection vers la confirmation d'achat par exemple
         window.addEventListener("beforeunload", function(event) {
             if (!userClickedLink) {
                 event.preventDefault();
@@ -551,6 +552,7 @@
                         <p class="total"></p>
                     </div>
                 </div>
+                
 
                 
                 <!-- Le conteneur des boutons PayPal -->
@@ -560,9 +562,9 @@
                 <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID ?>&currency=EUR&locale=fr_FR"></script>
                 <script>
 
-
-                    var reliure_album = "Gold";
-                    var format_album = "A4";
+                    var reliure_album = "Erreur";
+                    var format_album = "Erreur";
+                    var couverture = "Erreur";
                     
 
                     // 2. Afficher le bouton PayPal
@@ -615,6 +617,12 @@
                                 //ne pas afficher le trigger
                                 userClickedLink = true;
 
+
+                                let options = JSON.parse(sessionStorage.getItem("options"));
+                                reliure_album = options[1]
+                                format_album = options[0]
+                                couverture = options[2]
+
                                 // Récupérer la date 
                                 const dateStr = details.update_time;
                                 var date = new Date(dateStr);
@@ -632,7 +640,7 @@
                                 tableau_commande[6] = details.purchase_units[0].items[0].quantity;
                                 tableau_commande[7] = reliure_album;
                                 tableau_commande[8] = format_album;
-                                tableau_commande[9] = nb_pages;
+                                tableau_commande[9] = couverture;
 
                                 tableau_commande[10] = details.purchase_units[0].amount.value;
 

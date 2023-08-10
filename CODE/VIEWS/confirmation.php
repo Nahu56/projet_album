@@ -28,7 +28,7 @@
                 <img width="400px" src="https://printshopcrea.com/wp-content/uploads/2023/08/logo_png.png" alt="logo">
             </a>
 
-            <h1>Votre commande à bien été confirmée !</h1>
+            <h1>Votre commande à bien été confirmée!</h1>
 
             <p>Vous serez recontacté par notre équipe lorsqu'elle sera prête !</p>
 

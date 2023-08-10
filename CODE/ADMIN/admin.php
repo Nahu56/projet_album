@@ -248,23 +248,23 @@
             @readfile($cheminFichier);
 
         }else{
-            // // On met à jour les informations dans le json 
-            // $json_string = file_get_contents('../../ASSETS/json/commandes.json');
-            // $tableau = json_decode($json_string, true);
-            // $tableau[$date][$key]['supprime'] = true;
-            // $newJsonString = json_encode($tableau);
-            // file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
+            // On met à jour les informations dans le json 
+            $json_string = file_get_contents('../../ASSETS/json/commandes.json');
+            $tableau = json_decode($json_string, true);
+            $tableau[$date][$key]['supprime'] = true;
+            $newJsonString = json_encode($tableau);
+            file_put_contents('../../ASSETS/json/commandes.json', $newJsonString);
 
 
-            // if (isset($affichage)) {
-            //     if ($affichage!=null) {
-            //         header("Refresh:0; url=admin?affichage=".$affichage."&notification=fichier");
-            //     }else {
-            //         header("Refresh:0; url=admin?notification=fichier");
-            //     }
-            // }else {
-            //     header("Refresh:0; url=admin?notification=fichier");
-            // }
+            if (isset($affichage)) {
+                if ($affichage!=null) {
+                    header("Refresh:0; url=admin?affichage=".$affichage."&notification=fichier");
+                }else {
+                    header("Refresh:0; url=admin?notification=fichier");
+                }
+            }else {
+                header("Refresh:0; url=admin?notification=fichier");
+            }
         }
 
     }
@@ -486,8 +486,8 @@
                                 </div>
 
                                 <div>
-                                    <p>Nb Pages </p>
-                                    <p>'.$tab['pages'].' pages </p>
+                                    <p>Couverture </p>
+                                    <p>'.$tab['couverture'].'</p>
                                 </div>
 
 
@@ -576,7 +576,12 @@
 
         function lancer_fichierOuvert(date, key){
 
-            window.location.href = "admin?action=ouvert&date=" + date + "&key=" + key;
+            // window.location.href = "admin?action=ouvert&date=" + date + "&key=" + key;
+
+            window.open(
+                "admin?action=ouvert&date=" + date + "&key=" + key,
+                '_blank' // <- Ouvrir dans un nouvel onglet 
+            );
 
         }
 

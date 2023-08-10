@@ -82,7 +82,7 @@ function creation_commande(){
         $commandes[$date][$tableau_commande[1]]['qtt_album'] = (int)$tableau_commande[6];
         $commandes[$date][$tableau_commande[1]]['reliure'] = $tableau_commande[7];
         $commandes[$date][$tableau_commande[1]]['format'] = $tableau_commande[8];
-        $commandes[$date][$tableau_commande[1]]['pages'] = (int)$tableau_commande[9];
+        $commandes[$date][$tableau_commande[1]]['couverture'] = $tableau_commande[9];
         
         $commandes[$date][$tableau_commande[1]]['total'] = (float)$tableau_commande[10];
 
@@ -100,7 +100,7 @@ function creation_commande(){
             'qtt_album' => (int)$tableau_commande[6],
             'reliure' => $tableau_commande[7],
             'format' => $tableau_commande[8],
-            'pages' => (int)$tableau_commande[9],
+            'couverture' => $tableau_commande[9],
             'total' => (float)$tableau_commande[10],
 
             'deja_telecharge' => false,

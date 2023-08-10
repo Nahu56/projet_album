@@ -152,11 +152,12 @@ body main .card {
   align-items: center;
   gap: 30px;
   background-color: #EBF0EF;
-  padding: 40px;
+  padding: 45px;
   border-radius: 10px;
 }
 body main .card h1 {
   color: #18574A;
+  text-align: center;
 }
 body main .card a {
   text-decoration: none;

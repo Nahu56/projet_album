@@ -122,6 +122,13 @@ function retour_verification(){
     })
 }
 
+
+// Appel de la fonction à l'appui sur ECHAP
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        vue_degagee();
+    }
+});
 //feature vue degagee
 function vue_degagee(){
 
@@ -135,7 +142,7 @@ function vue_degagee(){
         document.querySelector("#actions_droite").style.display = "none";
 
         //Changer texte du bouton
-        document.querySelector("#vue_degagee p").innerHTML = "Afficher l'éditeur";
+        document.querySelector("#vue_degagee p").innerHTML = "Afficher l'éditeur (esc)";
 
         afficher_edit_templates();
 
@@ -1509,7 +1516,6 @@ function close_continue_modal(){
  *  -> Nombre de pages impair
  */
 function go_checkout() {
-
 
     let contenu_couv_1 = document.querySelector("#couv_1 .feuille").classList.contains("editee");
     let contenu_couv_2 = document.querySelector("#couv_2 .feuille").classList.contains("editee");
