@@ -475,8 +475,8 @@
 
                             <div class="cache">
 
-                                <div>
-                                    <p>Reliure </p>
+                                <div style="flex: 1">
+                                    <p>Reliure et couverture</p>
                                     <p> '.$tab['reliure'].' </p>
                                 </div>
 
@@ -484,12 +484,6 @@
                                     <p>Format </p>
                                     <p> Feuilles '.$tab['format'].' </p>
                                 </div>
-
-                                <div>
-                                    <p>Couverture </p>
-                                    <p>'.$tab['couverture'].'</p>
-                                </div>
-
 
                             </div>
 

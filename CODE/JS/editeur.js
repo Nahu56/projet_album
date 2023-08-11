@@ -54,8 +54,7 @@ function lancement(){
                 //vérifie si l'ID est vide
                 if(options === null || ID == null || ID === ""){
 
-                    //window.location.href = "options";
-console.log("RETOUR OPTIONS");            
+                    window.location.href = "options";
                 }else{
                     options = JSON.parse(sessionStorage.getItem("options"));
 
@@ -70,16 +69,14 @@ console.log("RETOUR OPTIONS");
             //ni l'un ni l'autre => retour aux options
             }else{
 
-                //window.location.href = "options";
-console.log("RETOUR OPTIONS");
+                window.location.href = "options";
 
             }
 
             var PRIX = {
                 "base": json["base"]["1"],
                 "page": json["page"][ options[0] ],
-                "reliure": json["reliure"][ options[1] ],
-                "couverture": json["couverture"][ options[2] ]
+                "reliure": json["reliure"][ options[1] ]
             }
 
             //crée une variable de session avec les prix
@@ -196,7 +193,7 @@ function vue_degagee(){
 function charge_theme(){
     let options = JSON.parse(sessionStorage.getItem("options"));
 
-    theme = options[3];
+    theme = options[2];
 
     if(theme !== "classique"){ //si c'est le theme classique, prendre en compte différement (blanc)
 
@@ -1613,9 +1610,8 @@ function maj_prix_total(){
     total_avant_reduc = prix_album * qtt; // -> prix avant réduction
     prix_total = total_avant_reduc - (total_avant_reduc * reduction / 100) ; // -> prix apres réduction
 
-
     //Affichage du calcul de réduction si il y en une
-    if(reduction >= 10){
+    if(reduction > 0){
         document.querySelector('#panier .total>div').style.display = "flex";
     }else{
         document.querySelector('#panier .total>div').style.display = "none";
@@ -1642,7 +1638,7 @@ function maj_prix_total(){
 function maj_prix_album(){
     let PRIX = JSON.parse(sessionStorage.getItem("PRIX"));
 
-    prix_album = PRIX["base"] + (nb_pages * PRIX["page"]) + PRIX["reliure"] + PRIX["couverture"] ;
+    prix_album = PRIX["base"] + (nb_pages * PRIX["page"]) + PRIX["reliure"] ;
     
 
     var txt_prix_album = document.querySelector('#panier main main .txt_prix_album span')
@@ -1687,9 +1683,6 @@ function affichage_options_album(){
     var prx_reliure = document.querySelector('#options_album .prix_reliure span');
     prx_reliure.textContent = PRIX["reliure"].toFixed(2).replace('.', ',')+'€';
 
-    var prx_couverture = document.querySelector('#options_album .prix_couverture span');
-    prx_couverture.textContent = PRIX["couverture"].toFixed(2).replace('.', ',')+'€';
-
 
     // Pour le panier du modal
     var prx_base_modal = document.querySelector('#panier_modal .options .prix_base span');
@@ -1698,6 +1691,4 @@ function affichage_options_album(){
     var prx_reliure_modal = document.querySelector('#panier_modal .options .prix_reliure span');
     prx_reliure_modal.textContent = PRIX["reliure"].toFixed(2).replace('.', ',')+'€';
 
-    var prx_couverture_modal = document.querySelector('#panier_modal .options .prix_couverture span');
-    prx_couverture_modal.textContent = PRIX["couverture"].toFixed(2).replace('.', ',')+'€';
 }

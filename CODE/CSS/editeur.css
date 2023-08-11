@@ -679,7 +679,7 @@ body.no-scroll {
   height: 8vh;
 }
 #editeur div#droite #panier.unrolled {
-  height: 610px;
+  height: 575px;
 }
 #editeur div#droite #panier.shadow {
   box-shadow: 0px -20px 105px 50px #ebf0ef;

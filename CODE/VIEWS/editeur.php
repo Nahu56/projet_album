@@ -269,10 +269,7 @@
                             <p>Reliure</p>
                             <span id=""> </span>
                         </div>
-                        <div class="prix_couverture">
-                            <p>Couverture</p>
-                            <span id=""> </span>
-                        </div>
+
                         <div class="prix_pages">
                             <p></p>
                             <span id=""></span>
@@ -534,10 +531,6 @@
                             <p>Reliure</p>
                             <span></span>
                         </div>
-                        <div class="prix_couverture">
-                            <p>Couverture</p>
-                            <span></span>
-                        </div>
                         <div class="prix_pages">
                             <p>Page x10</p>
                             <span></span>
@@ -762,7 +755,7 @@ if(isset($_GET["id"])){
 if(!isset($_GET["id"])){
 
     //vérifie si toutes les options sont là
-    if( isset($_POST["format"]) && isset($_POST["reliure"]) && isset($_POST["couverture"]) && isset($_POST["theme"])){
+    if( isset($_POST["format"]) && isset($_POST["reliure"]) && isset($_POST["theme"])){
         ?>
 
         <script>
@@ -775,7 +768,6 @@ if(!isset($_GET["id"])){
             // Récupérer les valeurs des options de l'album et les ajouter au tableau
             options.push('<?php echo $_POST["format"]; ?>');
             options.push('<?php echo $_POST["reliure"]; ?>');
-            options.push('<?php echo $_POST["couverture"]; ?>');
             options.push('<?php echo $_POST["theme"]; ?>');
 
             // Convertir le tableau en une chaîne JSON
@@ -793,8 +785,8 @@ if(!isset($_GET["id"])){
 
         <script>
 
-            //window.location.href = "options";
-console.log("RETOUR OPTIONS");
+            window.location.href = "options";
+
         </script>
         
         <?php

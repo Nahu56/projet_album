@@ -34,24 +34,54 @@
                 </header>
 
                 <div class="secondHeader">
-                    <h3>Reliure</h3>
+                    <h3>Reliure et couverture</h3>
                     <div class="hr"></div>
                 </div>
 
-                <fieldset>
+                <fieldset id="choix_reliures">
                     <div>
-                        <label for="reliure_plastique">
+                        <label for="wireo">
                             <img src="ASSETS\img\image.jpg" alt="">
-                            <input type="radio" id="reliure_plastique" name="reliure" value="plastique" required="required" >
-                            <p>Reliure plastique</p>
+                            <input type="radio" id="wireo" name="reliure" value="wireo" required="required" >
+                            <p>Reliure WIRE O -&nbsp<span class="cellule_prix"></span>€</p>
                         </label>
                     </div>
 
                     <div>
-                        <label for="reliure_metallique">
+                        <label for="coil">
                             <img src="ASSETS\img\image.jpg" alt="">
-                            <input type="radio" id="reliure_metallique" name="reliure" value="metallique" required="required" >
-                            <p>Reliure metallique</p>
+                            <input type="radio" id="coil" name="reliure" value="coil" required="required" >
+                            <p>Reliure COIL -&nbsp<span class="cellule_prix"></span>€</p>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="dos_carre">
+                            <img src="ASSETS\img\image.jpg" alt="">
+                            <input type="radio" id="dos_carre" name="reliure" value="dos_carre" required="required" >
+                            <p>Reliure DOS CARRE -&nbsp<span class="cellule_prix"></span>€</p>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div>
+                        <label for="wireo">
+                            <input type="radio" id="couverture_carton" name="reliure" value="wireo" required="required" >
+                            <p>Couverture 350g</p>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="coil">
+                            <input type="radio" id="couverture_papier" name="reliure" value="coil" required="required" >
+                            <p>Couverture cartonnée 1mm</p>
+                        </label>
+                    </div>
+                    <div>
+                        <label for="dos_carre">
+                            <input type="radio" id="couverture_papier" name="reliure" value="dos_carre" required="required" >
+                            <p>Couverture rigide (bande dessinnée)</p>
                         </label>
                     </div>
                 </fieldset>
@@ -79,28 +109,6 @@
                         </label>
                     </div>
                 </fieldset>
-
-
-                <div class="secondHeader">
-                    <h3>Couverture</h3>
-                    <div class="hr"></div>
-                </div>
-                
-                <fieldset>
-                    <div>
-                        <label for="couverture_carton">
-                            <input type="radio" id="couverture_carton" name="couverture" value="carton" required="required" >
-                            <p>Couverture cartonnée</p>
-                        </label>
-                    </div>
-
-                    <div>
-                        <label for="couverture_papier">
-                            <input type="radio" id="couverture_papier" name="couverture" value="papier" required="required" >
-                            <p>Couverture papier</p>
-                        </label>
-                    </div>
-                </fieldset>
                 
             </section>
 
@@ -115,11 +123,12 @@
                     <p>Le choix du thème implique la couleur de fond des pages, ainsi que le typographie d'écriture de l'album</p>
                 </header>
 
+                <!-- --------------------------------------------------------------------------  -->
+                <!--                                    THEMES                                   -->
+                <!-- --------------------------------------------------------------------------  -->
+
                 <fieldset>
 
-                    <!-- --------------------------------------------------------------------------  -->
-                    <!--                              THEMES SECONDAIRES                             -->
-                    <!-- --------------------------------------------------------------------------  -->
                     <div>
                         <label for="classique">
                             <img src="ASSETS\img\themes\classique.png" alt="">
@@ -128,37 +137,6 @@
                             <p>Classique</p>
                         </label>
                     </div>
-
-                    <!-- <div>
-                        <label for="theme2">
-                            <img src="ASSETS\img\image.jpg" alt="">
-
-                            <input type="radio" id="theme2" name="theme" value="theme2" required="required" >
-                            <p>theme2</p>
-                        </label>
-                    </div>
-
-                    <div>
-                        <label for="theme3">
-                            <img src="ASSETS\img\image.jpg" alt="">
-
-                            <input type="radio" id="theme3" name="theme" value="theme3" required="required" >
-                            <p>theme3</p>
-                        </label>
-                    </div>
-
-                    <div>
-                        <label for="theme4">
-                            <img src="ASSETS\img\image.jpg" alt="">
-
-                            <input type="radio" id="theme4" name="theme" value="theme4" required="required" >
-                            <p>theme4</p>
-                        </label>
-                    </div> -->
-
-                    <!-- --------------------------------------------------------------------------  -->
-                    <!--                              THEMES PRINCIPAUX                              -->
-                    <!-- --------------------------------------------------------------------------  -->
 
                     <div>
                         <label for="dejavusansmono">
@@ -193,6 +171,12 @@
 
 
 <script>
+
+    // Récupère les prix des reliure
+    // Insère les prix
+    get_prix();
+
+
     sessionStorage.setItem("options", "");
 
     //ajoute la class selected
@@ -201,10 +185,22 @@
         fieldset.addEventListener("change", function(){
 
             fieldset.querySelectorAll("input").forEach(input => {
-                input.parentNode.parentNode.classList.remove("selected");
+                let htmlFor = input.parentNode.htmlFor;
 
+                // input.parentNode.parentNode.classList.add("selected");
+                document.querySelectorAll('label[for="' + htmlFor + '"]').forEach(element => {
+                    element.parentNode.classList.remove("selected")
+                });
+
+
+                
                 if(input.checked){
-                    input.parentNode.parentNode.classList.add("selected");
+                    let htmlFor = input.parentNode.htmlFor;
+
+                    // input.parentNode.parentNode.classList.add("selected");
+                    document.querySelectorAll('label[for="' + htmlFor + '"]').forEach(element => {
+                        element.parentNode.classList.add("selected")
+                    });
                 }
             });
         })
@@ -222,6 +218,23 @@
         } else {
             notifications(false, "Veuillez sélectionner toutes les options.");
         }
+    }
+
+    // Récupère les prix des reliure
+    // Insère les prix
+    function get_prix(){
+        fetch("ASSETS/json/variables_prix.json")
+            .then(response => response.json())
+            .then(function(json){
+
+                let labels = document.querySelectorAll("#choix_reliures>div>label");
+                labels.forEach(label => {
+                    
+                    //attribue le prix qui correspond dans la cellule span de prix
+                    label.querySelector(".cellule_prix").textContent = json["reliure"][label.htmlFor];
+                });
+
+            });
     }
 
 </script>

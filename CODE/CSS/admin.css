@@ -154,6 +154,7 @@ body #commande .date .album .info_album .visible .prx_totale {
 body #commande .date .album .info_album .cache {
   display: none;
   justify-content: space-between;
+  gap: 30px;
   align-items: center;
   margin-bottom: 15px;
   margin: 0 30px;

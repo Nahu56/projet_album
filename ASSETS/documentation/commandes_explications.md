@@ -13,7 +13,7 @@
             qtt_album : [QUANTITE],         -> number
             reliure : [RELIURE],            -> string
             format : [FORMAT],              -> string
-            pages : [NOMBRE],               -> number
+            couverture : [type],               -> number
             total : [PRIX],                 -> float
 
             deja_telecharge : [TELECHARGE], -> bool
